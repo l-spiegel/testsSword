@@ -1,5 +1,7 @@
-package appium;
+package appium.Android;
 
+import appium.Android.ConfigurationsAndroid;
+import appium.MobileActions;
 import io.appium.java_client.MobileBy.ByAccessibilityId;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
@@ -25,28 +27,18 @@ import appium.iOS.MobileActionsiOS;
 
 public class swordRegressionBadges {
 
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1651.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	
-	    AndroidDriver<MobileElement> driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
-}
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
+	}
 
-private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
+	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
 	// TODO Auto-generated method stub
 	}
 
-	
 	@Test
 	public void virtualPt() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		
@@ -213,8 +205,8 @@ private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> p
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My badges']")));
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		driver.findElementByAccessibilityId("menu_option_logout").click();
-		
-		driver.quit();
+
+		ConfigurationsAndroid.killDriver();
 	}
 	
 }

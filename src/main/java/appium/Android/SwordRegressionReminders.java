@@ -1,4 +1,4 @@
-package appium;
+package appium.Android;
 
 import static org.junit.Assert.assertEquals;
 
@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
@@ -34,10 +35,15 @@ import io.appium.java_client.functions.ExpectedCondition;
 import io.appium.java_client.remote.MobileCapabilityType;
 
 public class SwordRegressionReminders {
+
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
+	}
 	
 	@Test
 	public void virtualPt() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver,20);
 	  
 		//fazer login
@@ -241,26 +247,12 @@ public class SwordRegressionReminders {
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
-		
-		driver.quit();
+
+		ConfigurationsAndroid.killDriver();
 	}
 
 	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1651.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	    
-	    AndroidDriver<MobileElement> driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
 	}
 }

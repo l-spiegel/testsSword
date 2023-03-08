@@ -1,55 +1,31 @@
-package appium;
+package appium.Android;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Driver;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import appium.MobileActions;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import appium.iOS.MobileActionsiOS;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.offset.PointOption;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.functions.ExpectedCondition;
-import io.appium.java_client.remote.MobileCapabilityType;
 
 public class swordRegressionSessionDetails {
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1651.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	    
-	    AndroidDriver<MobileElement> driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
+
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
 	}
 	
 	@Test
 	public void virtualPtStaging() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
-		
 		WebDriverWait wait = new WebDriverWait(driver,50);
+		MobileActions mobileActions = new MobileActions(driver);
+
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
+		MobileElement el1 = driver.findElementByXPath("//android.widget.EditText[1]");
 		el1.clear();
 		el1.sendKeys("l.spiegel+3@swordhealth.com");
 		MobileElement el2 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
@@ -62,9 +38,8 @@ public class swordRegressionSessionDetails {
 		//mostrar o card do lastest sessions
 		MobileElement kitDeliveryCard = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
 		MobileElement ptCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
-		MobileActions mobileActions = new MobileActions(driver);
 		mobileActions.swipeByElements(kitDeliveryCard, ptCard);
-		MobileElement weeklyGoalTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Weekly goal']");
+		MobileElement weeklyGoalTxt = (MobileElement) driver.findElementByAccessibilityId("home_card_weekly_goal");
 		mobileActions.swipeByElements(weeklyGoalTxt, kitDeliveryCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
@@ -242,11 +217,11 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText")));
 		//voltar
 		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_delivery_kit_status']")));
 		MobileElement kitDeliveryCard2 = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
 		MobileElement ptCard2 = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
 		mobileActions.swipeByElements(kitDeliveryCard2, ptCard2);
-		MobileElement weeklyGoalTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Weekly goal']");
+		MobileElement weeklyGoalTxt2 = (MobileElement) driver.findElementByAccessibilityId("home_card_weekly_goal");
 		mobileActions.swipeByElements(weeklyGoalTxt2, kitDeliveryCard2);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
@@ -271,14 +246,13 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		driver.findElementByAccessibilityId("menu_option_logout").click();
-		
-		driver.quit();
+
+		ConfigurationsAndroid.killDriver();
 		
 	}
 	
 	@Test
 	public void virtualPtLive() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,50);
 		
@@ -519,7 +493,7 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Marta Casaca']")));
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		driver.findElementByAccessibilityId("menu_option_logout").click();
-		
-		driver.quit();
+
+		ConfigurationsAndroid.killDriver();
 	}
 }

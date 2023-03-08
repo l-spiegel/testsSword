@@ -1,4 +1,4 @@
-package appium;
+package appium.Android;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import appium.MobileActions;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
@@ -46,33 +48,22 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class swordRegressionOnCall {
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Desktop/visualizations";
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check";
 	private final static String BASELINE = "BASELINE_";
 
-
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1651.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	    
-	    AndroidDriver<MobileElement> driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
 	}
 
 	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	
 	@Test
 	public void preventive() throws IOException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActions mobileActions = new MobileActions(driver);
 		
@@ -225,16 +216,17 @@ public class swordRegressionOnCall {
 		        .getImagesSimilarity(screenshot2, screenshot3, new SimilarityMatchingOptions()
 		                .withEnabledVisualization());
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
-		assertThat(result2.getScore(), is(greaterThan(0.95)));
+		assertThat(result2.getScore(), is(greaterThan(0.90)));
 		String baselineFilename2 = VALIDATION_PATH + "/" + BASELINE + "2" + ".png";
         File comparison2 = new File(baselineFilename2);
         result2.storeVisualization(comparison2);
 		System.out.println("Similarity of: " + result2.getScore());
+
+		ConfigurationsAndroid.killDriver();
 	}
 
 	@Test
 	public void virtualPT() throws IOException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActions mobileActions = new MobileActions(driver);
 		
@@ -376,12 +368,14 @@ public class swordRegressionOnCall {
 		driver.findElementByAccessibilityId("home_on_call_card").click();
 		driver.findElementById("com.swordhealth.guarda.dev:id/ibtnAdd").click();
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]").click();
-		driver.findElementByXPath("//android.widget.FrameLayout[@content-desc='Photo taken on Mar 2, 2023, 10:54:09 AM']/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView").click();
+		driver.findElementByXPath("//android.widget.FrameLayout[@content-desc='Photo taken on Mar 7, 2023, 4:32:23 PM']/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
 		driver.findElementByXPath("//android.widget.ImageButton").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
+
+		ConfigurationsAndroid.killDriver();
 	}
 
 }

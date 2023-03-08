@@ -1,4 +1,4 @@
-package appium;
+package appium.Android;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
@@ -26,11 +27,18 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.functions.ExpectedCondition;
 import io.appium.java_client.remote.MobileCapabilityType;
 
+
 public class SwordRegressionLoginLogout {
+
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
+	}
 
 	@Test
 	public void errosELoginPage() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
+
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		
 		//login qr code
@@ -81,9 +89,9 @@ public class SwordRegressionLoginLogout {
 		el23.clear();
 		el23.sendKeys("jbduoa@hoer.com");
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.Button").click();
-		String el25 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[1]").getText();
+		String el25 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView[1]").getText();
 		Assert.assertEquals("Check your email", el25);
-		String el26 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[2]").getText();
+		String el26 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView[2]").getText();
 		Assert.assertEquals("If you have an active Sword account, you'll see an email from us showing you how to reset your password", el26);
 		driver.findElementByXPath("//android.widget.Button").click();
 		//erros do login - falta email vazion, senha vazia, email inválido + clicar fora do textfield
@@ -118,12 +126,11 @@ public class SwordRegressionLoginLogout {
 		String incorrectEmail = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[3]").getText();
 		Assert.assertEquals("Your email or password is incorrect", incorrectEmail);
 		
-		driver.quit();
+		ConfigurationsAndroid.killDriver();
 	}
 	
 	@Test
 	public void fazerLogin() throws MalformedURLException {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver,20);
 	  
 		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
@@ -214,26 +221,12 @@ public class SwordRegressionLoginLogout {
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		//logout button
 		driver.findElementByAccessibilityId("menu_option_logout").click();
-		
-		driver.quit();
+
+		ConfigurationsAndroid.killDriver();
 	}
 
 	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1651.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	    
-	    AndroidDriver<MobileElement> driver = new AndroidDriver(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
 	}
 }
