@@ -1,4 +1,4 @@
-package appium;
+package appium.Android;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +46,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class buttonsChange {
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Desktop/visualizations";
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check";
 	private final static String BASELINE = "BASELINE_";
 	private final static double MATCH_THRESHOLD = 0.1;
 	
@@ -113,9 +113,9 @@ public class buttonsChange {
 		desiredCapabilities.setCapability("platformName", "android");
 	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
 	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1589.apk");
+	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/vou ser despedido.apk");
 	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "false");
+	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
 	//    desiredCapabilities.setCapability("app", getResource("/Users/luizaspiegel/Downloads/app-sword-qa1517.apk").toString()); //colocar a build de testes ou de baseline
 	    
 	    driver = new AndroidDriver<MobileElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);

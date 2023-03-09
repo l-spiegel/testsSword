@@ -1,4 +1,4 @@
-package appium;
+package appium.Android;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,7 +36,6 @@ public class newSwordRegressionHome {
 	@Test
 	public void loginVirtualPt() throws MalformedURLException {
 		AndroidDriver<MobileElement> driver = inicializarAppium();
-		
 		MobileActions mobileActions = new MobileActions(driver);
 		
 		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");

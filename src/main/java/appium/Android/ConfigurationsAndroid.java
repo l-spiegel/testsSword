@@ -3,9 +3,7 @@ package appium.Android;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.junit.Before;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +24,7 @@ public class ConfigurationsAndroid {
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
         desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1665.apk");
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1647-release430.apk");
         desiredCapabilities.setCapability("appium:noReset", "false");
         desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
 

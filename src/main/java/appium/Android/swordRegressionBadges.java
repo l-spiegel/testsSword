@@ -1,7 +1,6 @@
 package appium.Android;
 
 import appium.Android.ConfigurationsAndroid;
-import appium.MobileActions;
 import io.appium.java_client.MobileBy.ByAccessibilityId;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;

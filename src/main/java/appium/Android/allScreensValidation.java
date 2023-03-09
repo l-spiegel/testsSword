@@ -1,10 +1,11 @@
-package appium;
+package appium.Android;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.io.FileUtils;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
@@ -86,22 +87,11 @@ public class allScreensValidation {
     private final static By PRESENT_CARD_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Present your card']");
     private final static By CAMERA_PERMISSION_SETTINGS_SCREEN = MobileBy.xpath("//android.widget.ImageView");
     private final static By CAMERA_PERMISSION_RETRY_SCREEN = MobileBy.xpath("//android.widget.ImageView");
-    
-    AndroidDriver<MobileElement> driver;
 
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1589.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "false");
-	//    desiredCapabilities.setCapability("app", getResource("/Users/luizaspiegel/Downloads/app-sword-qa1517.apk").toString()); //colocar a build de testes ou de baseline
-	    
-	    driver = new AndroidDriver<MobileElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
 	}
 
 	private Object getResource(String string) {
@@ -120,7 +110,6 @@ public class allScreensValidation {
 	
 	@Test
 	public void buttons() throws Exception {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		MobileActions mobileActions = new MobileActions(driver);
 		
