@@ -3,51 +3,28 @@ package appium.Android;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Driver;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import appium.iOS.MobileActionsiOS;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.offset.PointOption;
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileBy.ByAccessibilityId;
-import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.functions.ExpectedCondition;
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.CoreMatchers.*;
 
-
 public class swordRegressionOnCall {
-	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check";
+
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression commonui";
 	private final static String BASELINE = "BASELINE_";
 
 	private AndroidDriver<MobileElement> driver;
@@ -220,7 +197,7 @@ public class swordRegressionOnCall {
         File comparison2 = new File(baselineFilename2);
         result2.storeVisualization(comparison2);
 		System.out.println("Similarity of: " + result2.getScore());
-
+	
 		ConfigurationsAndroid.killDriver();
 	}
 
@@ -367,14 +344,12 @@ public class swordRegressionOnCall {
 		driver.findElementByAccessibilityId("home_on_call_card").click();
 		driver.findElementById("com.swordhealth.guarda.dev:id/ibtnAdd").click();
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]").click();
-		driver.findElementByXPath("//android.widget.FrameLayout[@content-desc='Photo taken on Mar 7, 2023, 4:32:23 PM']/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView").click();
+		driver.findElementByXPath("//android.widget.FrameLayout[@content-desc='Photo taken on Mar 21, 2023, 11:23:44 AM']/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
 		driver.findElementByXPath("//android.widget.ImageButton").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
-
-		ConfigurationsAndroid.killDriver();
 	}
 
 }

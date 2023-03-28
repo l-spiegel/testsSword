@@ -44,7 +44,8 @@ public class swordRegressionSessionDetails {
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_see_more_button']")));
+		//o id do see more button sumiu com a mudança do layout do botão
+	//	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
 		driver.findElementByAccessibilityId("home_card_session_details_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
 		//validar o ecrã
@@ -182,7 +183,7 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2_next_date_button']")));
 		driver.findElementByAccessibilityId("home_card_session_details_2_next_date_button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1_next_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_1_see_more_button").click();
+		driver.findElementByAccessibilityId("home_card_session_details_1").click();
 		//fazer scroll do carrossel
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		MobileElement nextSession = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]");
@@ -225,7 +226,7 @@ public class swordRegressionSessionDetails {
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_see_more_button']")));
+	//	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
 		driver.findElementByAccessibilityId("home_card_session_details_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//partilhar um exercício no chat
@@ -274,7 +275,7 @@ public class swordRegressionSessionDetails {
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Prochaine Séance']")).size() > 0) { //voltar pra inglês
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_see_more_button']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
 		driver.findElementByAccessibilityId("home_card_session_details_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercices']"))); //voltar pra inglês
 		//validar o ecrã
@@ -415,8 +416,8 @@ public class swordRegressionSessionDetails {
 		driver.findElementByAccessibilityId("home_card_session_details_2_prev_date_button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_3_next_date_button']")));
 		driver.findElementByAccessibilityId("home_card_session_details_3_next_date_button").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_2_see_more_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_2_see_more_button").click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_2']")));
+		driver.findElementByAccessibilityId("home_card_session_details_2").click();
 		//fazer scroll do carrossel
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
 		MobileElement latestSession = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_0");
@@ -472,7 +473,7 @@ public class swordRegressionSessionDetails {
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Prochaine Séance']")).size() > 0) { //voltar pra inglês
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_see_more_button']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
 		driver.findElementByAccessibilityId("home_card_session_details_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
 		//partilhar um exercício no chat

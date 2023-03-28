@@ -1,38 +1,16 @@
 package appium.Android;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.File;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Driver;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ById;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ByIdOrName;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileBy.ByAccessibilityId;
-import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.functions.ExpectedCondition;
-import io.appium.java_client.remote.MobileCapabilityType;
 
 public class SwordRegressionReminders {
 

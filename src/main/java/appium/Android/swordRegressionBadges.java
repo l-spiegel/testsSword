@@ -1,28 +1,15 @@
 package appium.Android;
 
-import appium.Android.ConfigurationsAndroid;
-import io.appium.java_client.MobileBy.ByAccessibilityId;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSTouchAction;
-import io.appium.java_client.remote.MobileCapabilityType;
-
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import appium.iOS.MobileActionsiOS;
 
 public class swordRegressionBadges {
 
@@ -79,7 +66,7 @@ public class swordRegressionBadges {
 			Assert.assertEquals("My badges", myBadges);
 			//validar o botão see all badges
 			String seeAllBadges = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.TextView").getText();
-			Assert.assertEquals("See all badges", seeAllBadges);
+			Assert.assertEquals("See more", seeAllBadges);
 			//pegar os valores das 3 primeiras badges
 			String lastAchieved = driver.findElementByXPath("//android.view.View[@content-desc='home_badges_card_badge_0']/android.widget.TextView").getText();
 				System.out.println("LAST BADGE ACHIEVED: " + lastAchieved);
@@ -114,7 +101,7 @@ public class swordRegressionBadges {
 		Assert.assertEquals("My badges", myBadges);
 		//validar título e badges do number of sessions
 		String numberOfSessions = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
-		Assert.assertEquals("Number of sessions", numberOfSessions);
+		Assert.assertEquals("Sessions", numberOfSessions);
 		//essa difernça de xpath para badges achieved e not achieved deve partir meus testes de acordo com o que tá ou não achieved nos users
 		String session1 = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_0_badge_0']/android.widget.TextView").getText();
 		Assert.assertEquals("1st Session", session1);
@@ -137,12 +124,12 @@ public class swordRegressionBadges {
 		//clicar fora do popup
 		mobileActions.tapByCoordinates(248, 158);
 		//Fazer scroll do number of weekly goals até o number of sessions
-		MobileElement numberWeeklyGoalsTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Number of weekly goals']");
+		MobileElement numberWeeklyGoalsTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Weekly goals']");
 		MobileElement firstSessionTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='1st Session']");
 		mobileActions.swipeByElements(numberWeeklyGoalsTxt, firstSessionTxt);
 		//validar título e nome das badges do number of weekly goals
 		String weeklyGoals = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
-		Assert.assertEquals("Number of weekly goals", weeklyGoals);
+		Assert.assertEquals("Weekly goals", weeklyGoals);
 		String weeklyGoal1 = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_1_badge_0']/android.view.View/android.widget.TextView").getText();
 		Assert.assertEquals("1st Weekly Goal", weeklyGoal1);
 		String weeklyGoal2 = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_1_badge_1']/android.view.View/android.widget.TextView").getText();
@@ -164,12 +151,12 @@ public class swordRegressionBadges {
 		//clicar no botão do popup
 		driver.findElementByXPath("//android.widget.Button").click();
 		//fazer scroll do app badges até o number of weekly goals
-		MobileElement appBadgesTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='App badges']");
+		MobileElement appBadgesTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Getting started']");
 		MobileElement session18Txt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='18th Session']");
 		mobileActions.swipeByElements(appBadgesTxt, session18Txt);
 		//validar título e nome das badges do app badges
 		String appBadges = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
-		Assert.assertEquals("App badges", appBadges);
+		Assert.assertEquals("Getting started", appBadges);
 		String remindersBadge = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_2_badge_0']/android.widget.TextView").getText();
 		Assert.assertEquals("Reminders Scheduled", remindersBadge);
 		String messageInChatBadge = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_2_badge_1']/android.widget.TextView").getText();
@@ -180,12 +167,12 @@ public class swordRegressionBadges {
 		String numberOfBadgesAchieved3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
 			System.out.println("BADGES ACHIEVED: " + numberOfBadgesAchieved3);
 		//fazer scroll pra mostrar até o final
-		MobileElement appBadgesTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='App badges']");
-		MobileElement journeyStepsTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Journey steps']");
+		MobileElement appBadgesTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Getting started']");
+		MobileElement journeyStepsTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Program milestones']");
 		mobileActions.swipeByElements(journeyStepsTxt, appBadgesTxt2);
 		//validar o título e nome das badges do journey steps
 		String journeySteps = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[3]").getText();
-		Assert.assertEquals("Journey steps", journeySteps);
+		Assert.assertEquals("Program milestones", journeySteps);
 		String enrollmentBadge = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_3_badge_0']/android.widget.TextView").getText();
 		Assert.assertEquals("Enrollment", enrollmentBadge);
 		String reassessmen1tBadge = driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_3_badge_1']/android.view.View/android.widget.TextView").getText();
