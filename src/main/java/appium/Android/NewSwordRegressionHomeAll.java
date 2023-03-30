@@ -1,13 +1,11 @@
 package appium.Android;
 
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,15 +20,15 @@ public class NewSwordRegressionHomeAll {
     }
 
     @Test
-        public void virtualPt() throws MalformedURLException {
+        public void virtualPt() {
         MobileActions mobileActions = new MobileActions(driver);
         WebDriverWait wait = new WebDriverWait(driver,20);
 
         //login
-        MobileElement email = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
+        MobileElement email = driver.findElementByXPath("//android.widget.EditText[1]");
         email.clear();
         email.sendKeys("vinteum@sword.com");
-        MobileElement pass = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
+        MobileElement pass = driver.findElementByXPath("//android.widget.EditText[2]");
         pass.click();
         pass.sendKeys("Test1234!");
         driver.findElementByAccessibilityId("loginButton").click();
@@ -54,8 +52,8 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("It's time for your reassessment check-in", pendingActionsTitle);
             Assert.assertEquals("Tap to complete your reassessment", pendingActionsSubtitle);
             //scroll pra mostrar o kit delivery inteiro
-            MobileElement pendingActionsCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pending_actions");
-            MobileElement ptCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
+            MobileElement pendingActionsCard = driver.findElementByAccessibilityId("home_card_pending_actions");
+            MobileElement ptCard = driver.findElementByAccessibilityId("home_card_pt");
             mobileActions.swipeByElements(pendingActionsCard, ptCard);
         }
         else {
@@ -124,8 +122,8 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("Build strength and endurance", myProgramBuild);
             Assert.assertEquals("Reduce your symptoms", myProgramReduce);
             //scroll
-            MobileElement myProgramReduceTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Reduce your symptoms']");
-            MobileElement myProgramProgramGoalTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
+            MobileElement myProgramReduceTxt = driver.findElementByXPath("//android.widget.TextView[@text='Reduce your symptoms']");
+            MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
             mobileActions.swipeByElements(myProgramReduceTxt, myProgramProgramGoalTxt);
             //validar o restante do my program
             String myProgramHandle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[13]").getText();
@@ -227,6 +225,9 @@ public class NewSwordRegressionHomeAll {
             String personalGoalsPopupReopenTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[2]").getText();
             Assert.assertEquals(personalGoalsLabel1, personalGoalsPopupReopenTitle);
             Assert.assertEquals("Would you like to reopen this personal goal?", personalGoalsPopupReopenTxt);
+            //clicar fora do popup
+            mobileActions.tapByCoordinates(735, 1867);
+            mobileActions.tapByCoordinates(842, 338);
             driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").click();
             //fazer scroll no personal goals
             MobileElement personalGoalsCard2 = (MobileElement) driver.findElementByAccessibilityId("home_card_personal_goals_1");
@@ -268,67 +269,299 @@ public class NewSwordRegressionHomeAll {
         //abrir settings de novo
         driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar pra definir pin
+        driver.findElementByAccessibilityId("menu_option_define_pin").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         //voltar
+        driver.findElementByXPath("//android.widget.Button").click();
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar pra definir pin
+        driver.findElementByAccessibilityId("menu_option_define_pin").click();
         //inserir 3 digitos
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number1CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='1']");
+        number1CreatePin.click();
+        number1CreatePin.click();
+        number1CreatePin.click();
         //apagar 1
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]").click();
         //terminar de definir o pin
+        number1CreatePin.click();
+        number1CreatePin.click();
         //voltar pra create pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        driver.findElementByXPath("//android.widget.Button").click();
         //inserir 4 digitos
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number2CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='2']");
+        number2CreatePin.click();
+        number2CreatePin.click();
+        number2CreatePin.click();
+        number2CreatePin.click();
         //inserir 4 digitos diferentes no confirm pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        MobileElement number5ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='5']");
+        number5ConfirmPin.click();
+        number5ConfirmPin.click();
+        number5ConfirmPin.click();
+        number5ConfirmPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String pinDoesntMatch1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        String retryButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
+        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch1);
+        Assert.assertEquals("Retry", retryButton);
         //clicar em retry
+        driver.findElementByXPath("//android.widget.Button").click();
         //inserir 4 digitos no create your pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number0CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='0']");
+        number0CreatePin.click();
+        number0CreatePin.click();
+        number0CreatePin.click();
+        number0CreatePin.click();
         //inserir os mesmos 4 digitos no confirm pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        MobileElement number0ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='0']");
+        number0ConfirmPin.click();
+        number0ConfirmPin.click();
+        number0ConfirmPin.click();
+        number0ConfirmPin.click();
         //validar ecrã de biometria
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String biometrics = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        String activateNowButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.TextView").getText();
+        String activateLaterButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.TextView").getText();
+        Assert.assertEquals("Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.", biometrics);
+        Assert.assertEquals("Activate now", activateNowButton);
+        Assert.assertEquals("Activate later", activateLaterButton);
         //clicar pra ativar depois
+        driver.findElementByXPath("//android.widget.TextView[@text='Activate later']").click();
         //validar ecrã de sucesso
+        String newPinSuccess1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("New PIN code set successfully", newPinSuccess1);
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar pra ativar biometria
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login with biometrics']")));
+        MobileElement biometricsToggle = driver.findElementByAccessibilityId("menu_option_login_biometrics");
+        biometricsToggle.click();
         //clicar de novo na biometria
+        biometricsToggle.click();
         //clicar em change pin
+        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
+        String forgotPinButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView").getText();
+        Assert.assertEquals("Forgot your PIN?", forgotPinButton);
         //voltar
+        driver.findElementByXPath("//android.widget.Button").click();
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar em change pin
+        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //digitar 3 digitos corretos
+        MobileElement number0EnterPin1 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
+        number0EnterPin1.click();
+        number0EnterPin1.click();
+        number0EnterPin1.click();
         //apagar 1 digito
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]").click();
         //terminar de inserir o pin correto
+        number0EnterPin1.click();
+        number0EnterPin1.click();
         //voltar
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        driver.findElementByXPath("//android.widget.Button").click();
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar em change pin
-        //inserir 4 digitos
+        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        //inserir 4 digitos no enter pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
+        MobileElement number0EnterPin2 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
+        number0EnterPin2.click();
+        number0EnterPin2.click();
+        number0EnterPin2.click();
+        number0EnterPin2.click();
+        //inserir 4 digitos no create pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number3CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='3']");
+        number3CreatePin.click();
+        number3CreatePin.click();
+        number3CreatePin.click();
+        number3CreatePin.click();
         //inserir 4 digitos diferentes no confirm pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        MobileElement number7ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='7']");
+        number7ConfirmPin.click();
+        number7ConfirmPin.click();
+        number7ConfirmPin.click();
+        number7ConfirmPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String pinDoesntMatch2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        String retryButton2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
+        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch2);
+        Assert.assertEquals("Retry", retryButton2);
         //clicar em retry
+        driver.findElementByXPath("//android.widget.Button").click();
         //inserir 4 digitos no create
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number9CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='9']");
+        number9CreatePin.click();
+        number9CreatePin.click();
+        number9CreatePin.click();
+        number9CreatePin.click();
         //inserir os mesmos 4 digitos no confirm pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        MobileElement number9ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='9']");
+        number9ConfirmPin.click();
+        number9ConfirmPin.click();
+        number9ConfirmPin.click();
+        number9ConfirmPin.click();
         //validar ecra de sucesso
+        String newPinSuccess2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("New PIN code set successfully", newPinSuccess2);
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //clicar em change pin
+        driver.findElementByAccessibilityId("menu_option_change_pin").click();
         //inserir o pin errado
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
+        MobileElement number1EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='1']");
+        number1EnterPin.click();
+        number1EnterPin.click();
+        number1EnterPin.click();
+        number1EnterPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String wrongPin1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("Wrong PIN code! \n" +
+                "You have 4 more attempts", wrongPin1);
         //retry
+        driver.findElementByXPath("//android.widget.Button").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
+        MobileElement number2EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='2']");
+        number2EnterPin.click();
+        number2EnterPin.click();
+        number2EnterPin.click();
+        number2EnterPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String wrongPin2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("Wrong PIN code! \n" +
+                "You have 3 more attempts", wrongPin2);
         //retry
+        driver.findElementByXPath("//android.widget.Button").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
+        MobileElement number3EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='3']");
+        number3EnterPin.click();
+        number3EnterPin.click();
+        number3EnterPin.click();
+        number3EnterPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String wrongPin3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("Wrong PIN code! \n" +
+                "You have 2 more attempts", wrongPin3);
         //retry
+        driver.findElementByXPath("//android.widget.Button").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
+        MobileElement number4EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='4']");
+        number4EnterPin.click();
+        number4EnterPin.click();
+        number4EnterPin.click();
+        number4EnterPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String wrongPin4 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
+        Assert.assertEquals("Wrong PIN code! \n" +
+                "You have 1 more attempts", wrongPin4); //tem um bug na string
         //retry
+        driver.findElementByXPath("//android.widget.Button").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
+        MobileElement number5EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='5']");
+        number5EnterPin.click();
+        number5EnterPin.click();
+        number5EnterPin.click();
+        number5EnterPin.click();
         //validar ecrã de erro
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        String pinError = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[1]").getText();
+        String loginAgain = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[2]").getText();
+        String backToLoginButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
+        Assert.assertEquals("Uh-oh! That's 5 failed attempts", pinError);
+        Assert.assertEquals("For security reasons, please log in again and set a new PIN code.", loginAgain);
+        Assert.assertEquals("Back to login", backToLoginButton);
         //back to login
+        driver.findElementByXPath("//android.widget.Button").click();
         //fazer login
+        driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("Test1234!");
+        driver.findElementByAccessibilityId("loginButton").click();
         //definir pin
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        MobileElement number6CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='6']");
+        number6CreatePin.click();
+        number6CreatePin.click();
+        number6CreatePin.click();
+        number6CreatePin.click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        MobileElement number6ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='6']");
+        number6ConfirmPin.click();
+        number6ConfirmPin.click();
+        number6ConfirmPin.click();
+        number6ConfirmPin.click();
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.TextView").click();
         //abrir settings
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        driver.findElementByAccessibilityId("header_menu_button").click();
         //abrir change pin
+        driver.findElementByAccessibilityId("menu_option_change_pin").click();
         //clicar em forgot pin
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView").click();
         //validar que voltou pra login screen
+        String welcomeSword = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[1]").getText();
+        Assert.assertEquals("Welcome to Sword", welcomeSword);
 
-        //    ConfigurationsAndroid.killDriver();
+        System.out.println("O TESTE PASSOU");
+
+        ConfigurationsAndroid.killDriver();
     }
 }
 
