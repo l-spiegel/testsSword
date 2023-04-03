@@ -41,7 +41,7 @@ public class NewSwordRegressionHomeAll {
         //clicar no botão do chat do card
         driver.findElementByAccessibilityId("home_card_pt_button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("com.swordhealth.guarda.dev:id/etInputText"))); //tá pra staging
-        //voltar pra home
+        //voltar para home
         driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
         //validar pending actions
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_pending_actions']")).size() > 0) {
@@ -76,8 +76,8 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("Kit delivered", kitStatusDelivered);
             Assert.assertEquals("Delivery address", kitStatusAddress);
             //scroll pra mostrar o program status inteiro
-            MobileElement programStatusCard = (MobileElement) driver.findElementByAccessibilityId("home_card_program_status");
-            MobileElement kitDeliveryCard = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
+            MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
+            MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             mobileActions.swipeByElements(programStatusCard, kitDeliveryCard);
         }
         else {
@@ -136,8 +136,8 @@ public class NewSwordRegressionHomeAll {
             //voltar
             driver.findElementByXPath("//android.widget.Button").click();
             //scroll pra mostrar o weekly goal
-            MobileElement programGoalCard = (MobileElement) driver.findElementByAccessibilityId("home_card_program_goal");
-            MobileElement programStatusCard = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Program status']");
+            MobileElement programGoalCard = driver.findElementByAccessibilityId("home_card_program_goal");
+            MobileElement programStatusCard = driver.findElementByXPath("//android.widget.TextView[@text='Program status']");
             mobileActions.swipeByElements(programGoalCard, programStatusCard);
         }
         else {
@@ -161,7 +161,7 @@ public class NewSwordRegressionHomeAll {
             String myProgramWeeklyGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
             String myProgramWeeklyGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[5]").getText();
             String myProgramWeeklyGoalTip = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[6]").getText();
-            Assert.assertEquals("My program", myProgramWeeklyGoalHeader);
+            Assert.assertEquals("My program", myProgramWeeklyGoalHeader); //virou My weekly goal
             Assert.assertEquals("We set 4 goal sessions per week", myProgramWeeklyGoalSubtitle);
             Assert.assertEquals(weeklyGoalSubtitle, myProgramWeeklyGoal);
             Assert.assertEquals(weeklyGoalLabel, myProgramWeeklyGoalLabel);
@@ -169,8 +169,8 @@ public class NewSwordRegressionHomeAll {
             //voltar
             driver.findElementByXPath("//android.widget.Button").click();
             //scroll pra mostrar as sessions
-            MobileElement weeklyGoalCard = (MobileElement) driver.findElementByAccessibilityId("home_card_weekly_goal");
-            MobileElement programGoalCard = (MobileElement) driver.findElementByAccessibilityId("home_card_program_goal");
+            MobileElement weeklyGoalCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
+            MobileElement programGoalCard = driver.findElementByAccessibilityId("home_card_program_goal");
             mobileActions.swipeByElements(weeklyGoalCard, programGoalCard);
         }
         else {
@@ -181,8 +181,8 @@ public class NewSwordRegressionHomeAll {
             String sessionsTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
             Assert.assertEquals("Sessions", sessionsTitle);
             //scroll pra mostrar o progress
-            MobileElement sessionsCard = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_0");
-            MobileElement weeklyGoalCard = (MobileElement) driver.findElementByAccessibilityId("home_card_weekly_goal");
+            MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
+            MobileElement weeklyGoalCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
             mobileActions.swipeByElements(sessionsCard, weeklyGoalCard);
         }
         else {
@@ -199,8 +199,8 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("78", progressTotalStarsNumber);
             Assert.assertEquals("Pain level during session", progressPainChartLabel);
             //scroll pra mostrar o personal goals e badges
-            MobileElement painChartCard = (MobileElement) driver.findElementByAccessibilityId("home_screen_pain_chart");
-            MobileElement sessionsCard = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_0");
+            MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart");
+            MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
             mobileActions.swipeByElements(painChartCard, sessionsCard);
         }
         else {
@@ -230,10 +230,10 @@ public class NewSwordRegressionHomeAll {
             mobileActions.tapByCoordinates(842, 338);
             driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").click();
             //fazer scroll no personal goals
-            MobileElement personalGoalsCard2 = (MobileElement) driver.findElementByAccessibilityId("home_card_personal_goals_1");
-            MobileElement personalGoalsCard1 = (MobileElement) driver.findElementByAccessibilityId("home_card_personal_goals_0");
+            MobileElement personalGoalsCard2 = driver.findElementByAccessibilityId("home_card_personal_goals_1");
+            MobileElement personalGoalsCard1 = driver.findElementByAccessibilityId("home_card_personal_goals_0");
             mobileActions.swipeByElements(personalGoalsCard2, personalGoalsCard1);
-            MobileElement personalGoalsCard3 = (MobileElement) driver.findElementByAccessibilityId("home_card_personal_goals_2");
+            MobileElement personalGoalsCard3 = driver.findElementByAccessibilityId("home_card_personal_goals_2");
             mobileActions.swipeByElements(personalGoalsCard3, personalGoalsCard2);
             //validar o último personal goals
             String personalGoalsLabel3 = driver.findElementByAccessibilityId("home_card_personal_goals_label_2").getText();
