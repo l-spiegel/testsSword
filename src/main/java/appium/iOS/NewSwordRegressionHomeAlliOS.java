@@ -25,21 +25,10 @@ public class NewSwordRegressionHomeAlliOS {
         UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 
         //login
-        utilitiesiOS.clickByAccessibilityId("Allow", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-        MobileElement email = driver.findElementByAccessibilityId("loginEmailTextfield");
-        email.clear();
-        email.sendKeys("l.spiegel+3@swordhealth.com");
-        MobileElement pass = driver.findElementByAccessibilityId("loginPasswordTextfield");
-        pass.click();
-        pass.sendKeys("Test1234!");
-        utilitiesiOS.clickByAccessibilityId("loginButton", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']").click();
+        utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
-        String virtualPtCard = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_card_pt']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[1]").getText();
-        Assert.assertEquals("Your Physical Therapist", virtualPtCard);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
         //clicar no botão do chat do card
         utilitiesiOS.clickByAccessibilityId("home_card_pt_button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
@@ -47,10 +36,9 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByAccessibilityId("bottom_navigation_home_tab", driver);
         //validar pending actions
         if (driver.findElements(By.xpath("//XCUIElementTypeOther[@name='home_card_pending_actions']")).size() > 0) {
-            String pendingActions = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pending actions']");
             String pendingActionsTitle = driver.findElementByAccessibilityId("home_card_pending_actions_title").getText();
             String pendingActionsSubtitle = driver.findElementByAccessibilityId("home_card_pending_actions_subtitle").getText();
-            Assert.assertEquals("Pending actions", pendingActions);
             Assert.assertEquals("It's time for your reassessment check-in", pendingActionsTitle);
             Assert.assertEquals("Tap to complete your reassessment", pendingActionsSubtitle);
             //scroll pra mostrar o kit delivery inteiro
@@ -87,11 +75,10 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar program status
         if (driver.findElements(By.id("home_card_program_status")).size() > 0) {
-            String programStatusTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
             //String programStatusCreating = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_status']/android.widget.TextView[2]").getText(); //não encontra
             String programStatusLabel = driver.findElementByAccessibilityId("home_card_program_status_creating_program_label").getText();
             //String programStatusTxt2 = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_status']/android.view.View/android.widget.TextView[2]").getText(); //não encontra
-            Assert.assertEquals("Program status", programStatusTitle);
             //Assert.assertEquals("Creating your program", programStatusCreating); //não encontra
             Assert.assertEquals("Hi, Vinte Seis! I'm creating your program now. ", programStatusLabel);
             //Assert.assertEquals("Once your program is ready, you can complete your 1st session!", programStatusTxt2); //não encontra
@@ -111,35 +98,25 @@ public class NewSwordRegressionHomeAlliOS {
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
-            String myProgramProgramGoalHeader = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            String myProgramProgramGoalSubtitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My program']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We set up the goals until your first reassessment after session 9.']");
 //            String myProgramProgramGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText(); //também não encontra
             String myProgramProgramGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
-            String myProgramReassessment = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            String myProgramPrepare = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[4]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
-            String myProgramActivate = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[4]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText").getText();
-            String myProgramBuild = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[5]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
-            String myProgramReduce = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[5]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText").getText();
-            Assert.assertEquals("My program", myProgramProgramGoalHeader);
-            Assert.assertEquals("We set up the goals until your first reassessment after session 9.", myProgramProgramGoalSubtitle);
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Prepare your body']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate your muscles']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Build strength and endurance']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reduce your symptoms']");
 //            Assert.assertEquals(programGoalTitle, myProgramProgramGoal);
             Assert.assertEquals(programGoalLabel, myProgramProgramGoalLabel);
-            Assert.assertEquals("For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.", myProgramReassessment);
-            Assert.assertEquals("Prepare your body", myProgramPrepare);
-            Assert.assertEquals("Activate your muscles", myProgramActivate);
-            Assert.assertEquals("Build strength and endurance", myProgramBuild);
-            Assert.assertEquals("Reduce your symptoms", myProgramReduce);
             //scroll
             MobileElement myProgramReduceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reduce your symptoms']");
             MobileElement myProgramProgramSubtitle = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We set up the goals until your first reassessment after session 9.']");
             mobileActions.swipeByElements(myProgramReduceTxt, myProgramProgramSubtitle);
             //validar o restante do my program
-            String myProgramHandle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[4]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
-            String myProgramMeet = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[4]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText").getText();
-            String myProgramFull = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[5]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            Assert.assertEquals("Handle more reps", myProgramHandle);
-            Assert.assertEquals("Meet program goals", myProgramMeet);
-            Assert.assertEquals("Reassessment to check your progress ETA: 3rd week of program", myProgramFull);
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Handle more reps']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Meet program goals']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reassessment to check your progress ETA: 3rd week of program']");
             //voltar
             utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
             //scroll pra mostrar o weekly goal
@@ -152,27 +129,20 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar weekly goal
         if (driver.findElements(By.id("home_card_weekly_goal")).size() > 0) {
-            String weeklyGoalTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
 //            String weeklyGoalSubtitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']/android.widget.TextView[1]").getText(); //não encontra
 //            String weeklyGoalLabel = driver.findElementByAccessibilityId("home_card_weekly_goal_label").getText(); //não existe essa id em iOS
-            String weeklyGoalSetReminders = driver.findElementByXPath("//XCUIElementTypeButton[@name='home_card_weekly_goal_reminders_buttons']/XCUIElementTypeStaticText[2]").getText();
-            Assert.assertEquals("Weekly goal", weeklyGoalTitle);
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set reminders']");
 //            Assert.assertEquals("Complete 4 sessions this week", weeklyGoalSubtitle);
 //            Assert.assertEquals("Once your kit arrives, you can start your first exercise session!", weeklyGoalLabel);
-            Assert.assertEquals("Set reminders", weeklyGoalSetReminders);
             //clicar nas informações do weekly goal
             utilitiesiOS.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
-            String myProgramWeeklyGoalHeader = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            String myProgramWeeklyGoalSubtitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            String myProgramWeeklyGoal = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            String myProgramWeeklyGoalLabel = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeStaticText").getText();
-            String myProgramWeeklyGoalTip = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[3]/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-            Assert.assertEquals("My weekly goal", myProgramWeeklyGoalHeader);
-            Assert.assertEquals("We set 4 goal sessions per week", myProgramWeeklyGoalSubtitle);
-            Assert.assertEquals("Complete 4 sessions this week", myProgramWeeklyGoal);
-            Assert.assertEquals("Let's end the week strong! Try to complete 1 more session today.", myProgramWeeklyGoalLabel); //a frase muda de acordo com o comportamento do weekly goal e não consigo buscar o do card da home pra comparar entre os dois
-            Assert.assertEquals("Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.", myProgramWeeklyGoalTip);
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My weekly goal']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We set 4 goal sessions per week']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Complete 4 sessions this week']");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Let's end the week strong! Try to complete 1 more session today.\"]");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.']");
             //voltar
             utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
             //scroll pra mostrar as sessions
@@ -185,9 +155,8 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar sessions
         if (driver.findElements(By.id("home_card_session_details_0")).size() > 0) {
-            String sessionsTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
             String nextSession = driver.findElementByAccessibilityId("home_card_session_details_0_date_label").getText();
-            Assert.assertEquals("Sessions", sessionsTitle);
             Assert.assertEquals("Next Session", nextSession);
             //scroll pra mostrar o progress
             MobileElement progressTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
@@ -199,14 +168,12 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar progress
         if (driver.findElements(By.id("home_card_achieved_stars")).size() > 0 && driver.findElements(By.id("home_screen_pain_chart_card")).size() > 0) {
-            String progressTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
             //String progressTotalStarsTxt = driver.findElementByXPath("//android.view.View[@content-desc='home_card_achieved_stars']/android.widget.TextView[1]").getText(); //não encontra
             String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
-            String progressPainChartLabel = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_screen_pain_chart_card']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[1]").getText(); //não tem o id
-            Assert.assertEquals("Progress", progressTitle);
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pain level during session']"); //não tem o id
             //Assert.assertEquals("Total stars earned", progressTotalStarsTxt);
             Assert.assertEquals("78", progressTotalStarsNumber);
-            Assert.assertEquals("Pain level during session", progressPainChartLabel);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart_card");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -217,12 +184,11 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar personal goals
         if (driver.findElements(By.id("home_card_personal_goals_0")).size() > 0) {
-            String personalGoalsTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Personal goals']");
             String personalGoalsLabel1 = driver.findElementByAccessibilityId("home_card_personal_goals_label_0").getText();
             String personalGoalsButton1 = driver.findElementByXPath("(//XCUIElementTypeOther[@name='home_card_personal_goals_action_view'])[1]/XCUIElementTypeStaticText").getText();
             String personalGoalsLabel2 = driver.findElementByAccessibilityId("home_card_personal_goals_label_1").getText();
             String personalGoalsButton2 = driver.findElementByXPath("(//XCUIElementTypeOther[@name='home_card_personal_goals_action_view'])[2]/XCUIElementTypeStaticText").getText();
-            Assert.assertEquals("Personal goals", personalGoalsTitle);
             Assert.assertEquals("Decrease my pain or symptoms", personalGoalsLabel1);
             Assert.assertEquals("Achieved", personalGoalsButton1);
             Assert.assertEquals("Decrease/avoid pain using medications", personalGoalsLabel2);
@@ -231,9 +197,8 @@ public class NewSwordRegressionHomeAlliOS {
             utilitiesiOS.clickByAccessibilityId("home_card_personal_goals_0", driver);
             //validar popup
             String personalGoalsPopupReopenTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]").getText();
-            String personalGoalsPopupReopenTxt = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Would you like to reopen this personal goal?']");
             Assert.assertEquals(personalGoalsLabel1, personalGoalsPopupReopenTitle);
-            Assert.assertEquals("Would you like to reopen this personal goal?", personalGoalsPopupReopenTxt);
             //clicar fora do popup
             mobileActions.tapByCoordinates(303, 150);
             mobileActions.tapByCoordinates(78, 660);
@@ -253,11 +218,9 @@ public class NewSwordRegressionHomeAlliOS {
             utilitiesiOS.clickByAccessibilityId("home_card_personal_goals_mark_as_achieved_label", driver);
             //validar o popup
             String personalGoalsPopupAchieveLastTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]").getText();
-            String personalGoalsPopupAchieveLastTxt = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]").getText();
-            String notYetButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Not yet']/XCUIElementTypeStaticText").getText();
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Did you achieve this goal? If you tap 'Yes', your goals cannot be reopened.\"]");
+            driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not yet']");
             Assert.assertEquals(personalGoalsLabel3, personalGoalsPopupAchieveLastTitle);
-            Assert.assertEquals("Did you achieve this goal? If you tap 'Yes', your goals cannot be reopened.", personalGoalsPopupAchieveLastTxt);
-            Assert.assertEquals("Not yet", notYetButton);
             driver.findElementByXPath("//XCUIElementTypeButton[@name='Not yet']").click();
         }
         else {
@@ -308,12 +271,10 @@ public class NewSwordRegressionHomeAlliOS {
         number5ConfirmPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String pinDoesntMatch1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        String retryButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch1);
-        Assert.assertEquals("Retry", retryButton);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Retry']");
         //clicar em retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         //inserir 4 digitos no create your pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
         MobileElement number0CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='0']");
@@ -330,17 +291,13 @@ public class NewSwordRegressionHomeAlliOS {
         number0ConfirmPin.click();
         //validar ecrã de biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String biometrics = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        String activateNowButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Activate now']/XCUIElementTypeStaticText").getText();
-        String activateLaterButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Activate later']/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Want to use Face ID for future logins? You can activate it now, or activate it later in Settings.", biometrics);
-        Assert.assertEquals("Activate now", activateNowButton);
-        Assert.assertEquals("Activate later", activateLaterButton);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Want to use Face ID for future logins? You can activate it now, or activate it later in Settings.']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate now']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate later']");
         //clicar pra ativar depois
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate later']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Activate later']", driver);
         //validar ecrã de sucesso
-        String newPinSuccess1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("New PIN code set successfully", newPinSuccess1);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='New PIN code set successfully']");
         //abrir settings
         try {
             Thread.sleep(3000);
@@ -350,18 +307,17 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
         //clicar pra ativar biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login with Face ID']")));
-        driver.findElementByAccessibilityId("menu_option_login_biometrics").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
         //clicar de novo na biometria
-        driver.findElementByAccessibilityId("menu_option_login_biometrics").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
-        String forgotPinButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Forgot your PIN?']/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Forgot your PIN?", forgotPinButton);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Forgot your PIN?']");
         //voltar
-        driver.findElementByAccessibilityId("ic arrow left").click();
+        utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         //digitar 3 digitos corretos
         MobileElement number0EnterPin1 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='0']");
@@ -369,15 +325,15 @@ public class NewSwordRegressionHomeAlliOS {
         number0EnterPin1.click();
         number0EnterPin1.click();
         //apagar 1 digito
-        driver.findElementByAccessibilityId("deleteKey").click();
+        utilitiesiOS.clickByAccessibilityId("deleteKey", driver);
         //terminar de inserir o pin correto
         number0EnterPin1.click();
         number0EnterPin1.click();
         //voltar
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-        driver.findElementByAccessibilityId("ic arrow left").click();
+        utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         //inserir 4 digitos no enter pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         MobileElement number0EnterPin2 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='0']");
@@ -401,12 +357,10 @@ public class NewSwordRegressionHomeAlliOS {
         number7ConfirmPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String pinDoesntMatch2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        String retryButton2 = driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch2);
-        Assert.assertEquals("Retry", retryButton2);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Retry']");
         //clicar em retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         //inserir 4 digitos no create
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
         MobileElement number9CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='9']");
@@ -422,17 +376,16 @@ public class NewSwordRegressionHomeAlliOS {
         number9ConfirmPin.click();
         number9ConfirmPin.click();
         //validar ecra de sucesso
-        String newPinSuccess2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("New PIN code set successfully", newPinSuccess2);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='New PIN code set successfully']");
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         //inserir o pin errado
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         MobileElement number1EnterPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='1']");
@@ -442,10 +395,9 @@ public class NewSwordRegressionHomeAlliOS {
         number1EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String wrongPin1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Wrong PIN code!  You have 4 more attempt(s)", wrongPin1);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 4 more attempt(s)']");
         //retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number2EnterPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='2']");
@@ -455,10 +407,9 @@ public class NewSwordRegressionHomeAlliOS {
         number2EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String wrongPin2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Wrong PIN code!  You have 3 more attempt(s)", wrongPin2);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 3 more attempt(s)']");
         //retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number3EnterPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='3']");
@@ -468,10 +419,9 @@ public class NewSwordRegressionHomeAlliOS {
         number3EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String wrongPin3 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Wrong PIN code!  You have 2 more attempt(s)", wrongPin3);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 2 more attempt(s)']");
         //retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number4EnterPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='4']");
@@ -481,10 +431,9 @@ public class NewSwordRegressionHomeAlliOS {
         number4EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String wrongPin4 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Wrong PIN code!  You have 1 more attempt(s)", wrongPin4);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 1 more attempt(s)']");
         //retry
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Retry']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number5EnterPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='5']");
@@ -494,20 +443,17 @@ public class NewSwordRegressionHomeAlliOS {
         number5EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
-        String pinError = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[1]").getText();
-        String loginAgain = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[2]").getText();
-        String backToLoginButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='Back to login']/XCUIElementTypeStaticText").getText();
-        Assert.assertEquals("Uh-oh! That's 5 failed attempts", pinError);
-        Assert.assertEquals("For security reasons, please log in again and set a new PIN code.", loginAgain);
-        Assert.assertEquals("Back to login", backToLoginButton);
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! That's 5 failed attempts\"]");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For security reasons, please log in again and set a new PIN code.']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Back to login']");
         //back to login
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Back to login']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
         driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
-        driver.findElementByAccessibilityId("loginButton").click();
+        utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Create PIN']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
         MobileElement number6CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='6']");
         number6CreatePin.click();
@@ -520,18 +466,18 @@ public class NewSwordRegressionHomeAlliOS {
         number6ConfirmPin.click();
         number6ConfirmPin.click();
         number6ConfirmPin.click();
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Activate later']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Activate later']", driver);
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
         //abrir change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         //clicar em forgot pin
-        driver.findElementByXPath("//XCUIElementTypeButton[@name='Forgot your PIN?']").click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Forgot your PIN?']", driver);
         //validar que voltou pra login screen
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Welcome to Sword']");
 
