@@ -10,7 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class SwordRegressionLoginLogoutiPhone {
+public class SwordRegressionLoginLogoutiOS {
 	private IOSDriver<MobileElement> driver;
 	@Before
 	public void startAppium() throws MalformedURLException {
@@ -18,7 +18,7 @@ public class SwordRegressionLoginLogoutiPhone {
 	}
 
 	@Test
-	public void errosELoginPage() throws MalformedURLException {
+	public void errosELoginPage() {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
@@ -64,7 +64,7 @@ public class SwordRegressionLoginLogoutiPhone {
 		utilitiesiOS.clickByAccessibilityId("loginRecoverPasswordButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Recover my password']")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Enter the email associated with your account. Then, we'll send you an email showing you how to reset your password\"]");
-		MobileElement recoverPassTextField = (MobileElement) driver.findElementByAccessibilityId("recoverPasswordEmailTextfield");
+		MobileElement recoverPassTextField = driver.findElementByAccessibilityId("recoverPasswordEmailTextfield");
 		recoverPassTextField.click();
 		recoverPassTextField.sendKeys("hjvhik");
 		mobileActions.tapByCoordinates(198, 348);
@@ -76,11 +76,11 @@ public class SwordRegressionLoginLogoutiPhone {
 		recoverPassTextField.sendKeys("dqd@jsks.com");
 		utilitiesiOS.clickByAccessibilityId("recoverPasswordButton", driver);
 		//ecrã de sucesso
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Check your email']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
-		//erros do login - email inválido + clicar fora do textfield
+		//erros do login
 		//email válido + pass em branco
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		MobileElement loginButton = driver.findElementByAccessibilityId("loginButton");
@@ -105,7 +105,7 @@ public class SwordRegressionLoginLogoutiPhone {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//XCUIElementTypeStaticText[@name='Login'])")));
 		loginButton.click();
 		loginButton.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Uh-oh!']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"You've reached the maximum number of login attempts. Please try again in a few minutes.\"]");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
@@ -114,7 +114,7 @@ public class SwordRegressionLoginLogoutiPhone {
 	}
 	
 	@Test
-	public void fazerLogin() throws MalformedURLException {
+	public void fazerLogin() {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 	  

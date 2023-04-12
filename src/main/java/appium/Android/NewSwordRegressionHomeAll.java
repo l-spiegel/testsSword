@@ -116,7 +116,7 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("We set up the goals until your first reassessment after session 9.", myProgramProgramGoalSubtitle);
             Assert.assertEquals(programGoalTitle, myProgramProgramGoal);
             Assert.assertEquals(programGoalLabel, myProgramProgramGoalLabel);
-            Assert.assertEquals("For best results, try to complete 9 sessions, plus a reassessment check-in with me.", myProgramReassessment);
+            Assert.assertEquals("For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.", myProgramReassessment);
             Assert.assertEquals("Prepare your body", myProgramPrepare);
             Assert.assertEquals("Activate your muscles", myProgramActivate);
             Assert.assertEquals("Build strength and endurance", myProgramBuild);
@@ -131,7 +131,7 @@ public class NewSwordRegressionHomeAll {
             String myProgramFull = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[15]").getText();
             Assert.assertEquals("Handle more reps", myProgramHandle);
             Assert.assertEquals("Meet program goals", myProgramMeet);
-            Assert.assertEquals("Full reassessment to check your improvements\n" +
+            Assert.assertEquals("Reassessment to check your progress\n" +
                     "ETA: 3rd week of program", myProgramFull);
             //voltar
             driver.findElementByXPath("//android.widget.Button").click();
@@ -161,7 +161,7 @@ public class NewSwordRegressionHomeAll {
             String myProgramWeeklyGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
             String myProgramWeeklyGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[5]").getText();
             String myProgramWeeklyGoalTip = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[6]").getText();
-            Assert.assertEquals("My program", myProgramWeeklyGoalHeader); //virou My weekly goal
+            Assert.assertEquals("My weekly goal", myProgramWeeklyGoalHeader);
             Assert.assertEquals("We set 4 goal sessions per week", myProgramWeeklyGoalSubtitle);
             Assert.assertEquals(weeklyGoalSubtitle, myProgramWeeklyGoal);
             Assert.assertEquals(weeklyGoalLabel, myProgramWeeklyGoalLabel);
@@ -195,7 +195,7 @@ public class NewSwordRegressionHomeAll {
             String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
             String progressPainChartLabel = driver.findElementByAccessibilityId("home_screen_pain_chart_label").getText();
             Assert.assertEquals("Progress", progressTitle);
-            Assert.assertEquals("Total stars earned", progressTotalStarsTxt);
+            Assert.assertEquals("Total stars", progressTotalStarsTxt);
             Assert.assertEquals("78", progressTotalStarsNumber);
             Assert.assertEquals("Pain level during session", progressPainChartLabel);
             //scroll pra mostrar o personal goals e badges
@@ -260,7 +260,7 @@ public class NewSwordRegressionHomeAll {
         driver.findElementByAccessibilityId("settings_delete_account").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Delete account']")));
         //voltar
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
+        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -463,7 +463,7 @@ public class NewSwordRegressionHomeAll {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
         String wrongPin1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
-                "You have 4 more attempts", wrongPin1);
+                "You have 4 more attempt(s)", wrongPin1);
         //retry
         driver.findElementByXPath("//android.widget.Button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
@@ -477,7 +477,7 @@ public class NewSwordRegressionHomeAll {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
         String wrongPin2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
-                "You have 3 more attempts", wrongPin2);
+                "You have 3 more attempt(s)", wrongPin2);
         //retry
         driver.findElementByXPath("//android.widget.Button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
@@ -491,7 +491,7 @@ public class NewSwordRegressionHomeAll {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
         String wrongPin3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
-                "You have 2 more attempts", wrongPin3);
+                "You have 2 more attempt(s)", wrongPin3);
         //retry
         driver.findElementByXPath("//android.widget.Button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
@@ -505,7 +505,7 @@ public class NewSwordRegressionHomeAll {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
         String wrongPin4 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
-                "You have 1 more attempts", wrongPin4); //tem um bug na string
+                "You have 1 more attempt(s)", wrongPin4); //tem um bug na string
         //retry
         driver.findElementByXPath("//android.widget.Button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));

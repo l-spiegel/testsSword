@@ -20,62 +20,30 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class swordRegressionSessionDetailsiOS {
 
-private IOSDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-//Setting Desired Capabilities
-	DesiredCapabilities capabilities = new DesiredCapabilities();
-	capabilities.setCapability("platformName", "iOS");
-	capabilities.setCapability("platformVersion", "16");
-	capabilities.setCapability("deviceName", "iPhone 11 Pro");
-	capabilities.setCapability("udid", "00008030-001115363A7A802E");
-	capabilities.setCapability("automationName", "XCUITest");
-	capabilities.setCapability("xcodeOrgId", "698N4JU9B9");
-	capabilities.setCapability("xcodeSigningId", "iPhone Developer");
-	capabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealthRelease430-117.ipa");
-	capabilities.setCapability("updatedWDABundleId", "com.luizateste2.wda.runner");
-	capabilities.setCapability("showXcodeLog", "true");
-	capabilities.setCapability("wdaLocalPort", "8205");
-	capabilities.setCapability("appium:usePrebuiltWDA", "true");
-	
-	IOSDriver<MobileElement> driver = new IOSDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
-	return driver;
-}
-
-private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
-	// TODO Auto-generated method stub
+	private IOSDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsiOS.getDriver();
 	}
-
 	
 	@Test
 	public void virtualPtProduction() throws MalformedURLException {
-		IOSDriver<MobileElement> driver = inicializarAppium();
-		
-		driver.findElementByAccessibilityId("Allow").click();
 		WebDriverWait wait = new WebDriverWait(driver,20);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-	//	MobileElement el1 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeTextField");
-	//	el1.clear();
-	//	el1.sendKeys("f.silva@swordhealth.com");
-		MobileElement el2 = (MobileElement) driver.findElementByAccessibilityId("loginPasswordTextfield");
-		el2.click();
-		el2.sendKeys("Cabixuda12");
-		MobileElement el3 = (MobileElement) driver.findElementByAccessibilityId("loginButton");
-		el3.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-		MobileElement el4 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']");
-		el4.click();
+		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
+		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
+
+		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//mostrar o card do lastest sessions
-		MobileElement remindersCard = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']"); //corrigir depois
-		MobileElement ptCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
-		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
+		MobileElement remindersCard = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']"); //corrigir depois
+		MobileElement ptCard = driver.findElementByAccessibilityId("home_card_pt");
 		mobileActions.swipeByElements(remindersCard, ptCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@value='Next Session']")).size() > 0) {
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_see_more_button")));
-		MobileElement el5 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_1");
-		el5.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Exercises']")));
 		//validar o ecrã
 		String chatWarning = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText").getText();
@@ -299,10 +267,11 @@ private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> p
 	
 	@Test
 	public void virtualPtStaging() throws MalformedURLException {
-		IOSDriver<MobileElement> driver = inicializarAppium();
-		
-		driver.findElementByAccessibilityId("Allow").click();
 		WebDriverWait wait = new WebDriverWait(driver,20);
+		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
+		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
+
+		driver.findElementByAccessibilityId("Allow").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
 	//	MobileElement el1 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeTextField");
 	//	el1.clear();
@@ -319,7 +288,6 @@ private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> p
 		//mostrar o card do lastest sessions
 		MobileElement kitDeliveryCard = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
 		MobileElement ptCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
-		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		mobileActions.swipeByElements(kitDeliveryCard, ptCard);
 		MobileElement weeklyGoalTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
 		mobileActions.swipeByElements(weeklyGoalTxt, kitDeliveryCard);
