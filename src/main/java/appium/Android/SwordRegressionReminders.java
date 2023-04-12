@@ -23,57 +23,50 @@ public class SwordRegressionReminders {
 	@Test
 	public void virtualPt() throws MalformedURLException {
 		WebDriverWait wait = new WebDriverWait(driver,20);
+		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
 	  
 		//fazer login
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
-		el1.clear();
-		el1.sendKeys("l.spiegel+4@swordhealth.com");
-		MobileElement el2 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
-		el2.click();
-		el2.sendKeys("Test1234!");
-		driver.findElementByAccessibilityId("loginButton").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-		driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
-		//verificar texto do card
-		String el6 = driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']/android.view.View/android.widget.TextView").getText();
-		Assert.assertEquals("Set reminders", el6);
+		utilitiesAndroid.login("f.silva@swordhealth.com", "Cabixuda12", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Marta Casaca']")));
 		//clicar set new reminder
-		driver.findElementByAccessibilityId("home_card_weekly_goal_reminders_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_reminders_button", driver);
 		//validar ecrã
-		String newReminder = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
-		Assert.assertEquals("Set a new reminder", newReminder);
-		String newReminderDays = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").getText();
-		Assert.assertEquals("Set reminders for at least 4 more session days per week to stay on track!", newReminderDays);
+		driver.findElementByXPath("//android.widget.TextView[@text='Set a new reminder']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Set reminders for at least 4 more session days per week to stay on track!']");
 		//voltar
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']");
 		//abrir menu
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		//clicar set reminders
-		driver.findElementByAccessibilityId("menu_option_set_reminders").click();
+		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
 		//voltar
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		//clicar set reminders de novo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='PIN code and Biometrics']")));
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set reminders']")));
-		driver.findElementByAccessibilityId("menu_option_set_reminders").click();
+		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
 		//selecionar 2 dias
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_0").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_2").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_0", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_2", driver);
 		//mudar a hora
-		driver.findElementByAccessibilityId("session_reminders_reminder_time_option").click();
-		driver.findElementByAccessibilityId("10").click();
-		driver.findElementByAccessibilityId("15").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_time_option", driver);
+		utilitiesAndroid.clickByAccessibilityId("10", driver);
+		utilitiesAndroid.clickByAccessibilityId("15", driver);
 		driver.findElementById("android:id/am_label").click();
 		driver.findElementById("android:id/button1").click();
 		//abrir notify me
 		String notifyMe1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[9]/android.widget.TextView[2]").getText();
 		Assert.assertEquals("At time of session", notifyMe1);
-		driver.findElementByAccessibilityId("session_reminders_reminder_notification_option").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_notification_option", driver);
 		//validar notify me
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Notify me']")));
 		String notifyMe2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
@@ -89,14 +82,14 @@ public class SwordRegressionReminders {
 		String hour8 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[5]/android.widget.TextView").getText();
 		Assert.assertEquals("8 hours before", hour8);
 		//mudar um valor
-		driver.findElementByAccessibilityId("session_reminders_notify_me_option_2").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_notify_me_option_2", driver);
 		//voltar
 		driver.findElementByXPath("//android.widget.Button").click();
 		//validar que notify me mudou
 		String notifyMe3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[9]/android.widget.TextView[2]").getText();
 		Assert.assertEquals("30 minutes before", notifyMe3);
 		//salvar
-		driver.findElementByAccessibilityId("session_reminders_reminder_save_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
 		//validar my reminders
 		String el38 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
 		Assert.assertEquals("My reminders", el38);
@@ -106,57 +99,57 @@ public class SwordRegressionReminders {
 		// Returns the size of the list / number of reminders in the list
 			System.out.println("Number of reminders: " + listOfReminders1.size());
 		//voltar pra home
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 		//validar texto novo do card
 		String el41 = driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']/android.view.View[2]/android.widget.TextView").getText();
 		Assert.assertEquals("Manage reminders", el41);
 		//clicar manage reminders
-		driver.findElementByAccessibilityId("home_card_weekly_goal_reminders_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_reminders_button", driver);
 		//criar novo reminder com a mesma hora do primeiro com 1 dia
-		driver.findElementByAccessibilityId("session_reminders_my_reminders_new_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
 		String newReminder2Days = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").getText();
 		Assert.assertEquals("Set reminders for at least 2 more session days per week to stay on track!", newReminder2Days);
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_1").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_time_option").click();
-		driver.findElementByAccessibilityId("10").click();
-		driver.findElementByAccessibilityId("15").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_1", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_time_option", driver);
+		utilitiesAndroid.clickByAccessibilityId("10", driver);
+		utilitiesAndroid.clickByAccessibilityId("15", driver);
 		driver.findElementById("android:id/am_label").click();
 		driver.findElementById("android:id/button1").click();		
-		driver.findElementByAccessibilityId("session_reminders_reminder_save_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]")));
 		List<MobileElement> listOfReminders2 = driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View"));
 		// Returns the size of the list / number of reminders in the list
 			System.out.println("Number of reminders: " + listOfReminders2.size());
 		//voltar a home
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		//abrir reminders pelo menu
-		driver.findElementByAccessibilityId("header_menu_button").click();
-		driver.findElementByAccessibilityId("menu_option_set_reminders").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
+		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
 		//verificar o texto dos reminders
 		String reminderFor1Day = driver.findElementByAccessibilityId("session_reminders_my_reminders_weekly_goal_label").getText();
 		Assert.assertEquals("Set a reminder for 1 more session day", reminderFor1Day);
 		//criar novo reminder com 2 dias e notify me diferente
-		driver.findElementByAccessibilityId("session_reminders_my_reminders_new_reminder_button").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_3").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_4").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_notification_option").click();
-		driver.findElementByAccessibilityId("session_reminders_notify_me_option_4").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_3", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_4", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_notification_option", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_notify_me_option_4", driver);
 		driver.findElementByXPath("//android.widget.Button").click();
 		//validar valor do notify me
 		String el60 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View[9]/android.widget.TextView[2]").getText();
 		Assert.assertEquals("8 hours before", el60);
 		//salvar
-		driver.findElementByAccessibilityId("session_reminders_reminder_save_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
 		String remindersWeeklyGoalLabel2 = driver.findElementByAccessibilityId("session_reminders_my_reminders_weekly_goal_label").getText();
 		Assert.assertEquals("Nice job! Your reminders are all set.", remindersWeeklyGoalLabel2);
 		List<MobileElement> listOfReminders3 = driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View"));
 			System.out.println("Number of reminders: " + listOfReminders3.size());
-		//voltar pra home e ver se o card não aparece
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		//voltar pra home
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		//validar popup da badge dos reminders
 		if (driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View")).size() > 0) {
 			String remindersBadgeTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
@@ -167,63 +160,63 @@ public class SwordRegressionReminders {
 			ok.click();
 		}
 		//abrir reminders
-		driver.findElementByAccessibilityId("home_card_weekly_goal_reminders_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_reminders_button", driver);
 		//abrir um reminder
-		driver.findElementByAccessibilityId("session_reminders_reminder_3").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_3", driver);
 		//validar update reminder
 		String updateReminder = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
 		Assert.assertEquals("Update reminder", updateReminder);
 		String weeklyGoalSet = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").getText();
 		Assert.assertEquals("Your 4 weekly goal session days are set. You can schedule more session days.", weeklyGoalSet);
 		//editar um reminder
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_6").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_time_option").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_6", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_time_option", driver);
 		driver.findElementById("android:id/minutes").click();
-		driver.findElementByAccessibilityId("40").click();
+		utilitiesAndroid.clickByAccessibilityId("40", driver);
 		driver.findElementById("android:id/pm_label").click();
 		driver.findElementById("android:id/button1").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_notification_option").click();
-		driver.findElementByAccessibilityId("session_reminders_notify_me_option_2").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_notification_option", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_notify_me_option_2", driver);
 		driver.findElementByXPath("//android.widget.Button").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		String updatePopup = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView").getText();
 		Assert.assertEquals("There are changes to be saved. Are you sure you want to leave?", updatePopup);
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_update_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_update_reminder_button", driver);
 		//deletar um reminder
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
-		driver.findElementByAccessibilityId("session_reminders_reminder_3").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_3", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Update reminder']")));
-		driver.findElementByAccessibilityId("session_reminders_reminder_delete_reminder_button").click(); //como posso comparar a lista antes e depois??
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_delete_reminder_button", driver); //como posso comparar a lista antes e depois??
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
 		List<MobileElement> deleteReminder1 = driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View"));
 			System.out.println("Number of reminders: " + deleteReminder1.size());
 		//tentar criar um novo reminder sem escolher um dia
-		driver.findElementByAccessibilityId("session_reminders_my_reminders_new_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set a new reminder']")));
 		MobileElement el79 = (MobileElement) driver.findElementByAccessibilityId("session_reminders_reminder_save_reminder_button");
 		el79.click();
 		el79.click();
 		//voltar para reminders
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
 		//Fazer update, sair sem salvar e clicar em yes
-		driver.findElementByAccessibilityId("session_reminders_reminder_1").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_6").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_1", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_6", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button").click();
 		//criar novo reminder com mesmo dia e hora diferente de um anterior
-		driver.findElementByAccessibilityId("session_reminders_my_reminders_new_reminder_button").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_2").click();
-		driver.findElementByAccessibilityId("session_reminders_reminder_save_reminder_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_2", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
 		String remindersWeeklyGoalLabel3 = driver.findElementByAccessibilityId("session_reminders_my_reminders_weekly_goal_label").getText();
 			Assert.assertEquals("Set a reminder for 1 more session day", remindersWeeklyGoalLabel3);
 		List<MobileElement> deleteReminder2 = driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View"));
 			System.out.println("Number of reminders: " + deleteReminder2.size());
 		//voltar pra home
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
-		driver.findElementByAccessibilityId("header_menu_button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 
 		ConfigurationsAndroid.killDriver();
