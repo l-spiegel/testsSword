@@ -203,59 +203,45 @@ public class swordRegressionOnCall {
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
 		
 		//login
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
-		el1.clear();
-		el1.sendKeys("l.spiegel+3@swordhealth.com");
-		MobileElement el2 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
-		el2.click();
-		el2.sendKeys("Test1234!");
-		driver.findElementByAccessibilityId("loginButton").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-		driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
+		utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		//abrir hub screen
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Pending actions']")));
 		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
 		//validar hub screen
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
-		String onCallTitle = driver.findElementByXPath("//android.view.View[@content-desc='home_on_call_card']/android.widget.TextView[1]").getText();
-		String onCallLabel1 = driver.findElementByXPath("//android.view.View[@content-desc='home_on_call_card']/android.widget.TextView[2]").getText();
-		String onCallButton = driver.findElementByXPath("//android.view.View[@content-desc='home_on_call_card']/android.view.View/android.widget.TextView").getText();
-		Assert.assertEquals("On-Call", onCallTitle);
-		Assert.assertEquals("Get on-demand support from a Clinical Pain Specialist via chat.", onCallLabel1);
-		Assert.assertEquals("Chat with a Specialist", onCallButton);
+		driver.findElementByXPath("//android.widget.TextView[@text='On-Call']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Chat with a Specialist']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Explore our programs']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Learn more about our programs below to find the best fit for you.']");
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Explore our programs']")).size() > 0) {
+			driver.findElementByXPath("//android.widget.TextView[@text='Digital Physical Therapy']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Physical therapy you can do anytime, anywhere.']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Eligible']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Get started']");
+		}
 		//clicar on-call card
 		utilitiesAndroid.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='On-Call']")));
 		//validar triage screen
-		String painChatButton = driver.findElementByXPath("//android.view.View[@content-desc='on_call_physical_pain_card']/android.view.View[2]/android.widget.TextView").getText();
-		String painChatTitle = driver.findElementByXPath("//android.view.View[@content-desc='on_call_physical_pain_card']/android.widget.TextView[1]").getText();
-		String painChatLabel = driver.findElementByXPath("//android.view.View[@content-desc='on_call_physical_pain_card']/android.widget.TextView[2]").getText();
-		String headacheChatButton = driver.findElementByXPath("//android.view.View[@content-desc='on_call_headaches_card']/android.view.View[2]/android.widget.TextView").getText();
-		String headacheChatTitle = driver.findElementByXPath("//android.view.View[@content-desc='on_call_headaches_card']/android.widget.TextView[1]").getText();
-		String headacheChatLabel = driver.findElementByXPath("//android.view.View[@content-desc='on_call_headaches_card']/android.widget.TextView[2]").getText();
-		String pelvicChatButton = driver.findElementByXPath("//android.view.View[@content-desc='on_call_pelvic_health_card']/android.view.View[2]/android.widget.TextView").getText();
-		String pelvicChatTitle = driver.findElementByXPath("//android.view.View[@content-desc='on_call_pelvic_health_card']/android.widget.TextView[1]").getText();
-		String pelvicChatLabel = driver.findElementByXPath("//android.view.View[@content-desc='on_call_pelvic_health_card']/android.widget.TextView[2]").getText();
-		Assert.assertEquals("Chat with a Pain Specialist", painChatButton);
-		Assert.assertEquals("Physical Pain", painChatTitle);
-		Assert.assertEquals("Joint and muscle pain", painChatLabel);
-		Assert.assertEquals("Chat with a Headache Specialist", headacheChatButton);
-		Assert.assertEquals("Headaches", headacheChatTitle);
-		Assert.assertEquals("Tension headaches and migraines", headacheChatLabel);
-		Assert.assertEquals("Chat with a Pelvic Specialist", pelvicChatButton);
-		Assert.assertEquals("Pelvic Health", pelvicChatTitle);
-		Assert.assertEquals("Pelvic, bladder, and bowel function", pelvicChatLabel);
+		driver.findElementByXPath("//android.widget.TextView[@text='Chat with a Pain Specialist']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Physical Pain']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Joint and muscle pain']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Chat with a Headache Specialist']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Headaches']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Tension headaches and migraines']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Chat with a Pelvic Specialist']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Pelvic Health']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Pelvic, bladder, and bowel function']");
 		String terms = driver.findElementByAccessibilityId("on_call_terms_conditions").getText();
 		Assert.assertEquals("This practitioner is not intended to be a substitute for professional medical advice, diagnosis or treatment. Read Terms & Conditions", terms);
 		//abrir terms and conditions
 		utilitiesAndroid.clickByAccessibilityId("on_call_terms_conditions", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='On-Call']")));
 		//validar ecrã terms and conditions
-		MobileElement termsOnCallTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='On-Call']");
-		MobileElement termsTxt1 = (MobileElement) driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[2]");
+		MobileElement termsOnCallTxt = driver.findElementByXPath("//android.widget.TextView[@text='On-Call']");
+		MobileElement termsTxt1 = driver.findElementByXPath("//android.widget.TextView[2]");
 		mobileActions.swipeByElements(termsTxt1, termsOnCallTxt);
-		String termsHeader = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.TextView").getText();
-		Assert.assertEquals("Terms & Conditions", termsHeader);
+		driver.findElementByXPath("//android.widget.TextView[@text='Terms & Conditions']");
 		String termsTxt2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
 		Assert.assertEquals("All information provided by the On-call clinical pain specialist is for informational purposes only. Such information is not intended to be and should not be used as a substitute for professional medical advice, diagnosis or treatment. The On-call clinical pain specialist will not be able to provide a diagnosis, write you a prescription, or provide a plan of care or treatment. If you choose to rely on any information provided by the On-call clinical pain specialist, you rely solely at your own risk.\n"
 				+ "\n"
@@ -277,6 +263,11 @@ public class swordRegressionOnCall {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText")));
 		//voltar sem enviar mensagem
 		utilitiesAndroid.clickByXPath("//android.widget.ImageButton", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
 		//abrir triage screen de novo
 		utilitiesAndroid.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
@@ -285,13 +276,18 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByAccessibilityId("on_call_pelvic_health_card_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText")));
 		//enviar mensagem
-		MobileElement el11 = (MobileElement) driver.findElementByXPath("//android.widget.EditText");
+		MobileElement el11 = driver.findElementByXPath("//android.widget.EditText");
 		el11.click();
 		el11.sendKeys("Tests. Please ignore");
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.view.ViewGroup/android.widget.ImageButton[2]", driver);
 		mobileActions.tapByCoordinates(518, 783);
 		//voltar
 		utilitiesAndroid.clickByXPath("//android.widget.ImageButton", driver);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
 		//validar on-call card novo
 		File scrFile2 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
@@ -312,19 +308,24 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByXPath("//android.widget.ImageButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
 		//fazer logout
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
 		//fazer login no mesmo user de novo
-		MobileElement el14 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
-		el14.click();
-		el14.sendKeys("Test1234!");
-		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Not now']", driver);
+		utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		//validar que ainda mostra o mesmo on-call card
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Pending actions']")));
 		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
 		byte[] screenshot3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result2 = driver
@@ -340,12 +341,18 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByAccessibilityId("home_on_call_card", driver);
 		driver.findElementById("com.swordhealth.guarda.dev:id/ibtnAdd").click();
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]", driver);
-		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc='Photo taken on Mar 21, 2023, 11:23:44 AM']/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc=\"Motion Photo taken on Apr 13, 2023, 3:41:20 PM\"]/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView[1]", driver);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
 		utilitiesAndroid.clickByXPath("//android.widget.ImageButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
+
 	}
 
 }
