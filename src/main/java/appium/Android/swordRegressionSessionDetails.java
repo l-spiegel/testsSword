@@ -1,16 +1,31 @@
 package appium.Android;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
+
+import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
+import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
+
 public class swordRegressionSessionDetails {
+
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details";
+	private final static String BASELINE = "COMP_";
 
 	private AndroidDriver<MobileElement> driver;
 	@Before
@@ -252,40 +267,30 @@ public class swordRegressionSessionDetails {
 	}
 	
 	@Test
-	public void virtualPtLive() throws MalformedURLException {
+	public void virtualPtLive() throws IOException {
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,50);
+		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
 		
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Connexion']"))); //voltar pra inglês
-		MobileElement el1 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[1]");
-		el1.clear();
-		el1.sendKeys("f.silva@swordhealth.com");
-		MobileElement el2 = (MobileElement) driver.findElementByXPath("//android.widget.EditText[2]");
-		el2.click();
-		el2.sendKeys("Cabixuda12");
-		driver.findElementByAccessibilityId("loginButton").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Créez votre code PIN']"))); //voltar pra inglês
-		driver.findElementByXPath("//android.widget.TextView[@text='Pas maintenant']").click(); //voltar pra inglês
+		utilitiesAndroid.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Marta Casaca']")));
 		//mostrar o card do lastest sessions
-		MobileElement sessionsTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
-		MobileElement weeklyGoalTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Objectif hebdomadaire']"); //voltar pra inglês
+		MobileElement sessionsTxt = driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
+		MobileElement weeklyGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Weekly goal']");
 		mobileActions.swipeByElements(sessionsTxt, weeklyGoalTxt);
 		//clicar na sessão mais recente
-		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Prochaine Séance']")).size() > 0) { //voltar pra inglês
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
+			utilitiesAndroid.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
-		driver.findElementByAccessibilityId("home_card_session_details_1").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercices']"))); //voltar pra inglês
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_1", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
 		//validar o ecrã
-		String chatWarning = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[1]").getText();
-	//	Assert.assertEquals("For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.", chatWarning);
+		driver.findElementByXPath("//android.widget.TextView[@text='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		//fechar o warning antes de fazer a validação
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView", driver);
 		//validação overview
-		String overview = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[1]").getText();
-	//	Assert.assertEquals("Overview", overview);
+		driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
 		if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]")).size() > 0) {
 			String overviewStars = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]").getText();
 			System.out.println("STARS ACHHIEVED: " + overviewStars);
@@ -305,81 +310,70 @@ public class swordRegressionSessionDetails {
 			System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
 		}	
 		//validação exercícios
-		String exercises = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[2]").getText();
-	//	Assert.assertEquals("Exercises", exercises);
-		String exerciseNumber1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[1]").getText();
-		String exerciseName1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-		String reps1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
-		String score1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[4]").getText();
-			System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
-		String exerciseNumber2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[1]").getText();
-		String exerciseName2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-		String reps2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
-		String score2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[4]").getText();
-			System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
+		driver.findElementByXPath("//android.widget.TextView[@text='Exercises']");
+		String exerciseNumber1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[1]").getText();
+		String exerciseName1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
+		String reps1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
+		System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
+		String exerciseNumber2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[1]").getText();
+		String exerciseName2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
+		String reps2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
+		System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
 		//fazer scroll
-		MobileElement exerciseCard2 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_2_card");
-		MobileElement overviewTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Aperçu']"); //voltar pra inglês
+		MobileElement exerciseCard2 = driver.findElementByAccessibilityId("session_details_exercise_2_card");
+		MobileElement overviewTxt = driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
 		mobileActions.swipeByElements(exerciseCard2, overviewTxt);
 		//validar o ecrã
-		String exerciseNumberRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[1]").getText();
-		String exerciseNameRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-		String repsRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
-		String exerciseNumberRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[1]").getText();
-		String exerciseNameRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-		String repsRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
+		String exerciseNumberRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[1]").getText();
+		String exerciseNameRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
+		String repsRandom1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
+		System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
+		String exerciseNumberRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[1]").getText();
+		String exerciseNameRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
+		String repsRandom2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
+		System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
 		//pull to refresh
-		MobileElement exerciseCard4 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_4_card");
-		MobileElement exerciseCard9 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_9_card");
+		MobileElement exerciseCard4 = driver.findElementByAccessibilityId("session_details_exercise_4_card");
+		MobileElement exerciseCard9 = driver.findElementByAccessibilityId("session_details_exercise_9_card");
 		mobileActions.swipeByElements(exerciseCard4, exerciseCard9);
-		MobileElement overviewCard = (MobileElement) driver.findElementByAccessibilityId("session_details_session_overview_card");
-		MobileElement exerciseCard3 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_2_card");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		MobileElement overviewCard = driver.findElementByAccessibilityId("session_details_session_overview_card");
+		MobileElement exerciseCard3 = driver.findElementByAccessibilityId("session_details_exercise_2_card");
 		mobileActions.swipeByElements(overviewCard, exerciseCard3);
 		//validar next session ou sessão mais recente
-		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Aperçu de la séance']")).size() > 0) { //voltar pra inglês
-			String overviewGoal1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[2]").getText();
-			String overviewGoal2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[3]").getText();
-			String overviewTime1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[4]").getText();
-			String overviewTime2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[5]").getText();
-			String overviewExercises1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[6]").getText();
-			String overviewExercises2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[7]").getText();
-			String overviewTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[1]").getText();
-			String youllNeed = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[8]").getText();
-	//		String swordGoTitle = driver.findElementByAccessibilityId("sword_go_card_title").getText();
-	//		String swordGoSubtitle = driver.findElementByAccessibilityId("sword_go_card_subtitle").getText();
-	//		Assert.assertEquals("Goal:", overviewGoal1);
-	//		Assert.assertEquals("Improve low back strength", overviewGoal2);
-	//		Assert.assertEquals("Time:", overviewTime1);
-	//		Assert.assertEquals("31 minutes", overviewTime2);
-	//		Assert.assertEquals("Exercises:", overviewExercises1);
-	//		Assert.assertEquals("26 exercises", overviewExercises2);
-	//		Assert.assertEquals("Session overview", overviewTitle);
-	//		Assert.assertEquals("What you’ll need", youllNeed);
-	//		Assert.assertEquals("On the road? Can't use your Digital Therapist?", swordGoTitle);
-	//		Assert.assertEquals("Start your session now with GO", swordGoSubtitle);
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Session overview']")).size() > 0) {
+			driver.findElementByXPath("//android.widget.TextView[@text='Goal:']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Improve low back strength']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Time:']");
+			driver.findElementByXPath("//android.widget.TextView[@text='31 minutes']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Exercises:']");
+			driver.findElementByXPath("//android.widget.TextView[@text='26 exercises']");
+			driver.findElementByXPath("//android.widget.TextView[@text=\"What you’ll need\"]");
+			driver.findElementByXPath("//android.widget.TextView[@text=\"On the road? Can't use your Digital Therapist?\"]");
+			driver.findElementByXPath("//android.widget.TextView[@text='Start your session now with Go']");
 			//fazer scroll e validar alguns exercícios
-			MobileElement youllNeedTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Ce dont vous aurez besoin']"); //voltar pra inglês
-			MobileElement sessionOverviewTxt = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Aperçu de la séance']"); //voltar pra inglês
+			MobileElement youllNeedTxt = driver.findElementByXPath("//android.widget.TextView[@text='What you’ll need']");
+			MobileElement sessionOverviewTxt = driver.findElementByXPath("//android.widget.TextView[@text='Session overview']");
 			mobileActions.swipeByElements(youllNeedTxt, sessionOverviewTxt);
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}			
-			String nextSessionExsTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.widget.TextView[4]").getText();
-			String nextSessionEx1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.widget.TextView[2]").getText();
-	//		Assert.assertEquals("Next session exercises", nextSessionExsTitle);
-	//		Assert.assertEquals("Trunk forward bend", nextSessionEx1);
+			driver.findElementByXPath("//android.widget.TextView[@text='Next session exercises']");
+			driver.findElementByXPath("//android.widget.TextView[@text='Trunk forward bend']");
 		} else {
 			//validar se é a mesma sessão - não vai ser por causa do next session
-			String refreshExerciseName1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-			String refreshReps1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
-			String refreshScore1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[4]").getText();
-			String refreshExerciseName2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-			String refreshReps2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.TextView[3]").getText();
-			String refreshScore2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.TextView[4]").getText();
+			String refreshExerciseName1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
+			String refreshReps1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
+			String refreshScore1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[4]").getText();
+			String refreshExerciseName2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
+			String refreshReps2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.TextView[3]").getText();
+			String refreshScore2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.TextView[4]").getText();
 	//		Assert.assertEquals(exerciseName1, refreshExerciseName1);
 	//		Assert.assertEquals(reps1, refreshReps1);
 	//		Assert.assertEquals(score1, refreshScore1);
@@ -390,109 +384,131 @@ public class swordRegressionSessionDetails {
 		//validar abrir um set - MUDAR DE POSIÇÃO
 	
 		//selecionar outro dia
-		driver.findElementByAccessibilityId("session_details_carousel_date_card_1").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercices']"))); //voltar pra inglês
+		utilitiesAndroid.clickByAccessibilityId("session_details_carousel_date_card_1", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
 		//validar que está diferente - valores fixos para comparação do next session
-		String exerciseNameComp1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-		String repsComp1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
-		String exerciseNameComp2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-		String repsComp2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
+		String exerciseNameComp1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
+		String repsComp1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[3]").getText();
+		String exerciseNameComp2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
+		String repsComp2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[3]").getText();
 		Assert.assertNotEquals("Trunk forward bend", exerciseNameComp1);
 		Assert.assertNotEquals("6 reps", repsComp1);
 		Assert.assertNotEquals("Trunk side bend", exerciseNameComp2);
 		Assert.assertNotEquals("12 reps", repsComp2);
 		//pull to refresh
-		MobileElement overviewTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Aperçu']"); //voltar pra inglês
-		MobileElement exerciseCard42 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_1_card");
+		MobileElement overviewTxt2 = driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
+		MobileElement exerciseCard42 = driver.findElementByAccessibilityId("session_details_exercise_1_card");
 		mobileActions.swipeByElements(overviewTxt2, exerciseCard42);
 		//validar que abriu o next session
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu de la séance']"))); //voltar pra inglês
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Session overview']")));
 		//voltar pra home
-		driver.findElementByXPath("//android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_date_label']")));
 		//abrir outro dia clicando na setinha
-		driver.findElementByAccessibilityId("home_card_session_details_1_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_1_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_2_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_2_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_3_next_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_3_next_date_button").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_2']")));
-		driver.findElementByAccessibilityId("home_card_session_details_2").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_3_next_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_2", driver);
 		//fazer scroll do carrossel
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
-		MobileElement latestSession = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_0");
-		MobileElement toLeft = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
+		byte[] session11 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		MobileElement latestSession = driver.findElementByAccessibilityId("session_details_carousel_date_card_0");
+		MobileElement toLeft = driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
 		mobileActions.swipeByElements(latestSession, toLeft);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='session_details_carousel_date_card_0']")));
 		mobileActions.swipeByElements(toLeft, latestSession);
 		//abrir outro dia - card mais a esquerda
-		driver.findElementByAccessibilityId("session_details_carousel_date_card_3").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
+		utilitiesAndroid.clickByAccessibilityId("session_details_carousel_date_card_3", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
+		byte[] session9 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result = driver
+				.getImagesSimilarity(session11, session9, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + ".png";
+		File comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(lessThan(0.95)));
+		System.out.println("Different sessions");
 		//voltar pra home
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2']")));
 		//mudar até a sessão mais antiga
-		driver.findElementByAccessibilityId("home_card_session_details_2_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_2_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_3_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_3_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_3_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_4_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_4_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_4_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_5_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_5_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_5_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_6_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_6_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_6_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_7_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_7_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_7_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_8_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_8_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_8_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_9_prev_date_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_9_prev_date_button").click();
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_9_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_10']")));
 		//abrir see more sessions
-		driver.findElementByAccessibilityId("home_card_session_details_10").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_10", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']"))); //voltar pra inglês
 		//validar que abriu a sessão certa - do user da Filipa
-		String moreSessionsExercise1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-		String moreSessionsExercise2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-		String moreSessionsExercise3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.x0/android.view.View/android.view.View/android.view.View[3]/android.view.View[4]/android.widget.TextView[2]").getText();
-	//	Assert.assertEquals("Trunk side bend", moreSessionsExercise1);
-	//	Assert.assertEquals("Trunk forward bend", moreSessionsExercise2);
-	//	Assert.assertEquals("Trunk backwards bend", moreSessionsExercise3);
+		driver.findElementByXPath("//android.widget.TextView[@text='Session 3']");
+		driver.findElementByXPath("//android.widget.TextView[@text='91%']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Mild']");
+		byte[] session3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result2 = driver
+				.getImagesSimilarity(session9, session3, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		String baselineFilename2 = VALIDATION_PATH + "/" + BASELINE + "2.png";
+		File comparison2 = new File(baselineFilename2);
+		result.storeVisualization(comparison2);
+		assertThat(result2.getVisualization().length, is(greaterThan(0)));
+		assertThat(result2.getScore(), is(lessThan(0.95)));
+		System.out.println("Different sessions");
 		//compartilhar sessão no chat
-		driver.findElementByAccessibilityId("session_details_session_overview_card_share_button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_details_session_overview_card_share_button", driver);
 		String popupSessionTxt = driver.findElementByXPath("//android.widget.TextView").getText();
-	//	Assert.assertEquals("Would you like to share feedback from this session in chat?", popupSessionTxt);
-		driver.findElementByXPath("//android.widget.Button").click();
+		Assert.assertEquals("Would you like to share feedback from this session in chat?", popupSessionTxt);
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText")));
 		//voltar
-		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click(); //em Android abre a home e não o session details
+		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
-		MobileElement sessionsTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
-		MobileElement weeklyGoalTxt2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Objectif hebdomadaire']"); //voltar pra inglês
+		MobileElement sessionsTxt2 = driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
+		MobileElement weeklyGoalTxt2 = driver.findElementByXPath("//android.widget.TextView[@text='Weekly goal']");
 		mobileActions.swipeByElements(sessionsTxt2, weeklyGoalTxt2);
-		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Prochaine Séance']")).size() > 0) { //voltar pra inglês
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
+			utilitiesAndroid.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
-		driver.findElementByAccessibilityId("home_card_session_details_1").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Aperçu']"))); //voltar pra inglês
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_1", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//partilhar um exercício no chat
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_see_more").click();
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_share").click();
+		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_see_more", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_share", driver);
 		String popupExerciseTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView").getText();
-	//	Assert.assertEquals("Would you like to share feedback from this exercise in chat?", popupExerciseTxt);
-		driver.findElementByXPath("//android.widget.Button").click();
+		Assert.assertEquals("Would you like to share feedback from this exercise in chat?", popupExerciseTxt);
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText[@text='Commencez à taper...']"))); //voltar pra inglês
 		//fazer logout
-		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
+		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Marta Casaca']")));
-		driver.findElementByAccessibilityId("header_menu_button").click();
-		driver.findElementByAccessibilityId("menu_option_logout").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
+		utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
 
 		ConfigurationsAndroid.killDriver();
 	}
