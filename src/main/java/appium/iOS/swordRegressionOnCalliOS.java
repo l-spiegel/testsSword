@@ -178,53 +178,32 @@ public class swordRegressionOnCalliOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		
 		//login
-		driver.findElementByAccessibilityId("Allow").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-	//	MobileElement el1 = (MobileElement) driver.findElementByAccessibilityId("loginEmailTextfield");
-	//	el1.clear();
-	//	el1.sendKeys("luiza@marco.com");
-		MobileElement el2 = (MobileElement) driver.findElementByAccessibilityId("loginPasswordTextfield");
-		el2.click();
-		el2.sendKeys("10março!");
-		MobileElement el3 = (MobileElement) driver.findElementByAccessibilityId("loginButton");
-		el3.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-		MobileElement el4 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']");
-		el4.click();
+		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
 		//abrir hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
-		driver.findElementByAccessibilityId("bottom_navigation_hub_tab").click();
+		utilitiesiOS.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
 		//validar hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
-		String onCallTitle = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_on_call_card']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[1]").getText();
-		String onCallLabel1 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_on_call_card']/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[2]").getText();
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='On-Call']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Get on-demand support from a Clinical Pain Specialist via chat.']");
 		String onCallButton = driver.findElementByAccessibilityId("home_on_call_card_help_from_specialist_button").getText();
-		Assert.assertEquals("On-Call", onCallTitle);
-		Assert.assertEquals("Get on-demand support from a Clinical Pain Specialist via chat.", onCallLabel1);
 		Assert.assertEquals("Chat with a Specialist", onCallButton);
 		//clicar on-call card
-		MobileElement el5 = (MobileElement) driver.findElementByAccessibilityId("home_on_call_card_help_from_specialist_button");
-		el5.click();
+		utilitiesiOS.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='On-Call']")));
 		//validar triage screen - ver se em Android consegue validar os textos dos cards
-		String painChatButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='on_call_physical_pain_card_button']/XCUIElementTypeStaticText[2]").getText();
-		String headacheChatButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='on_call_headaches_card_button']/XCUIElementTypeStaticText[2]").getText();
-		String pelvicChatButton = driver.findElementByXPath("//XCUIElementTypeButton[@name='on_call_pelvic_health_card_button']/XCUIElementTypeStaticText[2]").getText();
-		Assert.assertEquals("Chat with a Pain Specialist", painChatButton);
-		Assert.assertEquals("Chat with a Headache Specialist", headacheChatButton);
-		Assert.assertEquals("Chat with a Pelvic Specialist", pelvicChatButton);
-		String terms = driver.findElementByXPath("//XCUIElementTypeButton[@name='on_call_terms_conditions']/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("This practitioner is not intended to be a substitute for professional medical advice, diagnosis or treatment. Read Terms & Conditions", terms);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Chat with a Pain Specialist']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Chat with a Headache Specialist']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Chat with a Pelvic Specialist']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='This practitioner is not intended to be a substitute for professional medical advice, diagnosis or treatment. Read Terms & Conditions']");
 		//abrir terms and conditions
-		MobileElement el6 = (MobileElement) driver.findElementByAccessibilityId("on_call_terms_conditions");
-		el6.click();
+		utilitiesiOS.clickByAccessibilityId("on_call_terms_conditions", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='On-Call']")));
 		//validar ecrã terms and conditions
-		MobileElement termsOnCallTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='On-Call']");
-		MobileElement termsTxt1 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]");
+		MobileElement termsOnCallTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='On-Call']");
+		MobileElement termsTxt1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]");
 		mobileActions.swipeByElements(termsTxt1, termsOnCallTxt);
-		String termsHeader = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Terms & Conditions']").getText();
-		Assert.assertEquals("Terms & Conditions", termsHeader);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Terms & Conditions']");
 		String termsTxt2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]").getText();
 		Assert.assertEquals("All information provided by the On-call clinical pain specialist is for informational purposes only.  Such information is not intended to be and should not be used as a substitute for professional medical advice, diagnosis or treatment.  The On-call clinical pain specialist will not be able to provide a diagnosis, write you a prescription, or provide a plan of care or treatment.  If you choose to rely on any information provided by the On-call clinical pain specialist, you rely solely at your own risk.\n"
 				+ "\n"
@@ -240,35 +219,33 @@ public class swordRegressionOnCalliOS {
 		FileUtils.copyFile(scrFile, new File("screen1.jpg"));
 		byte[] screenshot1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		//abrir headaches chat
-		MobileElement el7 = (MobileElement) driver.findElementByAccessibilityId("home_on_call_card");
-		el7.click();
+		utilitiesiOS.clickByAccessibilityId("home_on_call_card", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='On-Call']")));
-		MobileElement el8 = (MobileElement) driver.findElementByAccessibilityId("on_call_headaches_card");
-		el8.click();
+		utilitiesiOS.clickByAccessibilityId("on_call_headaches_card", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView")));
 		//voltar sem enviar mensagem
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		//abrir triage screen de novo
-		MobileElement el9 = (MobileElement) driver.findElementByAccessibilityId("home_on_call_card_help_from_specialist_button");
-		el9.click();
+		utilitiesiOS.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='On-Call']")));
 		//abrir pelvic chat
-		MobileElement el10 = (MobileElement) driver.findElementByAccessibilityId("on_call_pelvic_health_card_button");
-		el10.click();
+		utilitiesiOS.clickByAccessibilityId("on_call_pelvic_health_card_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView")));
 		//enviar mensagem
-		MobileElement el11 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeTextView");
-		el11.click();
-		el11.sendKeys("Tests. Please ignore");
-		MobileElement el12 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[2]");
-		el12.click();
+		MobileElement message = driver.findElementByXPath("//XCUIElementTypeTextView");
+		message.click();
+		message.sendKeys("Tests. Please ignore");
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[2]", driver);
 		mobileActions.tapByCoordinates(172, 273);
 		//voltar
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Get on-demand support from a Clinical Pain Specialist via chat.']")));
-		//validar on-call card novo - os ids dos cards são iguais em iOS
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//validar on-call card novo
 		File scrFile2 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile2, new File("screen2.jpg"));
 		byte[] screenshot2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -282,24 +259,19 @@ public class swordRegressionOnCalliOS {
         result.storeVisualization(comparison);
         System.out.println("Similarity of: " + result.getScore());
 		//clicar no on-call card
-		MobileElement el13 = (MobileElement) driver.findElementByAccessibilityId("home_on_call_card");
-		el13.click();
+		utilitiesiOS.clickByAccessibilityId("home_on_call_card", driver);
 		//voltar
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		//fazer logout
-		driver.findElementByAccessibilityId("header_menu_button").click();
-		driver.findElementByAccessibilityId("menu_option_logout").click();
+		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
+		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
 		//fazer login no mesmo user de novo
-		MobileElement el14 = (MobileElement) driver.findElementByAccessibilityId("loginPasswordTextfield");
-		el14.click();
-		el14.sendKeys("10março!");
-		MobileElement el15 = (MobileElement) driver.findElementByAccessibilityId("loginButton");
-		el15.click();
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-		MobileElement el16 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']");
-		el16.click();
+		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not now']", driver);
 		//validar que ainda mostra o mesmo on-call card
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		driver.findElementByAccessibilityId("bottom_navigation_hub_tab").click();
@@ -315,23 +287,17 @@ public class swordRegressionOnCalliOS {
         result2.storeVisualization(comparison2);
 		System.out.println("Similarity of: " + result2.getScore());
 		//enviar uma foto do rolo
-		MobileElement el17 = (MobileElement) driver.findElementByAccessibilityId("home_on_call_card");
-		el17.click();
-		MobileElement el18 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton");
-		el18.click();
-		MobileElement el19 = (MobileElement) driver.findElementByAccessibilityId("Photos and videos");
-		el19.click();
-		MobileElement el20 = (MobileElement) driver.findElementByAccessibilityId("Allow Access to All Photos");
-		el20.click();
-		MobileElement el21 = (MobileElement) driver.findElementByAccessibilityId("Screenshot, 23 February, 19:30"); //precisa atualizar pra uma que apareça no rolo
-		el21.click();
+		utilitiesiOS.clickByAccessibilityId("home_on_call_card", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton", driver);
+		utilitiesiOS.clickByAccessibilityId("Photos and videos", driver);
+		utilitiesiOS.clickByAccessibilityId("Allow Access to All Photos", driver);
+		utilitiesiOS.clickByAccessibilityId("Screenshot, 12 April, 11:02 AM", driver); //precisa atualizar pra uma que apareça no rolo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView[@name='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 
-		ConfigurationsiOS.killDriver();
 	}
 
 }
