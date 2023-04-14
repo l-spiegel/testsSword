@@ -460,7 +460,7 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_10']")));
 		//abrir see more sessions
 		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_10", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']"))); //voltar pra inglês
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//validar que abriu a sessão certa - do user da Filipa
 		driver.findElementByXPath("//android.widget.TextView[@text='Session 3']");
 		driver.findElementByXPath("//android.widget.TextView[@text='91%']");
@@ -471,7 +471,7 @@ public class swordRegressionSessionDetails {
 						.withEnabledVisualization());
 		String baselineFilename2 = VALIDATION_PATH + "/" + BASELINE + "2.png";
 		File comparison2 = new File(baselineFilename2);
-		result.storeVisualization(comparison2);
+		result2.storeVisualization(comparison2);
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
 		assertThat(result2.getScore(), is(lessThan(0.95)));
 		System.out.println("Different sessions");

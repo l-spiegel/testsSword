@@ -1,24 +1,29 @@
 package appium.iOS;
 
-import io.appium.java_client.MobileBy.ByAccessibilityId;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
+import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.ios.IOSTouchAction;
-
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import org.junit.After;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 
 public class swordRegressionSessionDetailsiOS {
+
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/iOS";
+	private final static String BASELINE = "COMP_";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -27,7 +32,7 @@ public class swordRegressionSessionDetailsiOS {
 	}
 	
 	@Test
-	public void virtualPtProduction() throws MalformedURLException {
+	public void virtualPtProduction() throws IOException {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
@@ -40,20 +45,17 @@ public class swordRegressionSessionDetailsiOS {
 		mobileActions.swipeByElements(remindersCard, ptCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@value='Next Session']")).size() > 0) {
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+			utilitiesiOS.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_see_more_button")));
 		utilitiesiOS.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Exercises']")));
 		//validar o ecrã
-		String chatWarning = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.", chatWarning);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		//fechar o warning antes de fazer a validação
-		MobileElement el6 = (MobileElement) driver.findElementByAccessibilityId("Close");
-		el6.click();
+		utilitiesiOS.clickByAccessibilityId("Close", driver);
 		//validação overview
-		String overview = driver.findElementByXPath("//XCUIElementTypeOther[@name='Overview']/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("Overview", overview);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
 		if (driver.findElements(By.id("session_details_session_overview_card_stars_view")).size() > 0) {
 	        System.out.println("STARS CARD ON OVERVIEW SHOWN");
         } else {
@@ -70,70 +72,61 @@ public class swordRegressionSessionDetailsiOS {
 	        System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
 	    }	
 		//validação exercícios
-		String exercises = driver.findElementByXPath("//XCUIElementTypeOther[@name='Exercises']/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("Exercises", exercises);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
 		String exerciseNumber1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_number").getText();
 		String exerciseName1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
 		String reps1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_reps").getText();
 		String score1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_score").getText();
-			System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
+		System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
 		String exerciseNumber2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_number").getText();
 		String exerciseName2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_name").getText();
 		String reps2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
 		String score2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_score").getText();
-			System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
+		System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
 		//fazer scroll
-		MobileElement exerciseCard2 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_2_card");
-		MobileElement overviewTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
+		MobileElement exerciseCard2 = driver.findElementByAccessibilityId("session_details_exercise_2_card");
+		MobileElement overviewTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
 		mobileActions.swipeByElements(exerciseCard2, overviewTxt);
 		//validar o ecrã
 		String exerciseNumberRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_number").getText();
 		String exerciseNameRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_name").getText();
 		String repsRandom1 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
+		System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
 		String exerciseNumberRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_number").getText();
 		String exerciseNameRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_name").getText();
 		String repsRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_reps").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
+		System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
 		//pull to refresh e abre next session
-		MobileElement exerciseCard4 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_3_card");
-		MobileElement exerciseCard8 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_7_card");
+		MobileElement exerciseCard4 = driver.findElementByAccessibilityId("session_details_exercise_3_card");
+		MobileElement exerciseCard8 = driver.findElementByAccessibilityId("session_details_exercise_7_card");
 		mobileActions.swipeByElements(exerciseCard4, exerciseCard8);
-		MobileElement exercisesTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
+		MobileElement exercisesTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
 		mobileActions.swipeByElements(exercisesTxt, exerciseCard4);
 		//validar next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")).size() > 0) {
-			String overviewGoal1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[1]").getText();
-			String overviewGoal2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[2]").getText();
-			String overviewTime1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[3]").getText();
-			String overviewTime2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[4]").getText();
-			String overviewExercises1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[5]").getText();
-			String overviewExercises2 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[6]").getText();
-			String overviewTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText[7]").getText();
-			String youllNeed = driver.findElementByXPath("//XCUIElementTypeOther[@name='What you’ll need']/XCUIElementTypeStaticText").getText();
-	//		String swordGoTitle = driver.findElementByAccessibilityId("sword_go_card_title").getText(); //ainda não está ativo em produção
-	//		String swordGoSubtitle = driver.findElementByAccessibilityId("sword_go_card_subtitle").getText();
-			Assert.assertEquals("Goal:", overviewGoal1);
-			Assert.assertEquals("Improve low back strength", overviewGoal2);
-			Assert.assertEquals("Time:", overviewTime1);
-			Assert.assertEquals("30 minutes", overviewTime2);
-			Assert.assertEquals("Exercises:", overviewExercises1);
-			Assert.assertEquals("26 exercises", overviewExercises2);
-			Assert.assertEquals("Session overview", overviewTitle);
-			Assert.assertEquals("What you’ll need", youllNeed);
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Goal:']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Improve low back strength']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Time:']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='30 minutes']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises:']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='26 exercises']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"What you’ll need\"]");
+			String swordGoTitle = driver.findElementByAccessibilityId("sword_go_card_title").getText();
+			String swordGoSubtitle = driver.findElementByAccessibilityId("sword_go_card_subtitle").getText();
+			Assert.assertEquals("On the road? Can't use your Digital Therapist?", swordGoTitle);
+			Assert.assertEquals("Start your session now with Go", swordGoSubtitle);
 			//fazer scroll e validar alguns exercícios
-			MobileElement youllNeedTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='What you’ll need']");
-			MobileElement sessionOverviewTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Session overview']");
+			MobileElement youllNeedTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='What you’ll need']");
+			MobileElement sessionOverviewTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Session overview']");
 			mobileActions.swipeByElements(youllNeedTxt, sessionOverviewTxt);
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}			
-			String nextSessionExsTitle = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Next session exercises']").getText();
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Next session exercises']");
 			String nextSessionEx1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
-			Assert.assertEquals("Next session exercises", nextSessionExsTitle);
 			Assert.assertEquals("Trunk forward bend", nextSessionEx1);
 		} else {
 		//validar se é a mesma sessão - isso só vai acontecer se não tiver next session
@@ -156,8 +149,7 @@ public class swordRegressionSessionDetailsiOS {
 	//	String set1 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set 1']").getText();
 	//		Assert.assertEquals("Set 1", set1);
 		//selecionar outro dia
-		MobileElement el8 = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
-		el8.click();
+		utilitiesiOS.clickByAccessibilityId("session_details_carousel_date_card_2", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@label='Exercises']")));
 		//validar que está diferente - valores fixos para comparação do next session
 		String exerciseNameComp1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
@@ -169,91 +161,96 @@ public class swordRegressionSessionDetailsiOS {
 		Assert.assertNotEquals("Trunk side bend", exerciseNameComp2);
 		Assert.assertNotEquals("12 reps", repsComp2);
 		//pull to refresh
-		MobileElement overviewCard2 = (MobileElement) driver.findElementByAccessibilityId("session_details_session_overview_card");
-		MobileElement exerciseCard32 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_1_card");
+		MobileElement overviewCard2 = driver.findElementByAccessibilityId("session_details_session_overview_card");
+		MobileElement exerciseCard32 = driver.findElementByAccessibilityId("session_details_exercise_1_card");
 		mobileActions.swipeByElements(overviewCard2, exerciseCard32);
 		//validar que foi pro next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
 		//voltar pra home
-		MobileElement backButton = (MobileElement) driver.findElementByAccessibilityId("ic arrow left");
-		backButton.click();
+		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_date_label")));
 		//abrir outro dia clicando na setinha
-		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@value='Next Session']")).size() > 0) {
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
-		}
-		MobileElement left2 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_1_prev_date_button");
-		left2.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2_next_date_button")));
-		MobileElement right = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_2_prev_date_button");
-		right.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_3_see_more_button")));
-		MobileElement moreDetails = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_3_see_more_button");
-		moreDetails.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_1_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2_prev_date_button")));
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_2_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_3_next_date_button")));
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_3_next_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2")));
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_2", driver);
 		//fazer scroll do carrossel
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
-		MobileElement latestSession = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
-		MobileElement toLeft = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_4");
+		byte[] session11 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		MobileElement latestSession = driver.findElementByAccessibilityId("session_details_carousel_date_card_1");
+		MobileElement toLeft = driver.findElementByAccessibilityId("session_details_carousel_date_card_3");
 		mobileActions.swipeByElements(latestSession, toLeft);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("session_details_carousel_date_card_6")));
-		MobileElement nextSession = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_6");
-		MobileElement toRight = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Next Session']")));
+		MobileElement nextSession = driver.findElementByAccessibilityId("Next Session");
+		MobileElement toRight = driver.findElementByAccessibilityId("session_details_carousel_date_card_2");
 		mobileActions.swipeByElements(toRight, nextSession);
 		//abrir outro dia - card mais a esquerda
-		MobileElement el9 = (MobileElement) driver.findElementByAccessibilityId("session_details_carousel_date_card_4");
-		el9.click();
+		utilitiesiOS.clickByAccessibilityId("session_details_carousel_date_card_4", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
+		byte[] session9 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result = driver
+				.getImagesSimilarity(session9, session11, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + ".png";
+		File comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(lessThan(0.95)));
+		System.out.println("Different sessions");
 		//voltar pra home
-		driver.findElementByAccessibilityId("ic arrow left").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_3")));
-		//mudar até a sessão mais antiga - mudar manualmente 1x porque tem um bug
-		MobileElement left4 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_3_prev_date_button");
-		left4.click();
+		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2")));
+		//mudar até a sessão mais antiga
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_2_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_3_prev_date_button")));
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_3_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_4_prev_date_button")));
-		MobileElement left5 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_4_prev_date_button");
-		left5.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_4_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_5_prev_date_button")));
-		MobileElement left6 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_5_prev_date_button");
-		left6.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_5_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_6_prev_date_button")));
-		MobileElement left7 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_6_prev_date_button");
-		left7.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_6_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_7_prev_date_button")));
-		MobileElement left8 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_7_prev_date_button");
-		left8.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_7_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_8_prev_date_button")));
-		MobileElement left9 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_8_prev_date_button");
-		left9.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_8_prev_date_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_9_prev_date_button")));
-		MobileElement left10 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_9_prev_date_button");
-		left10.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_9_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_10")));
 		//abrir see more sessions
-		MobileElement el10 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_10");
-		el10.click();
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_10", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
 		//validar que abriu a sessão certa
-		String moreSessionsExercise1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
-		String moreSessionsExercise2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_name").getText();
-		String moreSessionsExercise3 = driver.findElementByAccessibilityId("session_details_exercise_2_card_name").getText();
-		Assert.assertEquals("Trunk side bend", moreSessionsExercise1);
-		Assert.assertEquals("Trunk forward bend", moreSessionsExercise2);
-		Assert.assertEquals("Trunk backwards bend", moreSessionsExercise3);
-		//compartilhar sessão no chat - vai mudar com a feature do history
-		MobileElement el11 = (MobileElement) driver.findElementByAccessibilityId("session_details_session_overview_card_share_button");
-		el11.click();
-		String popupSessionTxt = driver.findElementByAccessibilityId("Would you like to share feedback from this session in chat?").getText();
-		Assert.assertEquals("Would you like to share feedback from this session in chat?", popupSessionTxt);
-		MobileElement el12 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeButton[@name='Yes']");
-		el12.click();
+		byte[] session3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result2 = driver
+				.getImagesSimilarity(session3, session9, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		String baselineFilename2 = VALIDATION_PATH + "/" + BASELINE + "2.png";
+		File comparison2 = new File(baselineFilename2);
+		result2.storeVisualization(comparison2);
+		assertThat(result2.getVisualization().length, is(greaterThan(0)));
+		assertThat(result2.getScore(), is(lessThan(0.95)));
+		System.out.println("Different sessions");
+		//compartilhar sessão no chat
+		utilitiesiOS.clickByAccessibilityId("session_details_session_overview_card_share_button", driver);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Would you like to share feedback from this session in chat?\"]");
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Yes']", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView")));
 		//voltar
-		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click(); //em Android abre a home e não o session details
+		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
 		//partilhar um exercício no chat
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_see_more").click();
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_share").click();
-		String popupExerciseTxt = driver.findElementByAccessibilityId("Would you like to share feedback from this exercise in chat?").getText();
-		Assert.assertEquals("Would you like to share feedback from this exercise in chat?", popupExerciseTxt);
+		utilitiesiOS.clickByAccessibilityId("session_details_exercise_0_card_see_more", driver);
+		utilitiesiOS.clickByAccessibilityId("session_details_exercise_0_card_share", driver);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Would you like to share feedback from this exercise in chat?\"]");
 		driver.findElementByXPath("//XCUIElementTypeButton[@name='Yes']").click();
 		try {
 			Thread.sleep(3000);
@@ -261,8 +258,8 @@ public class swordRegressionSessionDetailsiOS {
 			Thread.currentThread().interrupt();
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
-			
-		driver.quit();
+
+		ConfigurationsiOS.killDriver();
 	}
 	
 	@Test

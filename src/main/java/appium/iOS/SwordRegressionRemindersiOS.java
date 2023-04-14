@@ -297,7 +297,7 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 
-		ConfigurationsAndroid.killDriver();
+		ConfigurationsiOS.killDriver();
 	}
 
 	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
