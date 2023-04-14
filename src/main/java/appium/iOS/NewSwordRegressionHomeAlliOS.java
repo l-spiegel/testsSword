@@ -25,7 +25,7 @@ public class NewSwordRegressionHomeAlliOS {
         UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 
         //login
-        utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesiOS.login("luiza@marco.com", "10março!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
@@ -449,7 +449,7 @@ public class NewSwordRegressionHomeAlliOS {
         //back to login
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
-        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
+        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
         utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
