@@ -166,7 +166,7 @@ public class swordRegressionSessionDetailsiOS {
 		mobileActions.swipeByElements(overviewCard2, exerciseCard32);
 		//validar que foi pro next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_date_label")));
 		//abrir outro dia clicando na setinha
@@ -205,7 +205,7 @@ public class swordRegressionSessionDetailsiOS {
 		assertThat(result.getVisualization().length, is(greaterThan(0)));
 		assertThat(result.getScore(), is(lessThan(0.95)));
 		System.out.println("Different sessions");
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2")));
 		//mudar até a sessão mais antiga
@@ -427,7 +427,7 @@ public class swordRegressionSessionDetailsiOS {
 		mobileActions.swipeByElements(overviewCard2, exerciseCard32);
 		//validar que foi pro next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		MobileElement backButton = (MobileElement) driver.findElementByAccessibilityId("ic arrow left");
 		backButton.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_date_label")));
@@ -448,7 +448,7 @@ public class swordRegressionSessionDetailsiOS {
 		//abrir outro dia - card mais a esquerda
 		driver.findElementByAccessibilityId("session_details_carousel_date_card_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		driver.findElementByAccessibilityId("ic arrow left").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2")));
 		//mudar até a sessão mais antiga - l.spiegel+3 só tem 2 sessões

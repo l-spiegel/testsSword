@@ -305,7 +305,7 @@ public class buttonsChangeiOS {
 		waitForElement(wait, SHARE_EXERCISE_SCREEN);
 		doVisualCheck(CHECK_SHARE_EXERCISE_SCREEN);
 		driver.findElementByXPath("//XCUIElementTypeButton[@name='No']").click();
-		//pop-ups badges não atingidos - home
+		//pop-ups badges não atingidos - definePinLoginChangePinHome
 		driver.findElementByAccessibilityId("1PxIcChevronLeft").click();
 		MobileElement progress = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
 		MobileElement sessions2 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");

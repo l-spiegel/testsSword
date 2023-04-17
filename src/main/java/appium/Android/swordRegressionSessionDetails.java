@@ -190,7 +190,7 @@ public class swordRegressionSessionDetails {
 		mobileActions.swipeByElements(overviewTxt2, exerciseCard4);
 		//validar que abriu next session de novo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Session overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		driver.findElementByXPath("//android.widget.Button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_date_label']")));
 		//abrir outro dia clicando na setinha
@@ -209,7 +209,7 @@ public class swordRegressionSessionDetails {
 		//abrir outro dia - card mais a esquerda
 		driver.findElementByAccessibilityId("session_details_carousel_date_card_1").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1']")));
 		//mudar até a sessão mais antiga
@@ -401,7 +401,7 @@ public class swordRegressionSessionDetails {
 		mobileActions.swipeByElements(overviewTxt2, exerciseCard42);
 		//validar que abriu o next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Session overview']")));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_date_label']")));
 		//abrir outro dia clicando na setinha
@@ -438,7 +438,7 @@ public class swordRegressionSessionDetails {
 		assertThat(result.getVisualization().length, is(greaterThan(0)));
 		assertThat(result.getScore(), is(lessThan(0.95)));
 		System.out.println("Different sessions");
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2']")));
 		//mudar até a sessão mais antiga

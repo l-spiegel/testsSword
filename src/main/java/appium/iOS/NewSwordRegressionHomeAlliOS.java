@@ -32,7 +32,7 @@ public class NewSwordRegressionHomeAlliOS {
         //clicar no botão do chat do card
         utilitiesiOS.clickByAccessibilityId("home_card_pt_button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
-        //voltar para home
+        //voltar para definePinLoginChangePinHome
         utilitiesiOS.clickByAccessibilityId("bottom_navigation_home_tab", driver);
         //validar pending actions
         if (driver.findElements(By.xpath("//XCUIElementTypeOther[@name='home_card_pending_actions']")).size() > 0) {

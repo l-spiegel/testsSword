@@ -45,7 +45,7 @@ public class SwordRegressionRemindersiOS {
 
 		//fazer login
 		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
-		//wait carregar home
+		//wait carregar definePinLoginChangePinHome
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set reminders']");
@@ -114,7 +114,7 @@ public class SwordRegressionRemindersiOS {
 		File myReminders1 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(myReminders1, new File("reminders1.jpg"));
 		byte[] myRemindersComp1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
@@ -152,7 +152,7 @@ public class SwordRegressionRemindersiOS {
 		File comparison = new File(baselineFilename);
 		result.storeVisualization(comparison);
 		System.out.println("Similarity of: " + result.getScore());
-		//voltar a home
+		//voltar a definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		//abrir reminders pelo menu
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
@@ -185,7 +185,7 @@ public class SwordRegressionRemindersiOS {
 		File comparison2 = new File(baselineFilename2);
 		result2.storeVisualization(comparison2);
 		System.out.println("Similarity of: " + result2.getScore());
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
 		//validar badge dos reminders
@@ -292,7 +292,7 @@ public class SwordRegressionRemindersiOS {
 		File comparison6 = new File(baselineFilename6);
 		result6.storeVisualization(comparison6);
 		System.out.println("Similarity of: " + result6.getScore());
-		//voltar pra home
+		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
