@@ -24,6 +24,7 @@ public class SwordRegressionLoginLogout {
 	private final static String CHECK_PIN_DOESNT_MATCH_LOGIN = "pin_doesnt_match_login";
 	private final static String CHECK_BIOMETRICS_LOGIN = "biometrics_login";
 	private final static String CHECK_RECOVER_PASS_SUCCESS = "recover_pass_success";
+	private final static String CHECK_ACCOUNT_TEMP_LOCKED = "account_temp_locked";
 	private final static By CREATE_PIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
 	private final static By PIN_DOESNT_MATCH_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
 	private final static By BIOMETRICS_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
@@ -136,6 +137,7 @@ public class SwordRegressionLoginLogout {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Uh-oh!']");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"You've reached the maximum number of login attempts. Please try again in a few minutes.\"]");
+		visualCheck.doVisualCheck(CHECK_ACCOUNT_TEMP_LOCKED);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		//adicionar teste de email inválido e senha inválida
 		driver.findElementByXPath("//android.widget.EditText[1]").clear();
