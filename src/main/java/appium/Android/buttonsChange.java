@@ -1,52 +1,24 @@
 package appium.Android;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.sql.Driver;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import appium.iOS.MobileActionsiOS;
-import io.appium.java_client.touch.TapOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.MobileBy.ByAccessibilityId;
-import io.appium.java_client.MobileDriver;
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.functions.ExpectedCondition;
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
-import io.appium.java_client.ios.IOSDriver;
-import io.appium.java_client.remote.MobileCapabilityType;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.CoreMatchers.*;
-
 
 public class buttonsChange {
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check";
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/buttons";
 	private final static String BASELINE = "BASELINE_";
 	private final static double MATCH_THRESHOLD = 0.1;
 	
@@ -105,22 +77,11 @@ public class buttonsChange {
     private final static By PRESENT_CARD_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Present your card']");
     private final static By CAMERA_PERMISSION_SETTINGS_SCREEN = MobileBy.xpath("//android.widget.ImageView");
     private final static By CAMERA_PERMISSION_RETRY_SCREEN = MobileBy.xpath("//android.widget.ImageView");
-    
-    AndroidDriver<MobileElement> driver;
 
-	private AndroidDriver<MobileElement> inicializarAppium() throws MalformedURLException {
-		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-		desiredCapabilities.setCapability("platformName", "android");
-	    desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-	    desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-	    desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/vou ser despedido.apk");
-	    desiredCapabilities.setCapability("appium:noReset", "false");
-	    desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
-	//    desiredCapabilities.setCapability("app", getResource("/Users/luizaspiegel/Downloads/app-sword-qa1517.apk").toString()); //colocar a build de testes ou de baseline
-	    
-	    driver = new AndroidDriver<MobileElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
-	    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		return driver;
+	private AndroidDriver<MobileElement> driver;
+	@Before
+	public void startAppium() throws MalformedURLException {
+		driver = ConfigurationsAndroid.getDriver();
 	}
 
 	private Object getResource(String string) {
@@ -139,7 +100,6 @@ public class buttonsChange {
 	
 	@Test
 	public void buttons() throws Exception {
-		AndroidDriver<MobileElement> driver = inicializarAppium();
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		MobileActions mobileActions = new MobileActions(driver);
 		
@@ -147,13 +107,12 @@ public class buttonsChange {
 		waitForElement(wait, LOGIN_SCREEN);
 		doVisualCheck(CHECK_LOGIN);
 		//recover password
-		MobileElement el14 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Recover']");
-		el14.click();
+		driver.findElementByAccessibilityId("loginRecoverPasswordButton").click();
 		waitForElement(wait, RECOVER_SCREEN);
 		doVisualCheck(CHECK_RECOVER);
 		//check your email
 		driver.findElementByXPath("//android.widget.EditText").sendKeys("shbsjd@jdioj.com");
-		driver.findElementByXPath("//android.widget.Button").click();
+		driver.findElementByAccessibilityId("recoverPasswordButton").click();
 		waitForElement(wait, EMAIL_SCREEN);
 		doVisualCheck(CHECK_EMAIL_SCREEN);
 		//create pin code email

@@ -1,11 +1,13 @@
 package appium.Android;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,10 +21,30 @@ public class NewSwordRegressionHomeAll {
         driver = ConfigurationsAndroid.getDriver();
     }
 
+    private final static String CHECK_KIT_DELIVERY_CARD = "kit_delivery_card";
+    private final static String CHECK_PIN_DOESNT_MATCH_SETTINGS = "pin_doesnt_match_settings";
+    private final static String CHECK_BIOMETRICS_SETTINGS = "biometrics_settings";
+    private final static String CHECK_NEW_PIN = "new_pin";
+    private final static String CHECK_WRONG_PIN_SETTINGS = "wrong_pin_settings";
+    private final static String CHECK_FAILED_ATTEMPTS = "failed_attempts_settings";
+    private final static By KIT_DELIVERY_CARD = MobileBy.xpath("//android.view.View[@content-desc='home_card_delivery_kit_status']");
+    private final static By PIN_DOESNT_MATCH_SETTINGS_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+    private final static By BIOMETRICS_SETTINGS_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
+    private final static By NEW_PIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='New PIN code set successfully']");
+
+    private WebElement waitForElement(WebDriverWait wait, By selector) {
+        WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+
+        try {Thread.sleep(750); } catch (InterruptedException ign) {}
+
+        return el;
+    }
+
     @Test
-        public void virtualPt() {
+        public void virtualPt() throws Exception {
         MobileActions mobileActions = new MobileActions(driver);
         WebDriverWait wait = new WebDriverWait(driver,20);
+        VisualCheck visualCheck = new VisualCheck(driver);
 
         //login
         MobileElement email = driver.findElementByXPath("//android.widget.EditText[1]");
@@ -75,6 +97,8 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("January 31", kitStatusShippedDate);
             Assert.assertEquals("Kit delivered", kitStatusDelivered);
             Assert.assertEquals("Delivery address", kitStatusAddress);
+            waitForElement(wait, KIT_DELIVERY_CARD);
+            visualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
             //scroll pra mostrar o program status inteiro
             MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
@@ -316,6 +340,8 @@ public class NewSwordRegressionHomeAll {
         String retryButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
         Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch1);
         Assert.assertEquals("Retry", retryButton);
+        waitForElement(wait, PIN_DOESNT_MATCH_SETTINGS_SCREEN);
+        visualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_SETTINGS);
         //clicar em retry
         driver.findElementByXPath("//android.widget.Button").click();
         //inserir 4 digitos no create your pin
@@ -340,11 +366,15 @@ public class NewSwordRegressionHomeAll {
         Assert.assertEquals("Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.", biometrics);
         Assert.assertEquals("Activate now", activateNowButton);
         Assert.assertEquals("Activate later", activateLaterButton);
+        waitForElement(wait, BIOMETRICS_SETTINGS_SCREEN);
+        visualCheck.doVisualCheck(CHECK_BIOMETRICS_SETTINGS);
         //clicar pra ativar depois
         driver.findElementByXPath("//android.widget.TextView[@text='Activate later']").click();
         //validar ecrã de sucesso
         String newPinSuccess1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("New PIN code set successfully", newPinSuccess1);
+        waitForElement(wait, NEW_PIN_SCREEN);
+        visualCheck.doVisualCheck(CHECK_NEW_PIN);
         //abrir settings
         try {
             Thread.sleep(3000);
@@ -464,6 +494,7 @@ public class NewSwordRegressionHomeAll {
         String wrongPin1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
                 "You have 4 more attempt(s)", wrongPin1);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS);
         //retry
         driver.findElementByXPath("//android.widget.Button").click();
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
@@ -523,6 +554,7 @@ public class NewSwordRegressionHomeAll {
         Assert.assertEquals("Uh-oh! That's 5 failed attempts", pinError);
         Assert.assertEquals("For security reasons, please log in again and set a new PIN code.", loginAgain);
         Assert.assertEquals("Back to login", backToLoginButton);
+        visualCheck.doVisualCheck(CHECK_FAILED_ATTEMPTS);
         //back to login
         driver.findElementByXPath("//android.widget.Button").click();
         //fazer login

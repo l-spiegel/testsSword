@@ -2,6 +2,7 @@ package appium.Android;
 
 import java.net.MalformedURLException;
 
+import io.appium.java_client.MobileBy;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -19,11 +20,29 @@ public class SwordRegressionLoginLogout {
 		driver = ConfigurationsAndroid.getDriver();
 	}
 
+	private final static String CHECK_CREATE_PIN = "create_pin_screen";
+	private final static String CHECK_PIN_DOESNT_MATCH_LOGIN = "pin_doesnt_match_login";
+	private final static String CHECK_BIOMETRICS_LOGIN = "biometrics_login";
+	private final static String CHECK_RECOVER_PASS_SUCCESS = "recover_pass_success";
+	private final static By CREATE_PIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
+	private final static By PIN_DOESNT_MATCH_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+	private final static By BIOMETRICS_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
+	private final static By RECOVER_PASS_SUCCESS_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
+
+	private WebElement waitForElement(WebDriverWait wait, By selector) {
+		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+
+		try {Thread.sleep(750); } catch (InterruptedException ign) {}
+
+		return el;
+	}
+
 	@Test
-	public void errosELoginPage() throws MalformedURLException {
+	public void errosELoginPage() throws Exception {
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		VisualCheck visualCheck = new VisualCheck(driver);
 		
 		//login qr code
 		utilitiesAndroid.clickByAccessibilityId("loginQRCodeButton", driver);
@@ -36,7 +55,7 @@ public class SwordRegressionLoginLogout {
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementById("com.android.permissioncontroller:id/permission_allow_foreground_only_button").click();
 		//back no leitor de qr code
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View", driver);
 		MobileElement el11 = driver.findElementByAccessibilityId("Navigate up");
 		el11.click();
 		el11.click();
@@ -57,12 +76,12 @@ public class SwordRegressionLoginLogout {
 			Thread.currentThread().interrupt();
 		}
 		mobileActions.tapByCoordinates(780, 1070);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
 		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Danaher Canada']", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
 		//voltar para login screen
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View", driver);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		//recover pass
 		utilitiesAndroid.clickByAccessibilityId("loginRecoverPasswordButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Recover my password']")));
@@ -82,6 +101,8 @@ public class SwordRegressionLoginLogout {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Check your email']");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
+		waitForElement(wait, RECOVER_PASS_SUCCESS_SCREEN);
+		visualCheck.doVisualCheck(CHECK_RECOVER_PASS_SUCCESS);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		//erros do login
 		//email vazio + senha vazia
@@ -103,7 +124,7 @@ public class SwordRegressionLoginLogout {
 		driver.findElementByXPath("//android.widget.TextView[@text='Please enter your password']");
 		//email certo e senha errada + ecrã de bloqueio
 		emailTextfield.clear();
-		emailTextfield.sendKeys("luiza@marco.com");
+		emailTextfield.sendKeys("vinteum@sword.com");
 		MobileElement passwordTextfield = driver.findElementByXPath("//android.widget.EditText[2]");
 		passwordTextfield.click();
 		passwordTextfield.sendKeys("12345");
@@ -130,9 +151,10 @@ public class SwordRegressionLoginLogout {
 	}
 	
 	@Test
-	public void fazerLogin() throws MalformedURLException {
+	public void fazerLogin() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//login + create pin + set pin code later
 		MobileElement enterEmail = driver.findElementByXPath("//android.widget.EditText[1]");
@@ -144,6 +166,8 @@ public class SwordRegressionLoginLogout {
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create your PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
+		waitForElement(wait, CREATE_PIN_SCREEN);
+		visualCheck.doVisualCheck(CHECK_CREATE_PIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create your PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Set PIN code later']");
@@ -193,6 +217,8 @@ public class SwordRegressionLoginLogout {
 		//erro screen pins diferentes
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+		waitForElement(wait, PIN_DOESNT_MATCH_LOGIN_SCREEN);
+		visualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		MobileElement el29 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
 		el29.click();
@@ -207,6 +233,8 @@ public class SwordRegressionLoginLogout {
 		el30.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
+		waitForElement(wait, BIOMETRICS_LOGIN_SCREEN);
+		visualCheck.doVisualCheck(CHECK_BIOMETRICS_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Spiegel']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
