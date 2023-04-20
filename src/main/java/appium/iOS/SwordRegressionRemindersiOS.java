@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
-import appium.Android.ConfigurationsAndroid;
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import org.apache.commons.codec.binary.Base64;
@@ -19,7 +18,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.MobileBy;
@@ -39,12 +37,11 @@ public class SwordRegressionRemindersiOS {
 
 	@Test
 	public void virtualPt() throws IOException {
-		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 
 		//fazer login
-		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
 		//wait carregar definePinLoginChangePinHome
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
@@ -262,8 +259,10 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_week_day_6", driver);
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Yes']", driver);
-		//comparar com o do delete reminder
+		//comparar com o do delete reminder (2 reminders)
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
+		File myReminders5 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(myReminders5, new File("reminders5.jpg"));
 		byte[] myRemindersComp6 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result5 = driver
 				.getImagesSimilarity(myRemindersComp6, myRemindersComp5, new SimilarityMatchingOptions()
@@ -281,13 +280,15 @@ public class SwordRegressionRemindersiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
 		String remindersWeeklyGoalLabel3 = driver.findElementByAccessibilityId("session_reminders_my_reminders_weekly_goal_label").getText();
 		Assert.assertEquals("Set a reminder for 1 more session day", remindersWeeklyGoalLabel3);
-		//apagar a desgraça dessa lista e comparar com o anterior
+		//compara com o anterior (2 reminders)
+		File myReminders6 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(myReminders6, new File("reminders6.jpg"));
 		byte[] myRemindersComp7 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result6 = driver
 				.getImagesSimilarity(myRemindersComp7, myRemindersComp6, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result6.getVisualization().length, is(greaterThan(0)));
-		assertThat(result6.getScore(), is(lessThan(0.95)));
+		assertThat(result6.getScore(), is(greaterThan(0.95)));
 		String baselineFilename6 = VALIDATION_PATH + "/" + BASELINE + "6.png";
 		File comparison6 = new File(baselineFilename6);
 		result6.storeVisualization(comparison6);
@@ -298,10 +299,5 @@ public class SwordRegressionRemindersiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 
 		ConfigurationsiOS.killDriver();
-	}
-
-	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
-		// TODO Auto-generated method stub
-		
 	}
 }
