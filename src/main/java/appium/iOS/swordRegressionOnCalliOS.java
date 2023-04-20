@@ -39,31 +39,31 @@ public class swordRegressionOnCalliOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		
 		//login
-		utilitiesiOS.login("frodobaggins@sword.com", "28Abril!", driver);
+		utilitiesiOS.login("luiza.preventive@sword.com", "Test1234!", driver);
 		//validar hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='On-Call']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Get on-demand support from a Clinical Pain Specialist via chat.\"]");
 		String onCallButton = driver.findElementByAccessibilityId("home_on_call_card_help_from_specialist_button").getText();
 		Assert.assertEquals("Chat with a Specialist", onCallButton);
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Explore our programs\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Learn more about our programs below to find the best fit for you.\"]");
 		if (driver.findElements(By.id("Explore our programs")).size() > 0) {
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Explore our programs\"]");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Learn more about our programs below to find the best fit for you.\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Eligible\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Digital Physical Therapy\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Physical therapy you can do anytime, anywhere.\"]");
+			//clicar get started
+			utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_get_started_button", driver);
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage[@name=\"Sword Health\"]")));
+			//voltar
+			utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		}
 		//abrir academy tab
 		utilitiesiOS.clickByAccessibilityId("bottom_navigation_academy_tab", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Academy']")));
 		//voltar pra hub tab
 		utilitiesiOS.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
-		//clicar get started
-		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_get_started_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage[@name=\"Sword Health\"]")));
-		//voltar
-		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		//clicar on-call card
 		utilitiesiOS.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
@@ -151,7 +151,7 @@ public class swordRegressionOnCalliOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
 		MobileElement passField = driver.findElementByAccessibilityId("loginPasswordTextfield");
 		passField.click();
-		passField.sendKeys("28Abril!");
+		passField.sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not now']", driver);
@@ -178,7 +178,7 @@ public class swordRegressionOnCalliOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		
 		//login
-		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
 		//abrir hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		utilitiesiOS.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
@@ -268,7 +268,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
 		//fazer login no mesmo user de novo
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not now']", driver);
@@ -291,7 +291,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton", driver);
 		utilitiesiOS.clickByAccessibilityId("Photos and videos", driver);
 		utilitiesiOS.clickByAccessibilityId("Allow Access to All Photos", driver);
-		utilitiesiOS.clickByAccessibilityId("Screenshot, 12 April, 11:02 AM", driver); //precisa atualizar pra uma que apareça no rolo
+		utilitiesiOS.clickByAccessibilityId("Screenshot, 20 April, 12:34 PM", driver); //precisa atualizar pra uma que apareça no rolo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView[@name='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
