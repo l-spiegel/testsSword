@@ -56,21 +56,26 @@ public class swordRegressionSessionDetailsiOS {
 		utilitiesiOS.clickByAccessibilityId("Close", driver);
 		//validação overview
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
-		if (driver.findElements(By.id("session_details_session_overview_card_stars_view")).size() > 0) {
-	        System.out.println("STARS CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
-	    }
-		if (driver.findElements(By.id("session_details_session_overview_card_pain_view")).size() > 0) {
-	        System.out.println("PAIN CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
-	    }
-		if (driver.findElements(By.id("session_details_session_overview_card_fatigue_view")).size() > 0) {
-	        System.out.println("FATIGUE CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
-	    }	
+		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"This session was done with Sword Go.\"]")).size() > 0) {
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"No session results\"]");
+			System.out.println("Sword Go session");
+		} else {
+			if (driver.findElements(By.id("session_details_session_overview_card_stars_view")).size() > 0) {
+				System.out.println("STARS CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.id("session_details_session_overview_card_pain_view")).size() > 0) {
+				System.out.println("PAIN CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.id("session_details_session_overview_card_fatigue_view")).size() > 0) {
+				System.out.println("FATIGUE CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
+			}
+		}
 		//validação exercícios
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
 		String exerciseNumber1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_number").getText();
@@ -84,24 +89,24 @@ public class swordRegressionSessionDetailsiOS {
 		String score2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_score").getText();
 		System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
 		//fazer scroll
-		MobileElement exerciseCard2 = driver.findElementByAccessibilityId("session_details_exercise_2_card");
+		MobileElement exerciseCard1 = driver.findElementByAccessibilityId("session_details_exercise_1_card");
 		MobileElement overviewTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
-		mobileActions.swipeByElements(exerciseCard2, overviewTxt);
+		mobileActions.swipeByElements(exerciseCard1, overviewTxt);
 		//validar o ecrã
 		String exerciseNumberRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_number").getText();
 		String exerciseNameRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_name").getText();
-		String repsRandom1 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
+		String repsRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_reps").getText();
 		System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
 		String exerciseNumberRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_number").getText();
 		String exerciseNameRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_name").getText();
 		String repsRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_reps").getText();
 		System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
 		//pull to refresh e abre next session
-		MobileElement exerciseCard4 = driver.findElementByAccessibilityId("session_details_exercise_3_card");
-		MobileElement exerciseCard8 = driver.findElementByAccessibilityId("session_details_exercise_7_card");
-		mobileActions.swipeByElements(exerciseCard4, exerciseCard8);
-		MobileElement exercisesTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
-		mobileActions.swipeByElements(exercisesTxt, exerciseCard4);
+		MobileElement exerciseCard2 = driver.findElementByAccessibilityId("session_details_exercise_2_card");
+		MobileElement exerciseCard5 = driver.findElementByAccessibilityId("session_details_exercise_5_card");
+		mobileActions.swipeByElements(exerciseCard2, exerciseCard5);
+		MobileElement overviewTxt2 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='No session results']");
+		mobileActions.swipeByElements(overviewTxt2, exerciseCard2);
 		//validar next session
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")).size() > 0) {
@@ -205,7 +210,7 @@ public class swordRegressionSessionDetailsiOS {
 		assertThat(result.getVisualization().length, is(greaterThan(0)));
 		assertThat(result.getScore(), is(lessThan(0.95)));
 		System.out.println("Different sessions");
-		//voltar pra definePinLoginChangePinHome
+		//voltar pra home
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_2")));
 		//mudar até a sessão mais antiga
