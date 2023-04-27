@@ -1,21 +1,21 @@
-package appium.Android;
+package appium.iOS;
 
 import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import java.io.File;
 
-public class VisualCheck {
+public class VisualCheckiOS {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression login";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression login/iOS";
     private final static String BASELINE = "BASELINE_";
     private final static double MATCH_THRESHOLD = 0.90;
 
-    private static AndroidDriver<MobileElement> driver;
-    public VisualCheck (AndroidDriver<MobileElement> driver) {
+    private static IOSDriver<MobileElement> driver;
+    public VisualCheckiOS(IOSDriver<MobileElement> driver) {
         this.driver = driver;
     }
     public static void doVisualCheck(String checkName) throws Exception {

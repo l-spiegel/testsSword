@@ -1,7 +1,6 @@
 package appium.Android;
 
 import java.net.MalformedURLException;
-
 import io.appium.java_client.MobileBy;
 import org.junit.Before;
 import org.junit.Test;

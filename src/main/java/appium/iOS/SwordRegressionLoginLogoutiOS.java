@@ -1,11 +1,13 @@
 package appium.iOS;
 
+import io.appium.java_client.MobileBy;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.ios.IOSDriver;
 import java.net.MalformedURLException;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,11 +18,30 @@ public class SwordRegressionLoginLogoutiOS {
 		driver = ConfigurationsiOS.getDriver();
 	}
 
+	private final static String CHECK_CREATE_PIN = "create_pin_screen";
+	private final static String CHECK_PIN_DOESNT_MATCH_LOGIN = "pin_doesnt_match_login";
+	private final static String CHECK_BIOMETRICS_LOGIN = "biometrics_login";
+	private final static String CHECK_RECOVER_PASS_SUCCESS = "recover_pass_success";
+	private final static String CHECK_ACCOUNT_TEMP_LOCKED = "account_temp_locked";
+	private final static By CREATE_PIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
+	private final static By PIN_DOESNT_MATCH_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+	private final static By BIOMETRICS_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
+	private final static By RECOVER_PASS_SUCCESS_SCREEN = MobileBy.xpath("//XCUIElementTypeStaticText[@name=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
+
+	private WebElement waitForElement(WebDriverWait wait, By selector) {
+		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(selector));
+
+		try {Thread.sleep(750); } catch (InterruptedException ign) {}
+
+		return el;
+	}
+
 	@Test
-	public void errosELoginPage() {
+	public void errosELoginPage() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
+		VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
 
 		driver.findElementByAccessibilityId("Allow").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
@@ -54,8 +75,13 @@ public class SwordRegressionLoginLogoutiOS {
 		}
 		mobileActions.tapByCoordinates(198, 348);
 		utilitiesiOS.clickByAccessibilityId("ic close button", driver);
-		utilitiesiOS.clickByAccessibilityId("Danaher Canada", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
+		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"Danaher Canada\"]")).size() > 0) {
+			utilitiesiOS.clickByAccessibilityId("Danaher Canada", driver);
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
+		} else {
+			utilitiesiOS.clickByAccessibilityId("Client 1", driver);
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
+		}
 		//voltar para login screen
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
@@ -78,6 +104,8 @@ public class SwordRegressionLoginLogoutiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Check your email']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
+		waitForElement(wait, RECOVER_PASS_SUCCESS_SCREEN);
+		visualCheckiOS.doVisualCheck(CHECK_RECOVER_PASS_SUCCESS);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
 		//erros do login
 		//email válido + pass em branco

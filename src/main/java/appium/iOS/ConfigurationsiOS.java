@@ -21,13 +21,13 @@ public class ConfigurationsiOS {
     private static void createDriver() throws MalformedURLException {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "iOS");
-        desiredCapabilities.setCapability("platformVersion", "16.1.1");
+        desiredCapabilities.setCapability("platformVersion", "16.4.1");
         desiredCapabilities.setCapability("deviceName", "iPhone 11 Pro");
         desiredCapabilities.setCapability("udid", "00008030-001115363A7A802E");
         desiredCapabilities.setCapability("automationName", "XCUITest");
         desiredCapabilities.setCapability("xcodeOrgId", "698N4JU9B9");
         desiredCapabilities.setCapability("xcodeSigningId", "iPhone Developer");
-        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth1824.ipa");
+        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth1839.ipa");
         desiredCapabilities.setCapability("updatedWDABundleId", "com.luizateste2.wda.runner");
         desiredCapabilities.setCapability("showXcodeLog", "true");
         desiredCapabilities.setCapability("wdaLocalPort", "8205");
