@@ -25,8 +25,6 @@ public class SwordRegressionLoginLogout {
 	private final static String CHECK_RECOVER_PASS_SUCCESS = "recover_pass_success";
 	private final static String CHECK_ACCOUNT_TEMP_LOCKED = "account_temp_locked";
 	private final static By CREATE_PIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
-	private final static By PIN_DOESNT_MATCH_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
-	private final static By BIOMETRICS_LOGIN_SCREEN = MobileBy.xpath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
 	private final static By RECOVER_PASS_SUCCESS_SCREEN = MobileBy.xpath("//android.widget.TextView[@text=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
 
 	private WebElement waitForElement(WebDriverWait wait, By selector) {
@@ -218,7 +216,6 @@ public class SwordRegressionLoginLogout {
 		//erro screen pins diferentes
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
-		waitForElement(wait, PIN_DOESNT_MATCH_LOGIN_SCREEN);
 		visualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		MobileElement el29 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
@@ -234,7 +231,6 @@ public class SwordRegressionLoginLogout {
 		el30.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
-		waitForElement(wait, BIOMETRICS_LOGIN_SCREEN);
 		visualCheck.doVisualCheck(CHECK_BIOMETRICS_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Spiegel']")));
