@@ -24,6 +24,8 @@ public class swordRegressionSessionDetailsiOS {
 
 	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/iOS";
 	private final static String BASELINE = "COMP_";
+	private final static String CHECK_SESSION_DETAILS_FIRST_OPEN = "session_details_first_open";
+	private final static String CHECK_SESSION_DETAILS_CLOSE_WARNING = "session_details_close_warning";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -32,11 +34,17 @@ public class swordRegressionSessionDetailsiOS {
 	}
 	
 	@Test
-	public void virtualPtProduction() throws IOException {
+	public void virtualPtProduction() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
+		VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
 
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//mostrar o card do lastest sessions
@@ -52,8 +60,12 @@ public class swordRegressionSessionDetailsiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Exercises']")));
 		//validar o ecrã
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
+		//comparar com build antiga
+		VisualCheckiOS.doVisualCheck(CHECK_SESSION_DETAILS_FIRST_OPEN);
 		//fechar o warning antes de fazer a validação
 		utilitiesiOS.clickByAccessibilityId("Close", driver);
+		//comparar com build antiga
+		VisualCheckiOS.doVisualCheck(CHECK_SESSION_DETAILS_CLOSE_WARNING);
 		//validação overview
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"This session was done with Sword Go.\"]")).size() > 0) {
@@ -119,7 +131,7 @@ public class swordRegressionSessionDetailsiOS {
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"What you’ll need\"]");
 			String swordGoTitle = driver.findElementByAccessibilityId("sword_go_card_title").getText();
 			String swordGoSubtitle = driver.findElementByAccessibilityId("sword_go_card_subtitle").getText();
-			Assert.assertEquals("On the road? Can't use your Digital Therapist?", swordGoTitle);
+			Assert.assertEquals("On the road? Can't use your tablet?", swordGoTitle);
 			Assert.assertEquals("Start your session now with Go", swordGoSubtitle);
 			//fazer scroll e validar alguns exercícios
 			MobileElement youllNeedTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='What you’ll need']");
@@ -273,19 +285,7 @@ public class swordRegressionSessionDetailsiOS {
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 
-		driver.findElementByAccessibilityId("Allow").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-	//	MobileElement el1 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeTextField");
-	//	el1.clear();
-	//	el1.sendKeys("l.spiegel+3@swordhealth.com");
-		MobileElement el2 = (MobileElement) driver.findElementByAccessibilityId("loginPasswordTextfield");
-		el2.click();
-		el2.sendKeys("Test1234!");
-		MobileElement el3 = (MobileElement) driver.findElementByAccessibilityId("loginButton");
-		el3.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-		MobileElement el4 = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']");
-		el4.click();
+		utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
 		//mostrar o card do lastest sessions
 		MobileElement kitDeliveryCard = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
