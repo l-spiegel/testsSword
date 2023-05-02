@@ -16,7 +16,7 @@ public class UtilitiesiOS {
         driver.findElementByXPath(xpath).click();
     }
 
-    public void login(String email, String password, IOSDriver<MobileElement> driver) {
+    public static void login(String email, String password, IOSDriver<MobileElement> driver) {
         WebDriverWait wait = new WebDriverWait(driver,20);
 
         driver.findElementByAccessibilityId("Allow").click();

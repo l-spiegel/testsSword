@@ -10,9 +10,9 @@ import java.io.File;
 
 public class VisualCheck {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression login";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression exercise history/Android";
     private final static String BASELINE = "BASELINE_";
-    private final static double MATCH_THRESHOLD = 0.90;
+    private final static double MATCH_THRESHOLD = 0.95;
 
     private static AndroidDriver<MobileElement> driver;
     public VisualCheck (AndroidDriver<MobileElement> driver) {
