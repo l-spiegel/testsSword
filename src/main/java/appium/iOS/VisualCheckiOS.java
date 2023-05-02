@@ -10,7 +10,7 @@ import java.io.File;
 
 public class VisualCheckiOS {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/iOS";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression exercise history/iOS";
     private final static String BASELINE = "BASELINE_";
     private final static double MATCH_THRESHOLD = 0.95;
 
