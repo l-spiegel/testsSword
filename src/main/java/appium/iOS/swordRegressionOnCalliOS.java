@@ -188,6 +188,7 @@ public class swordRegressionOnCalliOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Get on-demand support from a Clinical Pain Specialist via chat.']");
 		String onCallButton = driver.findElementByAccessibilityId("home_on_call_card_help_from_specialist_button").getText();
 		Assert.assertEquals("Chat with a Specialist", onCallButton);
+		//adicionar teste visual
 		//clicar on-call card
 		utilitiesiOS.clickByAccessibilityId("home_on_call_card_help_from_specialist_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='On-Call']")));
@@ -291,7 +292,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton", driver);
 		utilitiesiOS.clickByAccessibilityId("Photos and videos", driver);
 		utilitiesiOS.clickByAccessibilityId("Allow Access to All Photos", driver);
-		utilitiesiOS.clickByAccessibilityId("Screenshot, 20 April, 12:34 PM", driver); //precisa atualizar pra uma que apareça no rolo
+		utilitiesiOS.clickByAccessibilityId("Screenshot, 28 April, 4:19 PM", driver); //precisa atualizar pra uma que apareça no rolo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView[@name='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
