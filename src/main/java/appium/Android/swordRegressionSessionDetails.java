@@ -285,26 +285,31 @@ public class swordRegressionSessionDetails {
 		driver.findElementByXPath("//android.widget.TextView[@text='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		//fechar o warning antes de fazer a validação
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView", driver);
-		//validação overview - adicionar o if/else pra sessão go (já coloquei no de staging)
+		//validação overview
 		driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
-		if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]")).size() > 0) {
-			String overviewStars = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]").getText();
-			System.out.println("STARS ACHHIEVED: " + overviewStars);
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text=\"This session was done with Sword Go.\"]")).size() > 0) {
+			driver.findElementByXPath("//android.widget.TextView[@text='No session results']");
+			System.out.println("Sword Go session");
 		} else {
-			System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
+			if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]")).size() > 0) {
+				String overviewStars = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]").getText();
+				System.out.println("STARS ACHHIEVED: " + overviewStars);
+			} else {
+				System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[4]")).size() > 0) {
+				String overviewPain = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[4]").getText();
+				System.out.println("PAIN SCORE: " + overviewPain);
+			} else {
+				System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[6]")).size() > 0) {
+				String overviewFatigue = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[6]").getText();
+				System.out.println("FATIGUE SCORE: " + overviewFatigue);
+			} else {
+				System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
+			}
 		}
-		if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[4]")).size() > 0) {
-			String overviewPain = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[4]").getText();
-			System.out.println("PAIN SCORE: " + overviewPain);
-		} else {
-			System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
-		}
-		if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[6]")).size() > 0) {
-			String overviewFatigue = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[6]").getText();
-			System.out.println("FATIGUE SCORE: " + overviewFatigue);
-		} else {
-			System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
-		}	
 		//validação exercícios
 		driver.findElementByXPath("//android.widget.TextView[@text='Exercises']");
 		String exerciseNumber1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[1]").getText();
@@ -349,7 +354,7 @@ public class swordRegressionSessionDetails {
 			driver.findElementByXPath("//android.widget.TextView[@text='Exercises:']");
 			driver.findElementByXPath("//android.widget.TextView[@text='26 exercises']");
 			driver.findElementByXPath("//android.widget.TextView[@text=\"What you’ll need\"]");
-			driver.findElementByXPath("//android.widget.TextView[@text=\"On the road? Can't use your Digital Therapist?\"]");
+			driver.findElementByXPath("//android.widget.TextView[@text=\"On the road? Can't use your tablet?\"]");
 			driver.findElementByXPath("//android.widget.TextView[@text='Start your session now with Go']");
 			//fazer scroll e validar alguns exercícios
 			MobileElement youllNeedTxt = driver.findElementByXPath("//android.widget.TextView[@text='What you’ll need']");
