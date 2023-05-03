@@ -1,5 +1,6 @@
 package appium.Android;
 
+import appium.iOS.VisualCheckiOS;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
@@ -18,15 +19,24 @@ public class swordRegressionBadges {
 		driver = ConfigurationsAndroid.getDriver();
 	}
 
+	private final static String CHECK_HOME_BADGES = "home_badges_screen";
+	private final static String CHECK_HOME_BADGES_SCROLL = "home_badges_scroll_screen";
+	private final static String CHECK_HOME_BADGE_NOT_ACHIEVED = "home_badge_not_achieved";
+	private final static String CHECK_BADGE_SCREEN_1 = "badge_screen_1";
+	private final static String CHECK_BADGE_SCREEN_4 = "badge_screen_4";
+	private final static String CHECK_BADGE_POPUP_1 = "badge_screen_popup_1";
+	private final static String CHECK_BADGE_POPUP_2 = "badge_screen_popup_2";
+
 	private void wait(org.openqa.selenium.support.ui.ExpectedCondition<WebElement> presenceOfElementLocated) {
 	// TODO Auto-generated method stub
 	}
 
 	@Test
-	public void production() throws MalformedURLException {
+	public void production() throws Exception {
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		VisualCheck visualCheck = new VisualCheck(driver);
 		
 		utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		try {
@@ -70,6 +80,7 @@ public class swordRegressionBadges {
 			System.out.println("FIRST NOT ACHIEVED BADGE: " + notAchieved1 + " ");
 			String notAchieved2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[4]/android.view.View[3]/android.widget.TextView").getText();
 			System.out.println("SECOND NOT ACHIEVED BADGE: " + notAchieved2);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES);
 			//fazer swipe pra mostrar a última badge
 			MobileElement secondNotAchievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_2");
 			MobileElement achievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_0");
@@ -77,6 +88,7 @@ public class swordRegressionBadges {
 			//pegar o texto da última badge
 			String notAchieved3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[4]/android.view.View[3]/android.widget.TextView").getText();
 			System.out.println("THIRD NOT ACHIEVED BADGE: " + notAchieved3);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES_SCROLL);
 			//abrir o popup de uma das badges not achieved
 			utilitiesAndroid.clickByAccessibilityId("home_badges_card_badge_2", driver);
 			//imprimir valores do badge
@@ -84,6 +96,7 @@ public class swordRegressionBadges {
 			System.out.println("POPUP BADGE TITLE: " + badgeDetailsTitle1);
 			String badgeDetailsInfo1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[2]").getText(); 
 			System.out.println("POPUP BADGE DESCRIPTION: " + badgeDetailsInfo1);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGE_NOT_ACHIEVED);
 			//fechar popup pelo botão
 			utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 			//abrir my badges
@@ -103,11 +116,13 @@ public class swordRegressionBadges {
 		//pegar o número de badges
 		String numberOfSessionsBadgesAchieved = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
 		System.out.println("BADGES ACHIEVED: " + numberOfSessionsBadgesAchieved);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_1);
 		//clicar na badge de 18 sessões
 		utilitiesAndroid.clickByAccessibilityId("badges_screen_section_0_badge_3", driver);
 		//validar details do popup
 		driver.findElementByXPath("//android.widget.TextView[@text='18th Session']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Complete your 18th exercise session']");
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_1);
 		//clicar fora do popup
 		mobileActions.tapByCoordinates(248, 158);
 		//Fazer scroll do number of weekly goals até o number of sessions
@@ -128,6 +143,7 @@ public class swordRegressionBadges {
 		//validar details do popup
 		driver.findElementByXPath("//android.widget.TextView[@text='4th Weekly Goal']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Achieve your weekly goal for the fourth time ']");
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_2);
 		//clicar no botão do popup
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		//fazer scroll do app badges até o number of weekly goals
@@ -155,6 +171,7 @@ public class swordRegressionBadges {
 		//pegar o número de badges
 		String numberOfBadgesAchieved4 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[4]").getText();
 		System.out.println("BADGES ACHIEVED: " + numberOfBadgesAchieved4);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_4);
 		//clicar na badge do enrollment
 		utilitiesAndroid.clickByAccessibilityId("badges_screen_section_3_badge_0", driver);
 		//voltar
