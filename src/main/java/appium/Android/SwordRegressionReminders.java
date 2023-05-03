@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.List;
-
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import org.apache.commons.codec.binary.Base64;
@@ -20,14 +19,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 public class SwordRegressionReminders {
 
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression reminders";
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression reminders/Android";
 	private final static String BASELINE = "COMP_";
 
 	private AndroidDriver<MobileElement> driver;
