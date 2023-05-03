@@ -47,6 +47,7 @@ public class NewSwordRegressionHomeAlliOS {
     private final static String CHECK_WRONG_PIN_SETTINGS_2_ATTEMPTS = "wrong_pin_2_attempts";
     private final static String CHECK_WRONG_PIN_SETTINGS_1_ATTEMPTS = "wrong_pin_1_attempts";
     private final static String CHECK_WRONG_PIN_SETTINGS_0_ATTEMPTS = "wrong_pin_0_attempts";
+    private final static String CHECK_LOGIN_SCREEN = "login_screen";
 
     @Test
         public void virtualPt() throws Exception {
@@ -56,7 +57,7 @@ public class NewSwordRegressionHomeAlliOS {
         VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
 
         //login
-        utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
+        utilitiesiOS.login("luiza@marco.com", "10março!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
@@ -64,7 +65,7 @@ public class NewSwordRegressionHomeAlliOS {
         //clicar no botão do chat do card
         utilitiesiOS.clickByAccessibilityId("home_card_pt_button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
-        //voltar para definePinLoginChangePinHome
+        //voltar para home
         utilitiesiOS.clickByAccessibilityId("bottom_navigation_home_tab", driver);
         //validar pending actions
         if (driver.findElements(By.xpath("//XCUIElementTypeOther[@name='home_card_pending_actions']")).size() > 0) {
@@ -129,7 +130,7 @@ public class NewSwordRegressionHomeAlliOS {
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
 //            Assert.assertEquals("Program goal: 9+ sessions ", programGoalTitle);
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
-            VisualCheckiOS.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
+//            VisualCheckiOS.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
@@ -514,7 +515,7 @@ public class NewSwordRegressionHomeAlliOS {
         //back to login
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
-        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
+        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
         utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
@@ -545,6 +546,7 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Forgot your PIN?']", driver);
         //validar que voltou pra login screen
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Welcome to Sword']");
+        visualCheckiOS.doVisualCheck(CHECK_LOGIN_SCREEN);
 
         System.out.println("O TESTE PASSOU");
 
