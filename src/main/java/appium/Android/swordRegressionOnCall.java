@@ -345,7 +345,7 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByAccessibilityId("home_on_call_card", driver);
 		driver.findElementById("com.swordhealth.guarda.dev:id/ibtnAdd").click();
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]", driver);
-		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc=\"Photo taken on Apr 13, 2023, 6:13:19 PM\"]/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc=\"Photo taken on May 3, 2023, 3:04:03 PM\"]/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView", driver);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
