@@ -35,14 +35,6 @@ public class SwordRegressionLoginLogout {
 	private final static String CHECK_LOGIN_EMAIL_INVALID = "login_invalid_email";
 	private final static String CHECK_LOGIN_EMAIL_PASS_WRONG = "login_wrong_email_pass";
 
-	private WebElement waitForElement(WebDriverWait wait, By selector) {
-		WebElement el = wait.until(ExpectedConditions.presenceOfElementLocated(selector));
-
-		try {Thread.sleep(750); } catch (InterruptedException ign) {}
-
-		return el;
-	}
-
 	@Test
 	public void errosELoginPage() throws Exception {
 		MobileActions mobileActions = new MobileActions(driver);
