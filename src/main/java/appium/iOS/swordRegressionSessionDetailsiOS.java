@@ -40,11 +40,6 @@ public class swordRegressionSessionDetailsiOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
 
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
 		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//mostrar o card do lastest sessions
