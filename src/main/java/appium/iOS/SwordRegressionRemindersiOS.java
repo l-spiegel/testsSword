@@ -41,7 +41,7 @@ public class SwordRegressionRemindersiOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 
 		//fazer login
-		utilitiesiOS.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
+		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
 		//wait carregar definePinLoginChangePinHome
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
@@ -139,6 +139,8 @@ public class SwordRegressionRemindersiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		File myReminders2 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(myReminders2, new File("reminders2.jpg"));
 		byte[] myRemindersComp2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result = driver
 				.getImagesSimilarity(myRemindersComp2, myRemindersComp1, new SimilarityMatchingOptions()
@@ -148,7 +150,7 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "1.png";
 		File comparison = new File(baselineFilename);
 		result.storeVisualization(comparison);
-		System.out.println("Similarity of: " + result.getScore());
+		System.out.println("2 reminders with same time + different days. Similarity of: " + result.getScore());
 		//voltar a definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		//abrir reminders pelo menu
@@ -172,6 +174,8 @@ public class SwordRegressionRemindersiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
 		String remindersWeeklyGoalLabel2 = driver.findElementByAccessibilityId("session_reminders_my_reminders_weekly_goal_label").getText();
 		Assert.assertEquals("Nice job! Your reminders are all set.", remindersWeeklyGoalLabel2);
+		File myReminders3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(myReminders3, new File("reminders3.jpg"));
 		byte[] myRemindersComp3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result2 = driver
 				.getImagesSimilarity(myRemindersComp3, myRemindersComp2, new SimilarityMatchingOptions()
@@ -181,7 +185,7 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename2 = VALIDATION_PATH + "/" + BASELINE + "2.png";
 		File comparison2 = new File(baselineFilename2);
 		result2.storeVisualization(comparison2);
-		System.out.println("Similarity of: " + result2.getScore());
+		System.out.println("3 reminders + weekly goal achieved. Similarity of: " + result2.getScore());
 		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
@@ -218,6 +222,8 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='No']", driver);
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_update_reminder_button", driver);
 		//comparar com o my reminders com 3 reminders
+		File myReminders4 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(myReminders4, new File("reminders4.jpg"));
 		byte[] myRemindersComp4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result3 = driver
 				.getImagesSimilarity(myRemindersComp4, myRemindersComp3, new SimilarityMatchingOptions()
@@ -227,14 +233,13 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename3 = VALIDATION_PATH + "/" + BASELINE + "3.png";
 		File comparison3 = new File(baselineFilename3);
 		result3.storeVisualization(comparison3);
-		System.out.println("Similarity of: " + result3.getScore());
+		System.out.println("Edit reminder with 3 reminders. Similarity of: " + result3.getScore());
 		//deletar um reminder
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_2", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Update reminder']")));
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_delete_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
-		//apagar essa desgraça de lista e meter uma comparação de imagens com o do update
 		byte[] myRemindersComp5 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result4 = driver
 				.getImagesSimilarity(myRemindersComp5, myRemindersComp4, new SimilarityMatchingOptions()
@@ -244,7 +249,7 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename4 = VALIDATION_PATH + "/" + BASELINE + "4.png";
 		File comparison4 = new File(baselineFilename4);
 		result4.storeVisualization(comparison4);
-		System.out.println("Similarity of: " + result4.getScore());
+		System.out.println("Delete one reminder. Similarity of: " + result4.getScore());
 		//tentar criar um novo reminder sem escolher um dia
 		utilitiesiOS.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Set a new reminder']")));
@@ -272,7 +277,7 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename5 = VALIDATION_PATH + "/" + BASELINE + "5.png";
 		File comparison5 = new File(baselineFilename5);
 		result5.storeVisualization(comparison5);
-		System.out.println("Similarity of: " + result5.getScore());
+		System.out.println("Try to update but don't save. Similarity of: " + result5.getScore());
 		//criar novo reminder com mesmo dia e hora diferente de um anterior
 		utilitiesiOS.clickByAccessibilityId("session_reminders_my_reminders_new_reminder_button", driver);
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_week_day_2", driver);
@@ -292,7 +297,7 @@ public class SwordRegressionRemindersiOS {
 		String baselineFilename6 = VALIDATION_PATH + "/" + BASELINE + "6.png";
 		File comparison6 = new File(baselineFilename6);
 		result6.storeVisualization(comparison6);
-		System.out.println("Similarity of: " + result6.getScore());
+		System.out.println("One new reminder - 3 reminders. Similarity of: " + result6.getScore());
 		//voltar pra definePinLoginChangePinHome
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
