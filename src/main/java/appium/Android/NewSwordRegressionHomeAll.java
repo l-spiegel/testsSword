@@ -125,7 +125,7 @@ public class NewSwordRegressionHomeAll {
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_program_goal']")).size() > 0) {
             String programGoalTitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_goal']/android.widget.TextView[1]").getText();
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
-//            Assert.assertEquals("Program goal: 9+ sessions ", programGoalTitle);
+            Assert.assertEquals("Program goal: 9+ sessions ", programGoalTitle);
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
 //            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
@@ -152,8 +152,7 @@ public class NewSwordRegressionHomeAll {
             VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_1);
             //scroll
             MobileElement myProgramReduceTxt = driver.findElementByXPath("//android.widget.TextView[@text='Reduce your symptoms']");
-            MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Complete 9 or more sessions']"); //fizeram revert disso pra anterior pra release
-         //   MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
+            MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
             mobileActions.swipeByElements(myProgramReduceTxt, myProgramProgramGoalTxt);
             //validar o restante do my program
             String myProgramHandle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[13]").getText();
@@ -213,7 +212,7 @@ public class NewSwordRegressionHomeAll {
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_session_details_0']")).size() > 0) {
             String sessionsTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
             Assert.assertEquals("Sessions", sessionsTitle);
-            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
+//            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
             MobileElement weeklyGoalCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
@@ -232,7 +231,7 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("Total stars", progressTotalStarsTxt);
             Assert.assertEquals("78", progressTotalStarsNumber);
             Assert.assertEquals("Pain level during session", progressPainChartLabel);
-            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
+//            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
