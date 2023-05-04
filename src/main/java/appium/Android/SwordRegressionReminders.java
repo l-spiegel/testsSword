@@ -38,10 +38,10 @@ public class SwordRegressionReminders {
 	public void virtualPt() throws IOException {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
-	  
+
 		//fazer login
-		utilitiesAndroid.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
+		utilitiesAndroid.login("luiza@marco.com", "10março!", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
 		//clicar set new reminder
 		utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_reminders_button", driver);
 		//validar ecrã
