@@ -42,8 +42,11 @@ public class swordRegressionSessionDetails {
 	private final static String CHECK_SESSION_DETAILS_LATEST_SESSION_STAGING = "session_details_latest_session_staging";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION = "session_details_next_session";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION_STAGING = "session_details_next_session_staging";
+	private final static String CHECK_SESSION_DETAILS_SESSION_1_STAGING = "session_details_session_1_staging";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION = "session_details_popup_session";
+	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING = "session_details_popup_session_staging";
 	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE = "session_details_popup_exercise";
+	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE_STAGING = "session_details_popup_exercise_staging";
 
 	@Test
 	public void virtualPtStaging() throws Exception {
@@ -128,6 +131,11 @@ public class swordRegressionSessionDetails {
 		MobileElement exerciseCard1 = driver.findElementByAccessibilityId("session_details_exercise_0_card");
 		MobileElement exerciseCard5 = driver.findElementByAccessibilityId("session_details_exercise_5_card");
 		mobileActions.swipeByElements(exerciseCard1, exerciseCard5);
+		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Overview']")).size() > 0) {
+			overviewTxt = driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
+			MobileElement exercisesTxt = driver.findElementByXPath("//android.widget.TextView[@text='Exercises']");
+			mobileActions.swipeByElements(overviewTxt, exercisesTxt);
+		}
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -215,27 +223,50 @@ public class swordRegressionSessionDetails {
 		System.out.println("Different sessions");
 		//voltar pra home
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1']")));
-		//mudar até a sessão mais antiga
-		driver.findElementByAccessibilityId("home_card_session_details_1_prev_date_button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_2']")));
-		driver.findElementByAccessibilityId("home_card_session_details_2").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
-		//validar que abriu a sessão certa - user l.spiegel+3@swordhealth.com
-		String moreSessionsExercise1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.widget.TextView[2]").getText();
-		String moreSessionsExercise2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[3]/android.widget.TextView[2]").getText();
-		String moreSessionsExercise3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[4]/android.widget.TextView[2]").getText();
-		Assert.assertEquals("Leg raise with knee bend", moreSessionsExercise1);
-		Assert.assertEquals("Leg to the side", moreSessionsExercise2);
-		Assert.assertEquals("Leg backwards", moreSessionsExercise3);
+		//mudar até a sessão mais antiga
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_2_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_3']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_3_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_4']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_4_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_5']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_5_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_6']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_6_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_7']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_7_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_8']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_8_prev_date_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_9']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_9", driver);
+		//validar que abriu a sessão certa - user l.spiegel+3@swordhealth.com - sessão 1
+		driver.findElementByXPath("//android.widget.TextView[@text='26%']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Leg raise with knee bend']");
+		driver.findElementByXPath("//android.widget.TextView[@text='98%']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Leg to the side']");
+		driver.findElementByXPath("//android.widget.TextView[@text='20%']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Leg backwards']");
+		driver.findElementByXPath("//android.widget.TextView[@text='25%']");
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_1_STAGING);
+		byte[] session1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result3 = driver
+				.getImagesSimilarity(session6, session1, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "2.png";
+		File comparison3 = new File(baselineFilename);
+		result3.storeVisualization(comparison3);
+		assertThat(result3.getVisualization().length, is(greaterThan(0)));
+		assertThat(result3.getScore(), is(lessThan(0.95)));
+		System.out.println("Different sessions");
 		//compartilhar sessão no chat
 		driver.findElementByAccessibilityId("session_details_session_overview_card_share_button").click();
-		String popupSessionTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView").getText();
-		Assert.assertEquals("Would you like to share feedback from this session in chat?", popupSessionTxt);
-		driver.findElementByXPath("//android.widget.Button").click();
+		driver.findElementByXPath("//android.widget.TextView[@text='Would you like to share feedback from this session in chat?']");
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING);
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText")));
 		//voltar
-		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
+		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_delivery_kit_status']")));
 		MobileElement kitDeliveryCard2 = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
 		MobileElement ptCard2 = driver.findElementByAccessibilityId("home_card_pt");
@@ -243,28 +274,27 @@ public class swordRegressionSessionDetails {
 		MobileElement weeklyGoalTxt2 = driver.findElementByAccessibilityId("home_card_weekly_goal");
 		mobileActions.swipeByElements(weeklyGoalTxt2, kitDeliveryCard2);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+			utilitiesAndroid.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
-	//	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1']")));
-		driver.findElementByAccessibilityId("home_card_session_details_1").click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_session_details_1']")));
+		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//partilhar um exercício no chat
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_see_more").click();
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_share").click();
-		String popupExerciseTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView").getText();
-		Assert.assertEquals("Would you like to share feedback from this exercise in chat?", popupExerciseTxt);
-		driver.findElementByXPath("//android.widget.Button").click();
+		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_see_more", driver);
+		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_share", driver);
+		driver.findElementByXPath("//android.widget.TextView[@text='Would you like to share feedback from this exercise in chat?']");
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_POPUP_EXERCISE_STAGING);
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.EditText[@text='Start typing...']")));
 		//fazer logout
-		driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
+		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
-		driver.findElementByAccessibilityId("header_menu_button").click();
-		driver.findElementByAccessibilityId("menu_option_logout").click();
+		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
+		utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
 
 		ConfigurationsAndroid.killDriver();
 		
