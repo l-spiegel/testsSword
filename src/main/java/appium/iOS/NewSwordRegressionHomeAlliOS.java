@@ -54,14 +54,14 @@ public class NewSwordRegressionHomeAlliOS {
         MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
         WebDriverWait wait = new WebDriverWait(driver,20);
         UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-        VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
+        VisualCheck visualCheck = new VisualCheck(driver);
 
         //login
         utilitiesiOS.login("luiza@marco.com", "10março!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
-        VisualCheckiOS.doVisualCheck(CHECK_HOME_SCREEN_TOP);
+        VisualCheck.doVisualCheck(CHECK_HOME_SCREEN_TOP);
         //clicar no botão do chat do card
         utilitiesiOS.clickByAccessibilityId("home_card_pt_button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
@@ -98,7 +98,7 @@ public class NewSwordRegressionHomeAlliOS {
 //            Assert.assertEquals("January 31", kitStatusShippedDate);
 //            Assert.assertEquals("Kit delivered", kitStatusDelivered);
 //            Assert.assertEquals("Delivery address", kitStatusAddress);
-            VisualCheckiOS.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
+            VisualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
             //scroll pra mostrar o program status inteiro
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
@@ -116,7 +116,7 @@ public class NewSwordRegressionHomeAlliOS {
             //Assert.assertEquals("Creating your program", programStatusCreating); //não encontra
             Assert.assertEquals("Hi, Vinte Seis! I'm creating your program now. ", programStatusLabel);
             //Assert.assertEquals("Once your program is ready, you can complete your 1st session!", programStatusTxt2); //não encontra
-        //    VisualCheckiOS.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
+        //    VisualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
             mobileActions.swipeByElements(programStatusCard, kitDeliveryCard);
@@ -130,7 +130,7 @@ public class NewSwordRegressionHomeAlliOS {
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
 //            Assert.assertEquals("Program goal: 9+ sessions ", programGoalTitle);
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
-//            VisualCheckiOS.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
+//            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
@@ -145,7 +145,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reduce your symptoms']");
 //            Assert.assertEquals(programGoalTitle, myProgramProgramGoal);
             Assert.assertEquals(programGoalLabel, myProgramProgramGoalLabel);
-            VisualCheckiOS.doVisualCheck(CHECK_MY_PROGRAM_1);
+            VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_1);
             //scroll
             MobileElement myProgramReduceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reduce your symptoms']");
             MobileElement myProgramProgramSubtitle = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We set up the goals until your first reassessment after session 9.']");
@@ -154,7 +154,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Handle more reps']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Meet program goals']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reassessment to check your progress ETA: 3rd week of program']");
-            VisualCheckiOS.doVisualCheck(CHECK_MY_PROGRAM_2);
+            VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_2);
             //voltar
             utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
             //scroll pra mostrar o weekly goal
@@ -174,7 +174,7 @@ public class NewSwordRegressionHomeAlliOS {
 //            Assert.assertEquals("Complete 4 sessions this week", weeklyGoalSubtitle);
 //            Assert.assertEquals("Once your kit arrives, you can start your first exercise session!", weeklyGoalLabel);
             //clicar nas informações do weekly goal
-        //    VisualCheckiOS.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
+        //    VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
             utilitiesiOS.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My weekly goal']");
@@ -182,7 +182,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Complete 4 sessions this week']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Let's end the week strong! Try to complete 1 more session today.\"]");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.']");
-            visualCheckiOS.doVisualCheck(CHECK_MY_WEEKLY_GOAL);
+            visualCheck.doVisualCheck(CHECK_MY_WEEKLY_GOAL);
             //voltar
             utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
             //scroll pra mostrar as sessions
@@ -198,7 +198,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
             String nextSession = driver.findElementByAccessibilityId("home_card_session_details_0_date_label").getText();
             Assert.assertEquals("Next Session", nextSession);
-        //    visualCheckiOS.doVisualCheck(CHECK_SESSIONS_CARD);
+        //    visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement progressTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
             MobileElement sessionsCardLabel = driver.findElementByAccessibilityId("home_card_session_details_0_date_label");
@@ -215,7 +215,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pain level during session']"); //não tem o id
             //Assert.assertEquals("Total stars earned", progressTotalStarsTxt);
             Assert.assertEquals("78", progressTotalStarsNumber);
-        //    visualCheckiOS.doVisualCheck(CHECK_PROGRESS_SECTION);
+        //    visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart_card");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -235,14 +235,14 @@ public class NewSwordRegressionHomeAlliOS {
             Assert.assertEquals("Achieved", personalGoalsButton1);
             Assert.assertEquals("Decrease/avoid pain using medications", personalGoalsLabel2);
             Assert.assertEquals("Achieved", personalGoalsButton2);
-            visualCheckiOS.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_1);
+            visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_1);
             //clicar em um achieved
             utilitiesiOS.clickByAccessibilityId("home_card_personal_goals_0", driver);
             //validar popup
             String personalGoalsPopupReopenTitle = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[1]").getText();
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Would you like to reopen this personal goal?']");
             Assert.assertEquals(personalGoalsLabel1, personalGoalsPopupReopenTitle);
-            visualCheckiOS.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_1);
+            visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_1);
             //clicar fora do popup
             mobileActions.tapByCoordinates(303, 150);
             mobileActions.tapByCoordinates(78, 660);
@@ -258,7 +258,7 @@ public class NewSwordRegressionHomeAlliOS {
             String personalGoalsButton3 = driver.findElementByAccessibilityId("home_card_personal_goals_mark_as_achieved_label").getText();
             Assert.assertEquals("Return to my hobbies/daily activities", personalGoalsLabel3);
             Assert.assertEquals("Mark as achieved", personalGoalsButton3);
-            visualCheckiOS.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_2);
+            visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_2);
             //clicar no último personal goals
             utilitiesiOS.clickByAccessibilityId("home_card_personal_goals_mark_as_achieved_label", driver);
             //validar o popup
@@ -266,7 +266,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Did you achieve this goal? If you tap 'Yes', your goals cannot be reopened.\"]");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not yet']");
             Assert.assertEquals(personalGoalsLabel3, personalGoalsPopupAchieveLastTitle);
-            visualCheckiOS.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_2);
+            visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_2);
             driver.findElementByXPath("//XCUIElementTypeButton[@name='Not yet']").click();
         }
         else {
@@ -279,7 +279,7 @@ public class NewSwordRegressionHomeAlliOS {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        visualCheckiOS.doVisualCheck(CHECK_SETTINGS_WITHOUT_PIN);
+        visualCheck.doVisualCheck(CHECK_SETTINGS_WITHOUT_PIN);
         //clicar pra deletar a conta
         utilitiesiOS.clickByAccessibilityId("settings_delete_account", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Delete account']")));
@@ -295,7 +295,7 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByAccessibilityId("menu_option_define_pin", driver);
         //inserir 3 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
-        visualCheckiOS.doVisualCheck(CHECK_SETTINGS_CREATE_PIN);
+        visualCheck.doVisualCheck(CHECK_SETTINGS_CREATE_PIN);
         MobileElement number1CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='1']");
         number1CreatePin.click();
         number1CreatePin.click();
@@ -317,7 +317,7 @@ public class NewSwordRegressionHomeAlliOS {
         number2CreatePin.click();
         //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
-        visualCheckiOS.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
+        visualCheck.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
         MobileElement number5ConfirmPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='5']");
         number5ConfirmPin.click();
         number5ConfirmPin.click();
@@ -327,7 +327,7 @@ public class NewSwordRegressionHomeAlliOS {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Retry']");
-        visualCheckiOS.doVisualCheck(CHECK_PIN_DIDNT_MATCH_SETTINGS);
+        visualCheck.doVisualCheck(CHECK_PIN_DIDNT_MATCH_SETTINGS);
         //clicar em retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         //inserir 4 digitos no create your pin
@@ -349,12 +349,12 @@ public class NewSwordRegressionHomeAlliOS {
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Want to use Face ID for future logins? You can activate it now, or activate it later in Settings.']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate now']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Activate later']");
-        visualCheckiOS.doVisualCheck(CHECK_ACTIVATE_BIOMETRICS_SETTINGS);
+        visualCheck.doVisualCheck(CHECK_ACTIVATE_BIOMETRICS_SETTINGS);
         //clicar pra ativar depois
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Activate later']", driver);
         //validar ecrã de sucesso
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='New PIN code set successfully']");
-        visualCheckiOS.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_1);
+        visualCheck.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_1);
         //abrir settings
         try {
             Thread.sleep(3000);
@@ -364,16 +364,16 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
         //clicar pra ativar biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login with Face ID']")));
-        visualCheckiOS.doVisualCheck(CHECK_SETTINGS_WITH_PIN);
+        visualCheck.doVisualCheck(CHECK_SETTINGS_WITH_PIN);
         utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
-        visualCheckiOS.doVisualCheck(CHECK_BIOMETRICS_TOGGLE);
+        visualCheck.doVisualCheck(CHECK_BIOMETRICS_TOGGLE);
         //clicar de novo na biometria
         utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
         //clicar em change pin
         utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Forgot your PIN?']");
-        visualCheckiOS.doVisualCheck(CHECK_ENTER_PIN_SETTINGS);
+        visualCheck.doVisualCheck(CHECK_ENTER_PIN_SETTINGS);
         //voltar
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         //clicar em change pin
@@ -437,7 +437,7 @@ public class NewSwordRegressionHomeAlliOS {
         number9ConfirmPin.click();
         //validar ecra de sucesso
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='New PIN code set successfully']");
-        visualCheckiOS.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_2);
+        visualCheck.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_2);
         //abrir settings
         try {
             Thread.sleep(3000);
@@ -457,7 +457,7 @@ public class NewSwordRegressionHomeAlliOS {
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 4 more attempt(s)']");
-        visualCheckiOS.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_4_ATTEMPTS);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_4_ATTEMPTS);
         //retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
@@ -470,7 +470,7 @@ public class NewSwordRegressionHomeAlliOS {
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 3 more attempt(s)']");
-        visualCheckiOS.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_3_ATTEMPTS);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_3_ATTEMPTS);
         //retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
@@ -483,7 +483,7 @@ public class NewSwordRegressionHomeAlliOS {
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 2 more attempt(s)']");
-        visualCheckiOS.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_2_ATTEMPTS);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_2_ATTEMPTS);
         //retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
@@ -496,7 +496,7 @@ public class NewSwordRegressionHomeAlliOS {
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Wrong PIN code!  You have 1 more attempt(s)']");
-        visualCheckiOS.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_1_ATTEMPTS);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_1_ATTEMPTS);
         //retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
@@ -511,7 +511,7 @@ public class NewSwordRegressionHomeAlliOS {
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! That's 5 failed attempts\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For security reasons, please log in again and set a new PIN code.']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Back to login']");
-        visualCheckiOS.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_0_ATTEMPTS);
+        visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_0_ATTEMPTS);
         //back to login
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
@@ -546,7 +546,7 @@ public class NewSwordRegressionHomeAlliOS {
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Forgot your PIN?']", driver);
         //validar que voltou pra login screen
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Welcome to Sword']");
-        visualCheckiOS.doVisualCheck(CHECK_LOGIN_SCREEN);
+        visualCheck.doVisualCheck(CHECK_LOGIN_SCREEN);
 
         System.out.println("O TESTE PASSOU");
 

@@ -41,7 +41,7 @@ public class SwordRegressionExerciseHistoryiOS {
         WebDriverWait wait = new WebDriverWait(driver,20);
         UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
         MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
-        VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
+        VisualCheck visualCheck = new VisualCheck(driver);
 
         try {
             Thread.sleep(10000);
@@ -77,7 +77,7 @@ public class SwordRegressionExerciseHistoryiOS {
         Assert.assertEquals("Total time", totalTime1);
         //teste visual
         byte[] exerciseHistoryComp1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        visualCheckiOS.doVisualCheck(CHECK_EXERCISE_HISTORY_1);
+        visualCheck.doVisualCheck(CHECK_EXERCISE_HISTORY_1);
         //clicar no vídeo
         utilitiesiOS.clickByAccessibilityId("exercise_history_video_description_content_view", driver);
         //validar que fechou - teste visual
@@ -105,14 +105,14 @@ public class SwordRegressionExerciseHistoryiOS {
         String lastSessionTxt1 = driver.findElementByAccessibilityId("exercise_history_results_label").getText();
         Assert.assertEquals("Last session results", lastSessionTxt1);
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
-        visualCheckiOS.doVisualCheck(CHECK_EXERCISE_HISTORY_1_SCROLL);
+        visualCheck.doVisualCheck(CHECK_EXERCISE_HISTORY_1_SCROLL);
         //abrir bottom sheet das estrelas
         utilitiesiOS.clickByXPath("(//XCUIElementTypeButton[@name=\"moreInfoClearer\"])[1]", driver);
         //validar bottom sheet das estrelas
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Total stars']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"This is the total number of stars you've earned from this exercise.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Close']");
-        visualCheckiOS.doVisualCheck(CHECK_STARS_BOTTOM_SHEET);
+        visualCheck.doVisualCheck(CHECK_STARS_BOTTOM_SHEET);
         //fechar no close
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
         //abrir bottom sheet do tempo
@@ -121,7 +121,7 @@ public class SwordRegressionExerciseHistoryiOS {
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Total time']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='This card shows the total amount of time you have spent doing this exercise.']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Close']");
-        visualCheckiOS.doVisualCheck(CHECK_TIME_BOTTOM_SHEET);
+        visualCheck.doVisualCheck(CHECK_TIME_BOTTOM_SHEET);
         //fechar clicando fora
         mobileActions.tapByCoordinates(222, 306);
         //abrir exercise history do exercício 2
@@ -139,7 +139,7 @@ public class SwordRegressionExerciseHistoryiOS {
         Assert.assertEquals("Total time", totalTime2);
         //teste visual
         byte[] exerciseHistoryComp3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        visualCheckiOS.doVisualCheck(CHECK_EXERCISE_HISTORY_2);
+        visualCheck.doVisualCheck(CHECK_EXERCISE_HISTORY_2);
         //clicar no vídeo
         utilitiesiOS.clickByAccessibilityId("exercise_history_video_info_card", driver);
         //validar que fechou - teste visual
@@ -166,7 +166,7 @@ public class SwordRegressionExerciseHistoryiOS {
         String lastSessionTxt2 = driver.findElementByAccessibilityId("exercise_history_results_label").getText();
         Assert.assertEquals("Last session results", lastSessionTxt2);
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
-        visualCheckiOS.doVisualCheck(CHECK_EXERCISE_HISTORY_2_SCROLL);
+        visualCheck.doVisualCheck(CHECK_EXERCISE_HISTORY_2_SCROLL);
         //voltar pra home
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);

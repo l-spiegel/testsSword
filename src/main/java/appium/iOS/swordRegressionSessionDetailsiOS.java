@@ -5,7 +5,6 @@ import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import io.appium.java_client.ios.IOSDriver;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
@@ -38,7 +37,7 @@ public class swordRegressionSessionDetailsiOS {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-		VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
@@ -56,11 +55,11 @@ public class swordRegressionSessionDetailsiOS {
 		//validar o ecrã
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		//comparar com build antiga
-		VisualCheckiOS.doVisualCheck(CHECK_SESSION_DETAILS_FIRST_OPEN);
+		VisualCheck.doVisualCheck(CHECK_SESSION_DETAILS_FIRST_OPEN);
 		//fechar o warning antes de fazer a validação
 		utilitiesiOS.clickByAccessibilityId("Close", driver);
 		//comparar com build antiga
-		VisualCheckiOS.doVisualCheck(CHECK_SESSION_DETAILS_CLOSE_WARNING);
+		VisualCheck.doVisualCheck(CHECK_SESSION_DETAILS_CLOSE_WARNING);
 		//validação overview
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"This session was done with Sword Go.\"]")).size() > 0) {

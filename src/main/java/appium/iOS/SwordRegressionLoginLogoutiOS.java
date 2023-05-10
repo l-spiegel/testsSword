@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -38,7 +37,7 @@ public class SwordRegressionLoginLogoutiOS {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-		VisualCheckiOS visualCheck = new VisualCheckiOS(driver);
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		driver.findElementByAccessibilityId("Allow").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
@@ -157,7 +156,7 @@ public class SwordRegressionLoginLogoutiOS {
 	public void fazerLogin() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-		VisualCheckiOS visualCheck = new VisualCheckiOS(driver);
+		VisualCheck visualCheck = new VisualCheck(driver);
 	  
 		//login + not now
 		utilitiesiOS.login("luiza@marco.com", "10março!", driver);

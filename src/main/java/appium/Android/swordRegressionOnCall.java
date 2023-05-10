@@ -36,6 +36,8 @@ public class swordRegressionOnCall {
 	private final static String CHECK_HUB_WITH_PROGRAMS_SCREEN = "hub_with_programs";
 	private final static String CHECK_HUB_WITHOUT_PROGRAMS_SCREEN = "hub_without_programs";
 	private final static String CHECK_TRIAGE_SCREEN = "triage_screen";
+	private final static String CHECK_HUB_WITH_OPEN_CHAT = "hub_with_active_chat";
+	private final static String CHECK_HUB_WITH_OPEN_CHAT_AFTER_LOGIN = "hub_with_active_chat_after_login";
 
 	private AndroidDriver<MobileElement> driver;
 	@Before
@@ -78,7 +80,6 @@ public class swordRegressionOnCall {
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 			}
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_on_call_card']")));
 			visualCheck.doVisualCheck(CHECK_HUB_WITH_PROGRAMS_SCREEN);
 		} else {
 			visualCheck.doVisualCheck(CHECK_HUB_WITHOUT_PROGRAMS_SCREEN);
@@ -162,6 +163,7 @@ public class swordRegressionOnCall {
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
 		//validar on-call card novo
+		visualCheck.doVisualCheck(CHECK_HUB_WITH_OPEN_CHAT);
 		byte[] hubWithChat = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result = driver
 		        .getImagesSimilarity(hubWithoutChat, hubWithChat, new SimilarityMatchingOptions()
@@ -199,6 +201,7 @@ public class swordRegressionOnCall {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		visualCheck.doVisualCheck(CHECK_HUB_WITH_OPEN_CHAT_AFTER_LOGIN);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
 		byte[] hubAfterLogin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result2 = driver
@@ -330,6 +333,7 @@ public class swordRegressionOnCall {
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
 		//validar on-call card novo
+		visualCheck.doVisualCheck(CHECK_HUB_WITH_OPEN_CHAT);
 		byte[] hubWithChat = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result = driver
 		        .getImagesSimilarity(hubWithoutChat, hubWithChat, new SimilarityMatchingOptions()
@@ -370,6 +374,7 @@ public class swordRegressionOnCall {
 			Thread.currentThread().interrupt();
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Get on-demand support from a Clinical Pain Specialist via chat.']")));
+		visualCheck.doVisualCheck(CHECK_HUB_WITH_OPEN_CHAT_AFTER_LOGIN);
 		byte[] hubAfterLogin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result2 = driver
 		        .getImagesSimilarity(hubWithChat, hubAfterLogin, new SimilarityMatchingOptions()

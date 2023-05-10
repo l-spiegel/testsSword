@@ -32,7 +32,7 @@ public class swordRegressionBadgesiOS {
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-		new VisualCheckiOS(driver);
+		new VisualCheck(driver);
 
 		utilitiesiOS.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
@@ -53,7 +53,7 @@ public class swordRegressionBadgesiOS {
 			System.out.println("FIRST NOT ACHIEVED BADGE: " + notAchieved1 + " ");
 			String notAchieved2 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_badges_card_badge_2']/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
 			System.out.println("SECOND NOT ACHIEVED BADGE: " + notAchieved2);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGES);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES);
 			//fazer swipe pra mostrar a última badge
 			MobileElement secondNotAchievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_2");
 			MobileElement achievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_0");
@@ -61,7 +61,7 @@ public class swordRegressionBadgesiOS {
 			//pegar o texto da última badge
 			String notAchieved3 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_badges_card_badge_3']/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
 			System.out.println("THIRD NOT ACHIEVED BADGE: " + notAchieved3);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGES_SCROLL);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES_SCROLL);
 			//abrir o popup de uma das badges not achieved
 			utilitiesiOS.clickByAccessibilityId("home_badges_card_badge_2", driver);
 			//imprimir valores do badge
@@ -69,7 +69,7 @@ public class swordRegressionBadgesiOS {
 			System.out.println("POPUP BADGE TITLE: " + badgeDetailsTitle1);
 			String badgeDetailsInfo1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[2]").getText(); 
 			System.out.println("POPUP BADGE DESCRIPTION: " + badgeDetailsInfo1);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGE_NOT_ACHIEVED);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGE_NOT_ACHIEVED);
 			//fechar popup pelo botão
 			utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Got it']", driver);
 			//abrir my badges
@@ -89,14 +89,14 @@ public class swordRegressionBadgesiOS {
 		//pegar o número de badges
 		String numberOfSessionsBadgesAchieved = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[1]/XCUIElementTypeStaticText[2]").getText();
 		System.out.println("BADGES ACHIEVED: " + numberOfSessionsBadgesAchieved);
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_SCREEN_1);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_1);
 		//clicar na badge de 18 sessões
 		utilitiesiOS.clickByAccessibilityId("badges_screen_section_0_badge_3", driver);
 		//validar details do popup
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name='18th Session'])[2]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Complete your 18th exercise session']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Got it']");
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_POPUP_1);
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_1);
 		//clicar fora do popup
 		mobileActions.tapByCoordinates(248, 158);
 		//Fazer scroll do number of weekly goals até o number of sessions
@@ -122,7 +122,7 @@ public class swordRegressionBadgesiOS {
 		//validar details do popup
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name='4th Weekly Goal'])[2]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Achieve your weekly goal for the fourth time ']");
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_POPUP_2);
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_2);
 		//clicar no botão do popup
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Got it']", driver);
 		//fazer scroll do app badges até o number of weekly goals
@@ -158,7 +158,7 @@ public class swordRegressionBadgesiOS {
 		//pegar o número de badges
 		String numberOfBadgesAchieved4 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeOther[2]/XCUIElementTypeStaticText[2]").getText();
 		System.out.println("BADGES ACHIEVED: " + numberOfBadgesAchieved4);
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_SCREEN_4);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_4);
 		//clicar na badge do enrollment
 		utilitiesiOS.clickByAccessibilityId("badges_screen_section_2_badge_2", driver);
 		//voltar
@@ -173,7 +173,7 @@ public class swordRegressionBadgesiOS {
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
-		VisualCheckiOS visualCheckiOS = new VisualCheckiOS(driver);
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
@@ -200,7 +200,7 @@ public class swordRegressionBadgesiOS {
 			System.out.println("FIRST NOT ACHIEVED BADGE: " + notAchieved1 + " ");
 			String notAchieved2 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_badges_card_badge_2']/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
 			System.out.println("SECOND NOT ACHIEVED BADGE: " + notAchieved2);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGES);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES);
 			//fazer swipe pra mostrar a última badge
 			MobileElement secondNotAchievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_2");
 			MobileElement achievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_0");
@@ -208,7 +208,7 @@ public class swordRegressionBadgesiOS {
 			//pegar o texto da última badge
 			String notAchieved3 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_badges_card_badge_3']/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
 			System.out.println("THIRD NOT ACHIEVED BADGE: " + notAchieved3);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGES_SCROLL);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGES_SCROLL);
 			//abrir o popup de uma das badges not achieved
 			utilitiesiOS.clickByAccessibilityId("home_badges_card_badge_2", driver);
 			//imprimir valores do badge
@@ -216,7 +216,7 @@ public class swordRegressionBadgesiOS {
 			System.out.println("POPUP BADGE TITLE: " + badgeDetailsTitle1);
 			String badgeDetailsInfo1 = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeStaticText[2]").getText();
 			System.out.println("POPUP BADGE DESCRIPTION: " + badgeDetailsInfo1);
-			VisualCheckiOS.doVisualCheck(CHECK_HOME_BADGE_NOT_ACHIEVED);
+			VisualCheck.doVisualCheck(CHECK_HOME_BADGE_NOT_ACHIEVED);
 			//fechar popup pelo botão
 			utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Got it']", driver);
 			//abrir my badges
@@ -236,14 +236,14 @@ public class swordRegressionBadgesiOS {
 		//pegar o número de badges
 		String numberOfSessionsBadgesAchieved = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"3/4\"]").getText();
 		System.out.println("SESSIONS BADGES ACHIEVED: " + numberOfSessionsBadgesAchieved);
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_SCREEN_1);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_1);
 		//clicar na badge de 18 sessões
 		utilitiesiOS.clickByAccessibilityId("eighteenth_session_badge_inactive", driver); //mudou o accessibility id
 		//validar details do popup
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name='18th Session'])[2]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Complete your 18th exercise session']");
 		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Got it\"]");
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_POPUP_1);
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_1);
 		//clicar fora do popup
 		mobileActions.tapByCoordinates(248, 158);
 		//Fazer scroll do number of weekly goals até o number of sessions
@@ -269,7 +269,7 @@ public class swordRegressionBadgesiOS {
 		//validar details do popup
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name='4th Weekly Goal'])[2]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Achieve your weekly goal for the fourth time ']");
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_POPUP_2);
+		VisualCheck.doVisualCheck(CHECK_BADGE_POPUP_2);
 		//clicar no botão do popup
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Got it']", driver);
 		//fazer scroll do getting started até o number of weekly goals
@@ -305,7 +305,7 @@ public class swordRegressionBadgesiOS {
 		//pegar o número de badges
 		String numberOfBadgesAchieved4 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"2/4\"]").getText();
 		System.out.println("PROGRAM MILESTONES BADGES ACHIEVED: " + numberOfBadgesAchieved4);
-		VisualCheckiOS.doVisualCheck(CHECK_BADGE_SCREEN_4);
+		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_4);
 		//clicar na badge do enrollment
 		utilitiesiOS.clickByAccessibilityId("badges_screen_section_2_badge_2", driver);
 		//voltar

@@ -1,6 +1,6 @@
 package appium.Android;
 
-import appium.iOS.VisualCheckiOS;
+import appium.Android.VisualCheck;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;

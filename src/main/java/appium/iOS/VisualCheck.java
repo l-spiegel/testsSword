@@ -8,14 +8,14 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import java.io.File;
 
-public class VisualCheckiOS {
+public class VisualCheck {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/iOS";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/iOS/preventive";
     private final static String BASELINE = "BASELINE_";
     private final static double MATCH_THRESHOLD = 0.95;
 
     private static IOSDriver<MobileElement> driver;
-    public VisualCheckiOS(IOSDriver<MobileElement> driver) {
+    public VisualCheck(IOSDriver<MobileElement> driver) {
         this.driver = driver;
     }
     public static void doVisualCheck(String checkName) throws Exception {
