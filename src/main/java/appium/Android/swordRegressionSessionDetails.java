@@ -2,7 +2,6 @@ package appium.Android;
 
 import java.io.File;
 import java.net.MalformedURLException;
-
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import org.apache.commons.codec.binary.Base64;
@@ -15,7 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -27,6 +25,7 @@ public class swordRegressionSessionDetails {
 	private final static String BASELINE = "COMP_";
 
 	private AndroidDriver<MobileElement> driver;
+
 	@Before
 	public void startAppium() throws MalformedURLException {
 		driver = ConfigurationsAndroid.getDriver();
@@ -76,7 +75,7 @@ public class swordRegressionSessionDetails {
 		//validar o ecrã
 		driver.findElementByXPath("//android.widget.TextView[@text='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_WARNING_STAGING);
-		//fechar o warning antes de fazer a validação
+		//fechar o warning
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView", driver);
 		//validação overview
 		driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
@@ -86,7 +85,7 @@ public class swordRegressionSessionDetails {
 		} else {
 			if (driver.findElements(By.xpath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]")).size() > 0) {
 				String overviewStars = driver.findElementByXPath("//android.view.View[@content-desc='session_details_session_overview_card']/android.widget.TextView[2]").getText();
-				System.out.println("STARS ACHHIEVED: " + overviewStars);
+				System.out.println("STARS ACHIEVED: " + overviewStars);
 			} else {
 				System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
 			}

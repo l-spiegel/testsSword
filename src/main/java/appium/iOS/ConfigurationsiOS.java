@@ -27,7 +27,7 @@ public class ConfigurationsiOS {
         desiredCapabilities.setCapability("automationName", "XCUITest");
         desiredCapabilities.setCapability("xcodeOrgId", "698N4JU9B9");
         desiredCapabilities.setCapability("xcodeSigningId", "iPhone Developer");
-        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealthRelease500.ipa");
+        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth1901.ipa");
         desiredCapabilities.setCapability("updatedWDABundleId", "com.luizateste2.wda.runner");
         desiredCapabilities.setCapability("showXcodeLog", "true");
         desiredCapabilities.setCapability("wdaLocalPort", "8205");

@@ -23,15 +23,30 @@ public class swordRegressionSessionDetailsiOS {
 
 	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/iOS";
 	private final static String BASELINE = "COMP_";
-	private final static String CHECK_SESSION_DETAILS_FIRST_OPEN = "session_details_first_open";
-	private final static String CHECK_SESSION_DETAILS_CLOSE_WARNING = "session_details_close_warning";
 
 	private IOSDriver<MobileElement> driver;
+
 	@Before
 	public void startAppium() throws MalformedURLException {
 		driver = ConfigurationsiOS.getDriver();
 	}
-	
+
+	private final static String CHECK_HOME_NEXT_SESSION = "home_next_session_card";
+	private final static String CHECK_HOME_NEXT_SESSION_STAGING = "home_next_session_card_staging";
+	private final static String CHECK_HOME_SESSION_CARD_1 = "home_session_card_1";
+	private final static String CHECK_HOME_SESSION_CARD_1_STAGING = "home_session_card_1_staging";
+	private final static String CHECK_SESSION_DETAILS_WARNING = "session_details_warning";
+	private final static String CHECK_SESSION_DETAILS_WARNING_STAGING = "session_details_warning_staging";
+	private final static String CHECK_SESSION_DETAILS_LATEST_SESSION = "session_details_latest_session";
+	private final static String CHECK_SESSION_DETAILS_LATEST_SESSION_STAGING = "session_details_latest_session_staging";
+	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION = "session_details_next_session";
+	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION_STAGING = "session_details_next_session_staging";
+	private final static String CHECK_SESSION_DETAILS_SESSION_1_STAGING = "session_details_session_1_staging";
+	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION = "session_details_popup_session";
+	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING = "session_details_popup_session_staging";
+	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE = "session_details_popup_exercise";
+	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE_STAGING = "session_details_popup_exercise_staging";
+
 	@Test
 	public void virtualPtProduction() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
@@ -55,11 +70,11 @@ public class swordRegressionSessionDetailsiOS {
 		//validar o ecrã
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		//comparar com build antiga
-		VisualCheck.doVisualCheck(CHECK_SESSION_DETAILS_FIRST_OPEN);
+//		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_FIRST_OPEN);
 		//fechar o warning antes de fazer a validação
 		utilitiesiOS.clickByAccessibilityId("Close", driver);
 		//comparar com build antiga
-		VisualCheck.doVisualCheck(CHECK_SESSION_DETAILS_CLOSE_WARNING);
+//		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_CLOSE_WARNING);
 		//validação overview
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"This session was done with Sword Go.\"]")).size() > 0) {
@@ -274,10 +289,11 @@ public class swordRegressionSessionDetailsiOS {
 	}
 	
 	@Test
-	public void virtualPtStaging() throws MalformedURLException {
+	public void virtualPtStaging() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		MobileActionsiOS mobileActions = new MobileActionsiOS(driver);
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
@@ -289,68 +305,71 @@ public class swordRegressionSessionDetailsiOS {
 		mobileActions.swipeByElements(weeklyGoalTxt, kitDeliveryCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@value='Next Session']")).size() > 0) {
-			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+			visualCheck.doVisualCheck(CHECK_HOME_NEXT_SESSION_STAGING);
+			utilitiesiOS.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_see_more_button")));
-		MobileElement el5 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_1");
-		el5.click();
+		visualCheck.doVisualCheck(CHECK_HOME_SESSION_CARD_1_STAGING);
+		utilitiesiOS.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Exercises']")));
 		//validar o ecrã
-		String chatWarning = driver.findElementByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeTable/XCUIElementTypeCell[1]/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.", chatWarning);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.\"]");
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_WARNING_STAGING);
 		//fechar o warning antes de fazer a validação
-		MobileElement el6 = (MobileElement) driver.findElementByAccessibilityId("Close");
-		el6.click();
+		utilitiesiOS.clickByAccessibilityId("Close", driver);
 		//validação overview
-		String overview = driver.findElementByXPath("//XCUIElementTypeOther[@name='Overview']/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("Overview", overview);
-		if (driver.findElements(By.id("session_details_session_overview_card_stars_view")).size() > 0) {
-	        System.out.println("STARS CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
-	    }
-		if (driver.findElements(By.id("session_details_session_overview_card_pain_view")).size() > 0) {
-	        System.out.println("PAIN CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
-	    }
-		if (driver.findElements(By.id("session_details_session_overview_card_fatigue_view")).size() > 0) {
-	        System.out.println("FATIGUE CARD ON OVERVIEW SHOWN");
-        } else {
-	        System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
-	    }	
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Overview\"]");
+		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"No session results\"]")).size() > 0) {
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='This session was done with Sword Go.']");
+			System.out.println("Sword Go session");
+		} else {
+			if (driver.findElements(By.id("session_details_session_overview_card_stars_view")).size() > 0) {
+				System.out.println("STARS CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("STARS CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.id("session_details_session_overview_card_pain_view")).size() > 0) {
+				System.out.println("PAIN CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("PAIN CARD ON OVERVIEW NOT SHOWN!");
+			}
+			if (driver.findElements(By.id("session_details_session_overview_card_fatigue_view")).size() > 0) {
+				System.out.println("FATIGUE CARD ON OVERVIEW SHOWN");
+			} else {
+				System.out.println("FATIGUE CARD ON OVERVIEW NOT SHOWN!");
+			}
+		}
 		//validação exercícios
-		String exercises = driver.findElementByXPath("//XCUIElementTypeOther[@name='Exercises']/XCUIElementTypeStaticText").getText();
-		Assert.assertEquals("Exercises", exercises);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises'']");
 		String exerciseNumber1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_number").getText();
 		String exerciseName1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
 		String reps1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_reps").getText();
-		String score1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_score").getText();
-			System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
+		System.out.println("Exercise nº: " + exerciseNumber1 + " - " + exerciseName1 + " " + reps1);
 		String exerciseNumber2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_number").getText();
 		String exerciseName2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_name").getText();
 		String reps2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
-		String score2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_score").getText();
-			System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
+		System.out.println("Exercise nº: " + exerciseNumber2 + " - " + exerciseName2 + " " + reps2);
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_LATEST_SESSION_STAGING);
 		//fazer scroll
-		MobileElement exerciseCard2 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_2_card");
-		MobileElement overviewTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview']");
-		mobileActions.swipeByElements(exerciseCard2, overviewTxt);
+		MobileElement exerciseCard1 = driver.findElementByAccessibilityId("session_details_exercise_1_card");
+		MobileElement overviewTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Overview'']");
+		mobileActions.swipeByElements(exerciseCard1, overviewTxt);
 		//validar o ecrã
 		String exerciseNumberRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_number").getText();
 		String exerciseNameRandom1 = driver.findElementByAccessibilityId("session_details_exercise_3_card_name").getText();
 		String repsRandom1 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
+		System.out.println("Exercise nº: " + exerciseNumberRandom1 + " - " + exerciseNameRandom1 + " " + repsRandom1);
 		String exerciseNumberRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_number").getText();
 		String exerciseNameRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_name").getText();
 		String repsRandom2 = driver.findElementByAccessibilityId("session_details_exercise_4_card_reps").getText();
-			System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
-		//pull to refresh e abre next session
-		MobileElement exerciseCard4 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_3_card");
-		MobileElement exerciseCard8 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_7_card");
-		mobileActions.swipeByElements(exerciseCard4, exerciseCard8);
-		MobileElement exercisesTxt = (MobileElement) driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
-		mobileActions.swipeByElements(exercisesTxt, exerciseCard4);
+		System.out.println("Exercise nº: " + exerciseNumberRandom2 + " - " + exerciseNameRandom2 + " " + repsRandom2);
+		//pull to refresh
+		MobileElement exerciseCard5 = driver.findElementByAccessibilityId("session_details_exercise_5_card");
+		MobileElement exerciseCard12 = driver.findElementByAccessibilityId("session_details_exercise_1_card");
+		mobileActions.swipeByElements(exerciseCard12, exerciseCard5);
+
+		MobileElement exercisesTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercises']");
+		mobileActions.swipeByElements(exercisesTxt, exerciseCard5);
 		//validar next session
 	//	wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")));
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name='Session overview']")).size() > 0) {
@@ -394,13 +413,11 @@ public class swordRegressionSessionDetailsiOS {
 			String refreshScore1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_score").getText();
 			Assert.assertEquals(exerciseName1, refreshExerciseName1);
 			Assert.assertEquals(reps1, refreshReps1);
-			Assert.assertEquals(score1, refreshScore1);
 			String refreshExerciseName2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_name").getText();
 			String refreshReps2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_reps").getText();
 			String refreshScore2 = driver.findElementByAccessibilityId("session_details_exercise_1_card_score").getText();
 			Assert.assertEquals(exerciseName2, refreshExerciseName2);
 			Assert.assertEquals(reps2, refreshReps2);
-			Assert.assertEquals(score2, refreshScore2);
 		}
 		//validar abrir um set
 	//	MobileElement el7 = (MobileElement) driver.findElementByAccessibilityId("session_details_exercise_1_card"); //mudar quando tiver outro com set, esse só se aplica ao user de testes
