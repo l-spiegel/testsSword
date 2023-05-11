@@ -42,10 +42,13 @@ public class swordRegressionSessionDetails {
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION = "session_details_next_session";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION_STAGING = "session_details_next_session_staging";
 	private final static String CHECK_SESSION_DETAILS_SESSION_1_STAGING = "session_details_session_1_staging";
+	private final static String CHECK_SESSION_DETAILS_SESSION_4 = "session_details_session_4";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION = "session_details_popup_session";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING = "session_details_popup_session_staging";
 	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE = "session_details_popup_exercise";
 	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE_STAGING = "session_details_popup_exercise_staging";
+	private final static String CHECK_SESSION_DETAILS_BOTTOM_SHEET_STAGING = "session_details_bottom_sheet_staging";
+	private final static String CHECK_SESSION_DETAILS_BOTTOM_SHEET = "session_details_bottom_sheet";
 
 	@Test
 	public void virtualPtStaging() throws Exception {
@@ -64,12 +67,12 @@ public class swordRegressionSessionDetails {
 		mobileActions.swipeByElements(weeklyGoalTxt, kitDeliveryCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
-			//visualCheck.doVisualCheck(CHECK_HOME_NEXT_SESSION_STAGING);
+			visualCheck.doVisualCheck(CHECK_HOME_NEXT_SESSION_STAGING);
 			utilitiesAndroid.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
 		//o id do see more button sumiu com a mudança do layout do botão
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc=\"home_card_session_details_1\"]")));
-		//visualCheck.doVisualCheck(CHECK_HOME_SESSION_CARD_1_STAGING);
+		visualCheck.doVisualCheck(CHECK_HOME_SESSION_CARD_1_STAGING);
 		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
 		//validar o ecrã
@@ -214,7 +217,7 @@ public class swordRegressionSessionDetails {
 		SimilarityMatchingResult result2 = driver
 				.getImagesSimilarity(session82, session6, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + ".png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session6_session8.png";
 		File comparison2 = new File(baselineFilename);
 		result2.storeVisualization(comparison2);
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
@@ -252,7 +255,7 @@ public class swordRegressionSessionDetails {
 		SimilarityMatchingResult result3 = driver
 				.getImagesSimilarity(session6, session1, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "2.png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session1_session6.png";
 		File comparison3 = new File(baselineFilename);
 		result3.storeVisualization(comparison3);
 		assertThat(result3.getVisualization().length, is(greaterThan(0)));
@@ -280,6 +283,7 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//partilhar um exercício no chat
 		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_see_more", driver);
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_BOTTOM_SHEET_STAGING);
 		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_share", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Would you like to share feedback from this exercise in chat?']");
 		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_POPUP_EXERCISE_STAGING);
@@ -289,11 +293,6 @@ public class swordRegressionSessionDetails {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		//fazer logout
-		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
-		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
-		utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
 
 		ConfigurationsAndroid.killDriver();
 		
@@ -326,7 +325,7 @@ public class swordRegressionSessionDetails {
 		driver.findElementByXPath("//android.widget.TextView[@text='For exercise details or to discuss it with your Physical Therapist, tap the three dots on each card.']");
 		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_WARNING);
 		//fechar o warning antes de fazer a validação
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.widget.ImageView", driver);
 		//validação overview
 		driver.findElementByXPath("//android.widget.TextView[@text='Overview']");
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text=\"This session was done with Sword Go.\"]")).size() > 0) {
@@ -411,9 +410,6 @@ public class swordRegressionSessionDetails {
 		}
 		driver.findElementByXPath("//android.widget.TextView[@text='Next session exercises']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Trunk forward bend']");
-
-		//validar abrir um set - MUDAR DE POSIÇÃO
-	
 		//selecionar outro dia - sessão 12
 		utilitiesAndroid.clickByAccessibilityId("session_details_carousel_date_card_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
@@ -473,7 +469,7 @@ public class swordRegressionSessionDetails {
 		SimilarityMatchingResult result2 = driver
 				.getImagesSimilarity(session122, session10, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + ".png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session10_session12.png";
 		File comparison2 = new File(baselineFilename);
 		result2.storeVisualization(comparison2);
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
@@ -502,12 +498,13 @@ public class swordRegressionSessionDetails {
 		//abrir see more sessions
 		utilitiesAndroid.clickByAccessibilityId("home_card_session_details_10", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
-		//validar que abriu a sessão certa - do user da Filipa
+		//validar que abriu a sessão certa
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_4);
 		byte[] session4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result3 = driver
 				.getImagesSimilarity(session10, session4, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "2.png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session10_session4.png";
 		File comparison3 = new File(baselineFilename);
 		result3.storeVisualization(comparison3);
 		assertThat(result3.getVisualization().length, is(greaterThan(0)));
@@ -533,6 +530,7 @@ public class swordRegressionSessionDetails {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 		//partilhar um exercício no chat
 		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_see_more", driver);
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_BOTTOM_SHEET);
 		utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_share", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Would you like to share feedback from this exercise in chat?']");
 		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_POPUP_EXERCISE);
@@ -542,11 +540,6 @@ public class swordRegressionSessionDetails {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		//fazer logout
-		utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Marta Casaca']")));
-		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
-		utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
 
 		ConfigurationsAndroid.killDriver();
 	}
