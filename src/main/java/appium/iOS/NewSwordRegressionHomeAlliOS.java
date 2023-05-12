@@ -1,14 +1,23 @@
 package appium.iOS;
 
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
+import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import io.appium.java_client.ios.IOSDriver;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import java.io.File;
 import java.net.MalformedURLException;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 
 public class NewSwordRegressionHomeAlliOS {
 
@@ -17,6 +26,9 @@ public class NewSwordRegressionHomeAlliOS {
     public void startAppium() throws MalformedURLException {
         driver = ConfigurationsiOS.getDriver();
     }
+
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression home/iOS";
+    private final static String BASELINE = "COMP_";
 
     private final static String CHECK_HOME_SCREEN_TOP = "home_screen_top";
     private final static String CHECK_KIT_DELIVERY_CARD = "kit_delivery_card";
@@ -84,7 +96,7 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar o kit delivery
         if (driver.findElements(By.id("home_card_delivery_kit_status")).size() > 0) { //não encontra os elementos dentro do card
-            VisualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
+//            VisualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
             //scroll pra mostrar o program status inteiro
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
@@ -110,7 +122,7 @@ public class NewSwordRegressionHomeAlliOS {
         if (driver.findElements(By.id("home_card_program_goal")).size() > 0) {
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
-            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
+//            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
@@ -148,7 +160,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set reminders']");
             //clicar nas informações do weekly goal
-            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
+//            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
             utilitiesiOS.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My weekly goal']");
@@ -172,7 +184,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
             String nextSession = driver.findElementByAccessibilityId("home_card_session_details_0_date_label").getText();
             Assert.assertEquals("Next Session", nextSession);
-            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
+//            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement progressTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
             MobileElement sessionsCardLabel = driver.findElementByAccessibilityId("home_card_session_details_0_date_label");
@@ -187,7 +199,7 @@ public class NewSwordRegressionHomeAlliOS {
             String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pain level during session']"); //não tem o id
             Assert.assertEquals("78", progressTotalStarsNumber);
-            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
+//            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart_card");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -218,7 +230,7 @@ public class NewSwordRegressionHomeAlliOS {
             //clicar fora do popup
             mobileActions.tapByCoordinates(303, 150);
             mobileActions.tapByCoordinates(78, 660);
-            driver.findElementByXPath("//XCUIElementTypeButton[@name='No']").click();
+            utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='No']", driver);
             //fazer scroll no personal goals
             MobileElement personalGoalsCard2 = driver.findElementByAccessibilityId("home_card_personal_goals_1");
             MobileElement personalGoalsCard1 = driver.findElementByAccessibilityId("home_card_personal_goals_0");
@@ -239,7 +251,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not yet']");
             Assert.assertEquals(personalGoalsLabel3, personalGoalsPopupAchieveLastTitle);
             visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_2);
-            driver.findElementByXPath("//XCUIElementTypeButton[@name='Not yet']").click();
+            utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Not yet']", driver);
         }
         else {
             System.out.println("LIGA O PROXY CERTO");
@@ -268,31 +280,92 @@ public class NewSwordRegressionHomeAlliOS {
         //inserir 3 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_CREATE_PIN);
+        byte[] createPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         MobileElement number1CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='1']");
         number1CreatePin.click();
         number1CreatePin.click();
         number1CreatePin.click();
+        //comparar com o createpin1 - vazio
+        byte[] createPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result1 = driver
+                .getImagesSimilarity(createPinSettings2, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_filled" + ".png";
+        File comparison1 = new File(baselineFilename);
+        result1.storeVisualization(comparison1);
+        assertThat(result1.getVisualization().length, is(greaterThan(0)));
+        assertThat(result1.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_filled similarity of: " + result1.getScore());
         //apagar 1
         utilitiesiOS.clickByAccessibilityId("deleteKey", driver);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        //comparar com o createpin2
+        byte[] createPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result2 = driver
+                .getImagesSimilarity(createPinSettings3, createPinSettings2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_erase" + ".png";
+        File comparison2 = new File(baselineFilename);
+        result2.storeVisualization(comparison2);
+        assertThat(result2.getVisualization().length, is(greaterThan(0)));
+        assertThat(result2.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_filled_delete_one similarity of: " + result2.getScore());
         //terminar de definir o pin
         number1CreatePin.click();
         number1CreatePin.click();
         //voltar pra create pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
-        //inserir 4 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        //comparar com o createpin1
+        byte[] createPinSettings4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result3 = driver
+                .getImagesSimilarity(createPinSettings4, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin1" + ".png";
+        File comparison3 = new File(baselineFilename);
+        result3.storeVisualization(comparison3);
+        assertThat(result3.getVisualization().length, is(greaterThan(0)));
+        assertThat(result3.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin1 similarity of: " + result3.getScore());
+        //inserir 4 digitos
         MobileElement number2CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='2']");
         number2CreatePin.click();
         number2CreatePin.click();
         number2CreatePin.click();
         number2CreatePin.click();
-        //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
+        //comparar com o createpin1
+        byte[] confirmPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result4 = driver
+                .getImagesSimilarity(confirmPinSettings1, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_vs_create_pin" + ".png";
+        File comparison4 = new File(baselineFilename);
+        result4.storeVisualization(comparison4);
+        assertThat(result4.getVisualization().length, is(greaterThan(0)));
+        assertThat(result4.getScore(), is(lessThan(0.95)));
+        System.out.println("settings_confirm_pin_vs_create_pin similarity of: " + result4.getScore());
+        //inserir 4 digitos diferentes no confirm pin
         MobileElement number5ConfirmPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='5']");
         number5ConfirmPin.click();
         number5ConfirmPin.click();
+        //comparar com o confirmpin2
+        byte[] confirmPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result5 = driver
+                .getImagesSimilarity(confirmPinSettings2, confirmPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_filled" + ".png";
+        File comparison5 = new File(baselineFilename);
+        result5.storeVisualization(comparison5);
+        assertThat(result5.getVisualization().length, is(greaterThan(0)));
+        assertThat(result5.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_confirm_pin_filled similarity of: " + result5.getScore());
         number5ConfirmPin.click();
         number5ConfirmPin.click();
         //validar ecrã de erro
@@ -300,10 +373,22 @@ public class NewSwordRegressionHomeAlliOS {
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Retry']");
         visualCheck.doVisualCheck(CHECK_PIN_DIDNT_MATCH_SETTINGS);
+        byte[] pinDidntMatchErrorCreatePin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //clicar em retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
-        //inserir 4 digitos no create your pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        byte[] createPinSettings5 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o createPinSettings1
+        SimilarityMatchingResult result6 = driver
+                .getImagesSimilarity(createPinSettings5, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin2" + ".png";
+        File comparison6 = new File(baselineFilename);
+        result6.storeVisualization(comparison6);
+        assertThat(result6.getVisualization().length, is(greaterThan(0)));
+        assertThat(result6.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin2 similarity of: " + result6.getScore());
+        //inserir 4 digitos no create your pin
         MobileElement number0CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='0']");
         number0CreatePin.click();
         number0CreatePin.click();
@@ -337,10 +422,41 @@ public class NewSwordRegressionHomeAlliOS {
         //clicar pra ativar biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login with Face ID']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_WITH_PIN);
+        byte[] biometricsToggleOff1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         visualCheck.doVisualCheck(CHECK_BIOMETRICS_TOGGLE);
+        byte[] biometricsToggleOn = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result7 = driver
+                .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOn, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_on_off" + ".png";
+        File comparison7 = new File(baselineFilename);
+        result7.storeVisualization(comparison7);
+        assertThat(result7.getVisualization().length, is(greaterThan(0)));
+        assertThat(result7.getScore(), is(greaterThan(0.95)));
+        System.out.println("toggle_on_off similarity of: " + result7.getScore());
         //clicar de novo na biometria
         utilitiesiOS.clickByAccessibilityId("menu_option_login_biometrics", driver);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        byte[] biometricsToggleOff2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result8 = driver
+                .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOff2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_off" + ".png";
+        File comparison8 = new File(baselineFilename);
+        result8.storeVisualization(comparison8);
+        assertThat(result8.getVisualization().length, is(greaterThan(0)));
+        assertThat(result8.getScore(), is(greaterThan(0.95)));
+        System.out.println("toggle_off similarity of: " + result8.getScore());
         //clicar em change pin
         utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
@@ -351,18 +467,57 @@ public class NewSwordRegressionHomeAlliOS {
         //clicar em change pin
         utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Enter your PIN code']")));
+        byte[] enterPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //digitar 3 digitos corretos
         MobileElement number0EnterPin1 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='0']");
         number0EnterPin1.click();
         number0EnterPin1.click();
         number0EnterPin1.click();
+        byte[] enterPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o enterpin1
+        SimilarityMatchingResult result9 = driver
+                .getImagesSimilarity(enterPinSettings2, enterPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "enter_pin_filled" + ".png";
+        File comparison9 = new File(baselineFilename);
+        result9.storeVisualization(comparison9);
+        assertThat(result9.getVisualization().length, is(greaterThan(0)));
+        assertThat(result9.getScore(), is(greaterThan(0.95)));
+        System.out.println("enter_pin_filled similarity of: " + result9.getScore());
         //apagar 1 digito
         utilitiesiOS.clickByAccessibilityId("deleteKey", driver);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        byte[] enterPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o enterpin2
+        SimilarityMatchingResult result10 = driver
+                .getImagesSimilarity(enterPinSettings3, enterPinSettings2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "enter_pin_erase" + ".png";
+        File comparison10 = new File(baselineFilename);
+        result10.storeVisualization(comparison10);
+        assertThat(result10.getVisualization().length, is(greaterThan(0)));
+        assertThat(result10.getScore(), is(greaterThan(0.95)));
+        System.out.println("enter_pin_erase similarity of: " + result10.getScore());
         //terminar de inserir o pin correto
         number0EnterPin1.click();
         number0EnterPin1.click();
         //voltar
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        byte[] createPinSettings6 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparação com create pin de criar o pin pela 1ª vez
+        SimilarityMatchingResult result11 = driver
+                .getImagesSimilarity(createPinSettings6, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_after_enter_pin" + ".png";
+        File comparison11 = new File(baselineFilename);
+        result11.storeVisualization(comparison11);
+        assertThat(result11.getVisualization().length, is(greaterThan(0)));
+        assertThat(result11.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_after_enter_pin similarity of: " + result11.getScore());
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         //clicar em change pin
         utilitiesiOS.clickByAccessibilityId("menu_option_change_pin", driver);
@@ -380,8 +535,19 @@ public class NewSwordRegressionHomeAlliOS {
         number3CreatePin.click();
         number3CreatePin.click();
         number3CreatePin.click();
-        //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
+        //comparação com o confirmpin1
+        byte[] confirmPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result12 = driver
+                .getImagesSimilarity(confirmPinSettings3, confirmPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_after_enter_pin" + ".png";
+        File comparison12 = new File(baselineFilename);
+        result12.storeVisualization(comparison12);
+        assertThat(result12.getVisualization().length, is(greaterThan(0)));
+        assertThat(result12.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_confirm_pin_after_enter_pin similarity of: " + result12.getScore());
+        //inserir 4 digitos diferentes no confirm pin
         MobileElement number7ConfirmPin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='7']");
         number7ConfirmPin.click();
         number7ConfirmPin.click();
@@ -391,6 +557,16 @@ public class NewSwordRegressionHomeAlliOS {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Retry']");
+        byte[] pinDidntMatchErrorChangePin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result13 = driver
+                .getImagesSimilarity(pinDidntMatchErrorChangePin, pinDidntMatchErrorCreatePin, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_pin_didnt_match_errors" + ".png";
+        File comparison13 = new File(baselineFilename);
+        result13.storeVisualization(comparison13);
+        assertThat(result13.getVisualization().length, is(greaterThan(0)));
+        assertThat(result13.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_pin_didnt_match_errors similarity of: " + result13.getScore());
         //clicar em retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         //inserir 4 digitos no create

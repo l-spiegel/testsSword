@@ -12,10 +12,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.net.MalformedURLException;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -61,6 +59,7 @@ public class NewSwordRegressionHomeAll {
     private final static String CHECK_WRONG_PIN_SETTINGS_2_ATTEMPTS = "wrong_pin_2_attempts";
     private final static String CHECK_WRONG_PIN_SETTINGS_1_ATTEMPTS = "wrong_pin_1_attempts";
     private final static String CHECK_WRONG_PIN_SETTINGS_0_ATTEMPTS = "wrong_pin_0_attempts";
+    private final static String CHECK_LOGIN_SCREEN = "login_screen";
 
     @Test
         public void virtualPt() throws Exception {
@@ -477,7 +476,7 @@ public class NewSwordRegressionHomeAll {
         File comparison8 = new File(baselineFilename);
         result8.storeVisualization(comparison8);
         assertThat(result8.getVisualization().length, is(greaterThan(0)));
-        assertThat(result8.getScore(), is(lessThan(0.99)));
+        assertThat(result8.getScore(), is(greaterThan(0.95)));
         System.out.println("toggle_off similarity of: " + result8.getScore());
         //clicar em change pin
         utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
@@ -640,6 +639,7 @@ public class NewSwordRegressionHomeAll {
         number1EnterPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
+        //trocar essas strings pra acelerar o teste
         String wrongPin1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
         Assert.assertEquals("Wrong PIN code! \n" +
                 "You have 4 more attempt(s)", wrongPin1);
@@ -741,6 +741,7 @@ public class NewSwordRegressionHomeAll {
         utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView", driver);
         //validar que voltou pra login screen
         driver.findElementByXPath("//android.widget.TextView[@text='Welcome to Sword']");
+        visualCheck.doVisualCheck(CHECK_LOGIN_SCREEN);
 
         System.out.println("O TESTE PASSOU");
 
