@@ -1,15 +1,25 @@
 package appium.Android;
 
-import appium.Android.VisualCheck;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
+import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
 import java.net.MalformedURLException;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 
 public class NewSwordRegressionHomeAll {
 
@@ -18,6 +28,9 @@ public class NewSwordRegressionHomeAll {
     public void startAppium() throws MalformedURLException {
         driver = ConfigurationsAndroid.getDriver();
     }
+
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression home/Android";
+    private final static String BASELINE = "COMP_";
 
     private final static String CHECK_HOME_SCREEN_TOP = "home_screen_top";
     private final static String CHECK_KIT_DELIVERY_CARD = "kit_delivery_card";
@@ -60,22 +73,18 @@ public class NewSwordRegressionHomeAll {
         utilitiesAndroid.login("vinteum@sword.com", "Test1234!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
         //validar card virtual PT
-        String virtualPtCard = driver.findElementByXPath("//android.view.View[@content-desc='home_card_pt']/android.widget.TextView[1]").getText();
-        Assert.assertEquals("Your Physical Therapist", virtualPtCard);
+        driver.findElementByXPath("//android.widget.TextView[@text='Your Physical Therapist']");
         VisualCheck.doVisualCheck(CHECK_HOME_SCREEN_TOP);
         //clicar no botão do chat do card
-        driver.findElementByAccessibilityId("home_card_pt_button").click();
+        utilitiesAndroid.clickByAccessibilityId("home_card_pt_button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.id("com.swordhealth.guarda.dev:id/etInputText"))); //tá pra staging
         //voltar para home
-        driver.findElementByAccessibilityId("bottom_navigation_home_tab").click();
+        utilitiesAndroid.clickByAccessibilityId("bottom_navigation_home_tab", driver);
         //validar pending actions
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_pending_actions']")).size() > 0) {
-            String pendingActions = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView").getText();
-            String pendingActionsTitle = driver.findElementByAccessibilityId("home_card_pending_actions_title").getText();
-            String pendingActionsSubtitle = driver.findElementByAccessibilityId("home_card_pending_actions_subtitle").getText();
-            Assert.assertEquals("Pending actions", pendingActions);
-            Assert.assertEquals("It's time for your reassessment check-in", pendingActionsTitle);
-            Assert.assertEquals("Tap to complete your reassessment", pendingActionsSubtitle);
+            driver.findElementByXPath("//android.widget.TextView[@text='Pending actions']");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"It's time for your reassessment check-in\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Tap to complete your reassessment\"]");
             //scroll pra mostrar o kit delivery inteiro
             MobileElement pendingActionsCard = driver.findElementByAccessibilityId("home_card_pending_actions");
             MobileElement ptCard = driver.findElementByAccessibilityId("home_card_pt");
@@ -86,21 +95,14 @@ public class NewSwordRegressionHomeAll {
         }
         //validar o kit delivery
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_delivery_kit_status']")).size() > 0) {
-            String kitStatusTitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[1]").getText();
-            String kitStatusPrepared = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[2]").getText();
-            String kitStatusPreparedDate = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[3]").getText();
-            String kitStatusShipped = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[4]").getText();
-            String kitStatusShippedDate = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[5]").getText();
-            String kitStatusDelivered = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[6]").getText();
-            String kitStatusAddress = driver.findElementByXPath("//android.view.View[@content-desc='home_card_delivery_kit_status']/android.widget.TextView[7]").getText();
-            Assert.assertEquals("Sword kit status", kitStatusTitle);
-            Assert.assertEquals("Kit being prepared", kitStatusPrepared);
-            Assert.assertEquals("December 26", kitStatusPreparedDate);
-            Assert.assertEquals("Kit shipped", kitStatusShipped);
-            Assert.assertEquals("January 31", kitStatusShippedDate);
-            Assert.assertEquals("Kit delivered", kitStatusDelivered);
-            Assert.assertEquals("Delivery address", kitStatusAddress);
-        //    visualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Sword kit status\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Kit being prepared\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"December 26\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Kit shipped\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"January 31\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Kit delivered\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Delivery address\"]");
+//            visualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
             //scroll pra mostrar o program status inteiro
             MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
@@ -111,14 +113,11 @@ public class NewSwordRegressionHomeAll {
         }
         //validar program status
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_program_status']")).size() > 0) {
-            String programStatusTitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_status']/android.widget.TextView[1]").getText();
-            String programStatusCreating = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_status']/android.widget.TextView[2]").getText();
-            String programStatusLabel = driver.findElementByAccessibilityId("home_card_program_status_creating_program_label").getText();
-            String programStatusTxt2 = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_status']/android.view.View/android.widget.TextView[2]").getText();
-            Assert.assertEquals("Program status", programStatusTitle);
-            Assert.assertEquals("Creating your program", programStatusCreating);
-            Assert.assertEquals("Hi, Vinte Seis! I'm creating your program now. ", programStatusLabel);
-            Assert.assertEquals("Once your program is ready, you can complete your 1st session!", programStatusTxt2);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Program status\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Creating your program\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Hi, Vinte Seis! I'm creating your program now. \"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Once your program is ready, you can complete your 1st session!\"]");
+//            visualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
         }
         //validar program goal
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_program_goal']")).size() > 0) {
@@ -128,42 +127,32 @@ public class NewSwordRegressionHomeAll {
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
 //            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
-            driver.findElementByAccessibilityId("home_card_program_goal_info_button").click();
+            utilitiesAndroid.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
-            String myProgramProgramGoalHeader = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
-            String myProgramProgramGoalSubtitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"My program\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"We set up the goals until your first reassessment after session 9.\"]");
             String myProgramProgramGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
             String myProgramProgramGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[3]").getText();
-            String myProgramReassessment = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[4]").getText();
-            String myProgramPrepare = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[7]").getText();
-            String myProgramActivate = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[8]").getText();
-            String myProgramBuild = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[11]").getText();
-            String myProgramReduce = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[12]").getText();
-            Assert.assertEquals("My program", myProgramProgramGoalHeader);
-            Assert.assertEquals("We set up the goals until your first reassessment after session 9.", myProgramProgramGoalSubtitle);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Prepare your body\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Activate your muscles\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Build strength and endurance\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Reduce your symptoms\"]");
             Assert.assertEquals(programGoalTitle, myProgramProgramGoal);
             Assert.assertEquals(programGoalLabel, myProgramProgramGoalLabel);
-            Assert.assertEquals("For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.", myProgramReassessment);
-            Assert.assertEquals("Prepare your body", myProgramPrepare);
-            Assert.assertEquals("Activate your muscles", myProgramActivate);
-            Assert.assertEquals("Build strength and endurance", myProgramBuild);
-            Assert.assertEquals("Reduce your symptoms", myProgramReduce);
             VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_1);
             //scroll
             MobileElement myProgramReduceTxt = driver.findElementByXPath("//android.widget.TextView[@text='Reduce your symptoms']");
             MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
             mobileActions.swipeByElements(myProgramReduceTxt, myProgramProgramGoalTxt);
             //validar o restante do my program
-            String myProgramHandle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[13]").getText();
-            String myProgramMeet = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[14]").getText();
-            String myProgramFull = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[15]").getText();
-            Assert.assertEquals("Handle more reps", myProgramHandle);
-            Assert.assertEquals("Meet program goals", myProgramMeet);
-            Assert.assertEquals("Reassessment to check your progress\n" +
-                    "ETA: 3rd week of program", myProgramFull);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Handle more reps\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Meet program goals\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Reassessment to check your progress\n" +
+                    "ETA: 3rd week of program\"]");
             VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_2);
             //voltar
-            driver.findElementByXPath("//android.widget.Button").click();
+            utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
             //scroll pra mostrar o weekly goal
             MobileElement programGoalCard = driver.findElementByAccessibilityId("home_card_program_goal");
             MobileElement programStatusCard = driver.findElementByXPath("//android.widget.TextView[@text='Program status']");
@@ -174,31 +163,26 @@ public class NewSwordRegressionHomeAll {
         }
         //validar weekly goal
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")).size() > 0) {
-            String weeklyGoalTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
-            String weeklyGoalSubtitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']/android.widget.TextView[1]").getText();
-            String weeklyGoalLabel = driver.findElementByAccessibilityId("home_card_weekly_goal_label").getText();
-            String weeklyGoalSetReminders = driver.findElementByXPath("//android.view.View[@content-desc='home_card_weekly_goal']/android.view.View[2]/android.widget.TextView").getText();
-            Assert.assertEquals("Weekly goal", weeklyGoalTitle);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Weekly goal\"]");
+            String weeklyGoalSubtitle = driver.findElementByXPath("//android.view.View[@content-desc=\"home_card_weekly_goal\"]/android.widget.TextView[1]").getText();
+            String weeklyGoalLabel = driver.findElementByXPath("//android.widget.TextView[@content-desc=\"home_card_weekly_goal_label\"]").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Set reminders\"]");
             Assert.assertEquals("Complete 4 sessions this week", weeklyGoalSubtitle);
             Assert.assertEquals("Once your kit arrives, you can start your first exercise session!", weeklyGoalLabel);
-            Assert.assertEquals("Set reminders", weeklyGoalSetReminders);
 //            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
             //clicar nas informações do weekly goal
-            driver.findElementByAccessibilityId("home_card_weekly_goal_info_button").click();
+            utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
-            String myProgramWeeklyGoalHeader = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView").getText();
-            String myProgramWeeklyGoalSubtitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"My weekly goal\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"We set 4 goal sessions per week\"]");
             String myProgramWeeklyGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
             String myProgramWeeklyGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[5]").getText();
-            String myProgramWeeklyGoalTip = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[6]").getText();
-            Assert.assertEquals("My weekly goal", myProgramWeeklyGoalHeader);
-            Assert.assertEquals("We set 4 goal sessions per week", myProgramWeeklyGoalSubtitle);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.\"]");
             Assert.assertEquals(weeklyGoalSubtitle, myProgramWeeklyGoal);
             Assert.assertEquals(weeklyGoalLabel, myProgramWeeklyGoalLabel);
-            Assert.assertEquals("Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.", myProgramWeeklyGoalTip);
             visualCheck.doVisualCheck(CHECK_MY_WEEKLY_GOAL);
             //voltar
-            driver.findElementByXPath("//android.widget.Button").click();
+            utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
             //scroll pra mostrar as sessions
             MobileElement weeklyGoalCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
             MobileElement programGoalCard = driver.findElementByAccessibilityId("home_card_program_goal");
@@ -209,8 +193,8 @@ public class NewSwordRegressionHomeAll {
         }
         //validar sessions
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_session_details_0']")).size() > 0) {
-            String sessionsTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
-            Assert.assertEquals("Sessions", sessionsTitle);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Sessions\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Next Session\"]");
 //            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -222,14 +206,10 @@ public class NewSwordRegressionHomeAll {
         }
         //validar progress
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_achieved_stars']")).size() > 0 && driver.findElements(By.xpath("//android.view.View[@content-desc='home_screen_pain_chart']")).size() > 0) {
-            String progressTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView").getText();
-            String progressTotalStarsTxt = driver.findElementByXPath("//android.view.View[@content-desc='home_card_achieved_stars']/android.widget.TextView[1]").getText();
-            String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
-            String progressPainChartLabel = driver.findElementByAccessibilityId("home_screen_pain_chart_label").getText();
-            Assert.assertEquals("Progress", progressTitle);
-            Assert.assertEquals("Total stars", progressTotalStarsTxt);
-            Assert.assertEquals("78", progressTotalStarsNumber);
-            Assert.assertEquals("Pain level during session", progressPainChartLabel);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Progress\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Total stars\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"78\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Pain level during session\"]");
 //            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart");
@@ -241,29 +221,25 @@ public class NewSwordRegressionHomeAll {
         }
         //validar personal goals
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_personal_goals_0']")).size() > 0) {
-            String personalGoalsTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[1]").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Personal goals\"]");
             String personalGoalsLabel1 = driver.findElementByAccessibilityId("home_card_personal_goals_label_0").getText();
-            String personalGoalsButton1 = driver.findElementByXPath("(//android.view.View[@content-desc='home_card_personal_goals_unmark_as_achieved_label'])[1]/android.widget.TextView").getText();
-            String personalGoalsLabel2 = driver.findElementByAccessibilityId("home_card_personal_goals_label_1").getText();
-            String personalGoalsButton2 = driver.findElementByXPath("(//android.view.View[@content-desc='home_card_personal_goals_unmark_as_achieved_label'])[2]/android.widget.TextView").getText();
-            Assert.assertEquals("Personal goals", personalGoalsTitle);
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Achieved\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Decrease/avoid pain using medications\"]");
             Assert.assertEquals("Decrease my pain or symptoms", personalGoalsLabel1);
-            Assert.assertEquals("Achieved", personalGoalsButton1);
-            Assert.assertEquals("Decrease/avoid pain using medications", personalGoalsLabel2);
-            Assert.assertEquals("Achieved", personalGoalsButton2);
             visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_1);
             //clicar em um achieved
-            driver.findElementByAccessibilityId("home_card_personal_goals_0").click();
+            utilitiesAndroid.clickByAccessibilityId("home_card_personal_goals_0", driver);
             //validar popup
             String personalGoalsPopupReopenTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[1]").getText();
-            String personalGoalsPopupReopenTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[2]").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Would you like to reopen this personal goal?\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Yes\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"No\"]");
             Assert.assertEquals(personalGoalsLabel1, personalGoalsPopupReopenTitle);
-            Assert.assertEquals("Would you like to reopen this personal goal?", personalGoalsPopupReopenTxt);
             visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_1);
             //clicar fora do popup
             mobileActions.tapByCoordinates(735, 1867);
             mobileActions.tapByCoordinates(842, 338);
-            driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").click();
+            utilitiesAndroid.clickByXPath("//android.widget.TextView[@text=\"No\"]", driver);
             //fazer scroll no personal goals
             MobileElement personalGoalsCard2 = driver.findElementByAccessibilityId("home_card_personal_goals_1");
             MobileElement personalGoalsCard1 = driver.findElementByAccessibilityId("home_card_personal_goals_0");
@@ -272,27 +248,24 @@ public class NewSwordRegressionHomeAll {
             mobileActions.swipeByElements(personalGoalsCard3, personalGoalsCard2);
             //validar o último personal goals
             String personalGoalsLabel3 = driver.findElementByAccessibilityId("home_card_personal_goals_label_2").getText();
-            String personalGoalsButton3 = driver.findElementByXPath("//android.view.View[@content-desc='home_card_personal_goals_mark_as_achieved_label']/android.widget.TextView").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Mark as achieved\"]");
             Assert.assertEquals("Return to my hobbies/daily activities", personalGoalsLabel3);
-            Assert.assertEquals("Mark as achieved", personalGoalsButton3);
             visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_SECTION_2);
             //clicar no último personal goals
-            driver.findElementByAccessibilityId("home_card_personal_goals_mark_as_achieved_label").click();
+            utilitiesAndroid.clickByAccessibilityId("home_card_personal_goals_mark_as_achieved_label", driver);
             //validar o popup
             String personalGoalsPopupAchieveLastTitle = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[1]").getText();
-            String personalGoalsPopupAchieveLastTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.widget.TextView[2]").getText();
-            String notYetButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").getText();
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Did you achieve this goal? If you tap 'Yes', your goals cannot be reopened.\"]");
+            driver.findElementByXPath("//android.widget.TextView[@text=\"Not yet\"]");
             Assert.assertEquals(personalGoalsLabel3, personalGoalsPopupAchieveLastTitle);
-            Assert.assertEquals("Did you achieve this goal? If you tap 'Yes', your goals cannot be reopened.", personalGoalsPopupAchieveLastTxt);
-            Assert.assertEquals("Not yet", notYetButton);
             visualCheck.doVisualCheck(CHECK_PERSONAL_GOALS_POPUP_2);
-            driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView").click();
+            utilitiesAndroid.clickByXPath("//android.widget.TextView[@text=\"Not yet\"]", driver);
         }
         else {
             System.out.println("LIGA O PROXY CERTO");
         }
         //clicar nas settings
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -300,49 +273,55 @@ public class NewSwordRegressionHomeAll {
         }
         visualCheck.doVisualCheck(CHECK_SETTINGS_WITHOUT_PIN);
         //clicar pra deletar a conta
-        driver.findElementByAccessibilityId("settings_delete_account").click();
+        utilitiesAndroid.clickByAccessibilityId("settings_delete_account", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Delete account']")));
         //voltar
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //abrir settings de novo
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar pra definir pin
-        driver.findElementByAccessibilityId("menu_option_define_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_define_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         //voltar
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar pra definir pin
-        driver.findElementByAccessibilityId("menu_option_define_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_define_pin", driver);
         //inserir 3 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_CREATE_PIN);
+        byte[] createPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         MobileElement number1CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='1']");
         number1CreatePin.click();
         number1CreatePin.click();
         number1CreatePin.click();
+        byte[] createPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparação
         //apagar 1
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]", driver);
+        byte[] createPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparação - será que consigo comparar mais de 2 screenshots??
         //terminar de definir o pin
         number1CreatePin.click();
         number1CreatePin.click();
         //voltar pra create pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //inserir 4 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-        visualCheck.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
+        byte[] createPinSettings4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparação
         MobileElement number2CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='2']");
         number2CreatePin.click();
         number2CreatePin.click();
@@ -350,22 +329,27 @@ public class NewSwordRegressionHomeAll {
         number2CreatePin.click();
         //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        visualCheck.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
+        byte[] confirmPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o createPin1
         MobileElement number5ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='5']");
         number5ConfirmPin.click();
         number5ConfirmPin.click();
+        byte[] confirmPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o confirm1
         number5ConfirmPin.click();
         number5ConfirmPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
-        String pinDoesntMatch1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
-        String retryButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
-        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch1);
-        Assert.assertEquals("Retry", retryButton);
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+        driver.findElementByXPath("//android.widget.TextView[@text='Retry']");
         visualCheck.doVisualCheck(CHECK_PIN_DIDNT_MATCH_SETTINGS);
         //clicar em retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //inserir 4 digitos no create your pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        byte[] createPinSettings5 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o createPinSettings1
         MobileElement number0CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='0']");
         number0CreatePin.click();
         number0CreatePin.click();
@@ -380,18 +364,14 @@ public class NewSwordRegressionHomeAll {
         number0ConfirmPin.click();
         //validar ecrã de biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
-        String biometrics = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
-        String activateNowButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.TextView").getText();
-        String activateLaterButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.TextView").getText();
-        Assert.assertEquals("Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.", biometrics);
-        Assert.assertEquals("Activate now", activateNowButton);
-        Assert.assertEquals("Activate later", activateLaterButton);
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.\"]");
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Activate now\"]");
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Activate later\"]");
         visualCheck.doVisualCheck(CHECK_ACTIVATE_BIOMETRICS_SETTINGS);
         //clicar pra ativar depois
-        driver.findElementByXPath("//android.widget.TextView[@text='Activate later']").click();
+        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Activate later']", driver);
         //validar ecrã de sucesso
-        String newPinSuccess1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
-        Assert.assertEquals("New PIN code set successfully", newPinSuccess1);
+        driver.findElementByXPath("//android.widget.TextView[@text=\"New PIN code set successfully\"]");
         visualCheck.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_1);
         //abrir settings
         try {
@@ -399,55 +379,80 @@ public class NewSwordRegressionHomeAll {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar pra ativar biometria
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login with biometrics']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_WITH_PIN);
+        byte[] biometricsToggleOff1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         MobileElement biometricsToggle = driver.findElementByAccessibilityId("menu_option_login_biometrics");
         biometricsToggle.click();
         visualCheck.doVisualCheck(CHECK_BIOMETRICS_TOGGLE);
+        byte[] biometricsToggleOn = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result = driver
+                .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOn, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_on_off" + ".png";
+        File comparison = new File(baselineFilename);
+        result.storeVisualization(comparison);
+        assertThat(result.getVisualization().length, is(greaterThan(0)));
+        assertThat(result.getScore(), is(lessThan(0.99)));
         //clicar de novo na biometria
         biometricsToggle.click();
+        byte[] biometricsToggleOff2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult resultx = driver
+                .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOff2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_off" + ".png";
+        comparison = new File(baselineFilename);
+        resultx.storeVisualization(comparison);
+        assertThat(resultx.getVisualization().length, is(greaterThan(0)));
+        assertThat(resultx.getScore(), is(lessThan(0.99)));
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
-        String forgotPinButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView").getText();
-        Assert.assertEquals("Forgot your PIN?", forgotPinButton);
+        driver.findElementByXPath("//android.widget.TextView[@text='Forgot your PIN?']");
         visualCheck.doVisualCheck(CHECK_ENTER_PIN_SETTINGS);
         //voltar
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
+        byte[] enterPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //digitar 3 digitos corretos
         MobileElement number0EnterPin1 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
         number0EnterPin1.click();
         number0EnterPin1.click();
         number0EnterPin1.click();
+        byte[] enterPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o enterpin1
         //apagar 1 digito
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]", driver);
+        byte[] enterPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparar com o enterpin2
         //terminar de inserir o pin correto
         number0EnterPin1.click();
         number0EnterPin1.click();
         //voltar
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-        driver.findElementByXPath("//android.widget.Button").click();
+        byte[] createPinSettings6 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        //comparação com create pin de criar o pin pela 1ª vez
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         //inserir 4 digitos no enter pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         MobileElement number0EnterPin2 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
@@ -476,7 +481,7 @@ public class NewSwordRegressionHomeAll {
         Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch2);
         Assert.assertEquals("Retry", retryButton2);
         //clicar em retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //inserir 4 digitos no create
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         MobileElement number9CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='9']");
@@ -501,9 +506,9 @@ public class NewSwordRegressionHomeAll {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //clicar em change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         //inserir o pin errado
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         MobileElement number1EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='1']");
@@ -518,7 +523,7 @@ public class NewSwordRegressionHomeAll {
                 "You have 4 more attempt(s)", wrongPin1);
         visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_4_ATTEMPTS);
         //retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number2EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='2']");
@@ -533,7 +538,7 @@ public class NewSwordRegressionHomeAll {
                 "You have 3 more attempt(s)", wrongPin2);
         visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_3_ATTEMPTS);
         //retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number3EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='3']");
@@ -548,7 +553,7 @@ public class NewSwordRegressionHomeAll {
                 "You have 2 more attempt(s)", wrongPin3);
         visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_2_ATTEMPTS);
         //retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number4EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='4']");
@@ -563,7 +568,7 @@ public class NewSwordRegressionHomeAll {
                 "You have 1 more attempt(s)", wrongPin4);
         visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_1_ATTEMPTS);
         //retry
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
         //inserir o pin errado
         MobileElement number5EnterPin = driver.findElementByXPath("//android.widget.TextView[@text='5']");
@@ -581,13 +586,13 @@ public class NewSwordRegressionHomeAll {
         Assert.assertEquals("Back to login", backToLoginButton);
         visualCheck.doVisualCheck(CHECK_WRONG_PIN_SETTINGS_0_ATTEMPTS);
         //back to login
-        driver.findElementByXPath("//android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //fazer login
         driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("Test1234!");
-        driver.findElementByAccessibilityId("loginButton").click();
+        utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         MobileElement number6CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='6']");
         number6CreatePin.click();
@@ -600,18 +605,18 @@ public class NewSwordRegressionHomeAll {
         number6ConfirmPin.click();
         number6ConfirmPin.click();
         number6ConfirmPin.click();
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.TextView").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.TextView", driver);
         //abrir settings
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        driver.findElementByAccessibilityId("header_menu_button").click();
+        utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
         //abrir change pin
-        driver.findElementByAccessibilityId("menu_option_change_pin").click();
+        utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         //clicar em forgot pin
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView").click();
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView", driver);
         //validar que voltou pra login screen
         String welcomeSword = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[1]").getText();
         Assert.assertEquals("Welcome to Sword", welcomeSword);
