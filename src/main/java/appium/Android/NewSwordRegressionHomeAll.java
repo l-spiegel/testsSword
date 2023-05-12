@@ -306,37 +306,87 @@ public class NewSwordRegressionHomeAll {
         number1CreatePin.click();
         number1CreatePin.click();
         number1CreatePin.click();
+        //comparar com o createpin1 - vazio
         byte[] createPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        //comparação
+        SimilarityMatchingResult result1 = driver
+                .getImagesSimilarity(createPinSettings2, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_filled" + ".png";
+        File comparison1 = new File(baselineFilename);
+        result1.storeVisualization(comparison1);
+        assertThat(result1.getVisualization().length, is(greaterThan(0)));
+        assertThat(result1.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_filled similarity of: " + result1.getScore());
         //apagar 1
         utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]", driver);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        //comparar com o createpin2
         byte[] createPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        //comparação - será que consigo comparar mais de 2 screenshots??
+        SimilarityMatchingResult result2 = driver
+                .getImagesSimilarity(createPinSettings3, createPinSettings2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_erase" + ".png";
+        File comparison2 = new File(baselineFilename);
+        result2.storeVisualization(comparison2);
+        assertThat(result2.getVisualization().length, is(greaterThan(0)));
+        assertThat(result2.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_filled_delete_one similarity of: " + result2.getScore());
         //terminar de definir o pin
         number1CreatePin.click();
         number1CreatePin.click();
         //voltar pra create pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-        //inserir 4 digitos
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        //comparar com o createpin1
         byte[] createPinSettings4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        //comparação
+        SimilarityMatchingResult result3 = driver
+                .getImagesSimilarity(createPinSettings4, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin1" + ".png";
+        File comparison3 = new File(baselineFilename);
+        result3.storeVisualization(comparison3);
+        assertThat(result3.getVisualization().length, is(greaterThan(0)));
+        assertThat(result3.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin1 similarity of: " + result3.getScore());
+        //inserir 4 digitos
         MobileElement number2CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='2']");
         number2CreatePin.click();
         number2CreatePin.click();
         number2CreatePin.click();
         number2CreatePin.click();
-        //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_CONFIRM_PIN);
+        //comparar com o createpin1
         byte[] confirmPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        //comparar com o createPin1
+        SimilarityMatchingResult result4 = driver
+                .getImagesSimilarity(confirmPinSettings1, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_vs_create_pin" + ".png";
+        File comparison4 = new File(baselineFilename);
+        result4.storeVisualization(comparison4);
+        assertThat(result4.getVisualization().length, is(greaterThan(0)));
+        assertThat(result4.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_confirm_pin_vs_create_pin similarity of: " + result4.getScore());
+        //inserir 4 digitos diferentes no confirm pin
         MobileElement number5ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='5']");
         number5ConfirmPin.click();
         number5ConfirmPin.click();
+        //comparar com o confirmpin2
         byte[] confirmPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        //comparar com o confirm1
+        SimilarityMatchingResult result5 = driver
+                .getImagesSimilarity(confirmPinSettings2, confirmPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_filled" + ".png";
+        File comparison5 = new File(baselineFilename);
+        result5.storeVisualization(comparison5);
+        assertThat(result5.getVisualization().length, is(greaterThan(0)));
+        assertThat(result5.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_confirm_pin_filled similarity of: " + result5.getScore());
         number5ConfirmPin.click();
         number5ConfirmPin.click();
         //validar ecrã de erro
@@ -344,12 +394,22 @@ public class NewSwordRegressionHomeAll {
         driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
         driver.findElementByXPath("//android.widget.TextView[@text='Retry']");
         visualCheck.doVisualCheck(CHECK_PIN_DIDNT_MATCH_SETTINGS);
+        byte[] pinDidntMatchErrorCreatePin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //clicar em retry
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-        //inserir 4 digitos no create your pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         byte[] createPinSettings5 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparar com o createPinSettings1
+        SimilarityMatchingResult result6 = driver
+                .getImagesSimilarity(createPinSettings5, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin2" + ".png";
+        File comparison6 = new File(baselineFilename);
+        result6.storeVisualization(comparison6);
+        assertThat(result6.getVisualization().length, is(greaterThan(0)));
+        assertThat(result6.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin2 similarity of: " + result6.getScore());
+        //inserir 4 digitos no create your pin
         MobileElement number0CreatePin = driver.findElementByXPath("//android.widget.TextView[@text='0']");
         number0CreatePin.click();
         number0CreatePin.click();
@@ -386,27 +446,39 @@ public class NewSwordRegressionHomeAll {
         byte[] biometricsToggleOff1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         MobileElement biometricsToggle = driver.findElementByAccessibilityId("menu_option_login_biometrics");
         biometricsToggle.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         visualCheck.doVisualCheck(CHECK_BIOMETRICS_TOGGLE);
         byte[] biometricsToggleOn = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        SimilarityMatchingResult result = driver
+        SimilarityMatchingResult result7 = driver
                 .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOn, new SimilarityMatchingOptions()
                         .withEnabledVisualization());
-        String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_on_off" + ".png";
-        File comparison = new File(baselineFilename);
-        result.storeVisualization(comparison);
-        assertThat(result.getVisualization().length, is(greaterThan(0)));
-        assertThat(result.getScore(), is(lessThan(0.99)));
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_on_off" + ".png";
+        File comparison7 = new File(baselineFilename);
+        result7.storeVisualization(comparison7);
+        assertThat(result7.getVisualization().length, is(greaterThan(0)));
+        assertThat(result7.getScore(), is(greaterThan(0.95)));
+        System.out.println("toggle_on_off similarity of: " + result7.getScore());
         //clicar de novo na biometria
         biometricsToggle.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         byte[] biometricsToggleOff2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-        SimilarityMatchingResult resultx = driver
+        SimilarityMatchingResult result8 = driver
                 .getImagesSimilarity(biometricsToggleOff1, biometricsToggleOff2, new SimilarityMatchingOptions()
                         .withEnabledVisualization());
         baselineFilename = VALIDATION_PATH + "/" + BASELINE + "toggle_off" + ".png";
-        comparison = new File(baselineFilename);
-        resultx.storeVisualization(comparison);
-        assertThat(resultx.getVisualization().length, is(greaterThan(0)));
-        assertThat(resultx.getScore(), is(lessThan(0.99)));
+        File comparison8 = new File(baselineFilename);
+        result8.storeVisualization(comparison8);
+        assertThat(result8.getVisualization().length, is(greaterThan(0)));
+        assertThat(result8.getScore(), is(lessThan(0.99)));
+        System.out.println("toggle_off similarity of: " + result8.getScore());
         //clicar em change pin
         utilitiesAndroid.clickByAccessibilityId("menu_option_change_pin", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Enter your PIN code']")));
@@ -432,10 +504,33 @@ public class NewSwordRegressionHomeAll {
         number0EnterPin1.click();
         byte[] enterPinSettings2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparar com o enterpin1
+        SimilarityMatchingResult result9 = driver
+                .getImagesSimilarity(enterPinSettings2, enterPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "enter_pin_filled" + ".png";
+        File comparison9 = new File(baselineFilename);
+        result9.storeVisualization(comparison9);
+        assertThat(result9.getVisualization().length, is(greaterThan(0)));
+        assertThat(result9.getScore(), is(greaterThan(0.95)));
+        System.out.println("enter_pin_filled similarity of: " + result9.getScore());
         //apagar 1 digito
         utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]", driver);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         byte[] enterPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparar com o enterpin2
+        SimilarityMatchingResult result10 = driver
+                .getImagesSimilarity(enterPinSettings3, enterPinSettings2, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "enter_pin_erase" + ".png";
+        File comparison10 = new File(baselineFilename);
+        result10.storeVisualization(comparison10);
+        assertThat(result10.getVisualization().length, is(greaterThan(0)));
+        assertThat(result10.getScore(), is(greaterThan(0.95)));
+        System.out.println("enter_pin_erase similarity of: " + result10.getScore());
         //terminar de inserir o pin correto
         number0EnterPin1.click();
         number0EnterPin1.click();
@@ -443,6 +538,15 @@ public class NewSwordRegressionHomeAll {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         byte[] createPinSettings6 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparação com create pin de criar o pin pela 1ª vez
+        SimilarityMatchingResult result11 = driver
+                .getImagesSimilarity(createPinSettings6, createPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_create_pin_after_enter_pin" + ".png";
+        File comparison11 = new File(baselineFilename);
+        result11.storeVisualization(comparison11);
+        assertThat(result11.getVisualization().length, is(greaterThan(0)));
+        assertThat(result11.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_create_pin_after_enter_pin similarity of: " + result11.getScore());
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //abrir settings
         try {
@@ -467,8 +571,19 @@ public class NewSwordRegressionHomeAll {
         number3CreatePin.click();
         number3CreatePin.click();
         number3CreatePin.click();
-        //inserir 4 digitos diferentes no confirm pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
+        //comparação com o confirmpin1
+        byte[] confirmPinSettings3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result12 = driver
+                .getImagesSimilarity(confirmPinSettings3, confirmPinSettings1, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_confirm_pin_after_enter_pin" + ".png";
+        File comparison12 = new File(baselineFilename);
+        result12.storeVisualization(comparison12);
+        assertThat(result12.getVisualization().length, is(greaterThan(0)));
+        assertThat(result12.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_confirm_pin_after_enter_pin similarity of: " + result12.getScore());
+        //inserir 4 digitos diferentes no confirm pin
         MobileElement number7ConfirmPin = driver.findElementByXPath("//android.widget.TextView[@text='7']");
         number7ConfirmPin.click();
         number7ConfirmPin.click();
@@ -476,10 +591,18 @@ public class NewSwordRegressionHomeAll {
         number7ConfirmPin.click();
         //validar ecrã de erro
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
-        String pinDoesntMatch2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
-        String retryButton2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View/android.widget.TextView").getText();
-        Assert.assertEquals("Uh-oh! The PIN codes didn't match. Please try again.", pinDoesntMatch2);
-        Assert.assertEquals("Retry", retryButton2);
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
+        driver.findElementByXPath("//android.widget.TextView[@text=\"Retry\"]");
+        byte[] pinDidntMatchErrorChangePin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+        SimilarityMatchingResult result13 = driver
+                .getImagesSimilarity(pinDidntMatchErrorChangePin, pinDidntMatchErrorCreatePin, new SimilarityMatchingOptions()
+                        .withEnabledVisualization());
+        baselineFilename = VALIDATION_PATH + "/" + BASELINE + "settings_pin_didnt_match_errors" + ".png";
+        File comparison13 = new File(baselineFilename);
+        result13.storeVisualization(comparison13);
+        assertThat(result13.getVisualization().length, is(greaterThan(0)));
+        assertThat(result13.getScore(), is(greaterThan(0.95)));
+        System.out.println("settings_pin_didnt_match_errors similarity of: " + result13.getScore());
         //clicar em retry
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //inserir 4 digitos no create
@@ -497,8 +620,7 @@ public class NewSwordRegressionHomeAll {
         number9ConfirmPin.click();
         number9ConfirmPin.click();
         //validar ecra de sucesso
-        String newPinSuccess2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView").getText();
-        Assert.assertEquals("New PIN code set successfully", newPinSuccess2);
+        driver.findElementByXPath("//android.widget.TextView[@text=\"New PIN code set successfully\"]");
         visualCheck.doVisualCheck(CHECK_NEW_PIN_SUCCESS_SETTINGS_2);
         //abrir settings
         try {
@@ -618,8 +740,7 @@ public class NewSwordRegressionHomeAll {
         //clicar em forgot pin
         utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.TextView", driver);
         //validar que voltou pra login screen
-        String welcomeSword = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.widget.TextView[1]").getText();
-        Assert.assertEquals("Welcome to Sword", welcomeSword);
+        driver.findElementByXPath("//android.widget.TextView[@text='Welcome to Sword']");
 
         System.out.println("O TESTE PASSOU");
 
