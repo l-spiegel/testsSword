@@ -1,6 +1,5 @@
 package appium.Android;
 
-import appium.Android.VisualCheck;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
@@ -81,6 +80,14 @@ public class swordRegressionBadges {
 			String notAchieved2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[4]/android.view.View[3]/android.widget.TextView").getText();
 			System.out.println("SECOND NOT ACHIEVED BADGE: " + notAchieved2);
 			VisualCheck.doVisualCheck(CHECK_HOME_BADGES);
+			//clicar na badge achieved - tem um bug que abre o popup
+			utilitiesAndroid.clickByAccessibilityId("home_badges_card_badge_0", driver);
+			if (driver.findElements(By.xpath("//android.widget.TextView[@text='Got it']")).size() > 0) {
+				System.out.println("BUG DO POPUP DA BADGE ACHIEVED");
+				utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Got it']", driver);
+			} else {
+				System.out.println("BUG DO POPUP DA BADGE ACHIEVED CORRIGIDO");
+			}
 			//fazer swipe pra mostrar a última badge
 			MobileElement secondNotAchievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_2");
 			MobileElement achievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_0");

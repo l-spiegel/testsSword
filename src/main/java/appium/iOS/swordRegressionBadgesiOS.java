@@ -201,6 +201,14 @@ public class swordRegressionBadgesiOS {
 			String notAchieved2 = driver.findElementByXPath("//XCUIElementTypeCell[@name='home_badges_card_badge_2']/XCUIElementTypeOther/XCUIElementTypeStaticText").getText();
 			System.out.println("SECOND NOT ACHIEVED BADGE: " + notAchieved2);
 			VisualCheck.doVisualCheck(CHECK_HOME_BADGES);
+			//clicar na badge achieved - tem um bug que abre o popup
+			utilitiesiOS.clickByAccessibilityId("home_badges_card_badge_0", driver);
+			if (driver.findElements(By.xpath("//XCUIElementTypeButton[@name='Got it']")).size() > 0) {
+				System.out.println("BUG DO POPUP DA BADGE ACHIEVED");
+				utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Got it']", driver);
+			} else {
+				System.out.println("SEM BUG DO POPUP DA BADGE ACHIEVED");
+			}
 			//fazer swipe pra mostrar a última badge
 			MobileElement secondNotAchievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_2");
 			MobileElement achievedBadge = driver.findElementByAccessibilityId("home_badges_card_badge_0");
