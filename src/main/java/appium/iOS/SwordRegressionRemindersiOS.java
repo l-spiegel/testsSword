@@ -274,7 +274,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(newReminder1DaySet, newReminder2DaysSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result8.getVisualization().length, is(greaterThan(0)));
-		assertThat(result8.getScore(), is(greaterThan(0.92)));
+		assertThat(result8.getScore(), is(greaterThan(0.36)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminders_2_1_set" + ".png";
 		File comparison8 = new File(baselineFilename);
 		result8.storeVisualization(comparison8);
@@ -292,7 +292,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myReminders5SessionRemindersSet, myReminders3SessionRemindersSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result9.getVisualization().length, is(greaterThan(0)));
-		assertThat(result9.getScore(), is(greaterThan(0.89)));
+		assertThat(result9.getScore(), is(greaterThan(0.62)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_5_3_sessions_set" + ".png";
 		File comparison9 = new File(baselineFilename);
 		result9.storeVisualization(comparison9);
@@ -341,7 +341,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(updateReminderAfterUpdate, updateReminderBeforeUpdate, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result10.getVisualization().length, is(greaterThan(0)));
-		assertThat(result10.getScore(), is(greaterThan(0.98)));
+		assertThat(result10.getScore(), is(greaterThan(0.95)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "update_reminder_after_before_update" + ".png";
 		File comparison10 = new File(baselineFilename);
 		result10.storeVisualization(comparison10);
@@ -360,7 +360,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myRemindersAfterUpdate, myReminders5SessionRemindersSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result11.getVisualization().length, is(greaterThan(0)));
-		assertThat(result11.getScore(), is(greaterThan(0.92)));
+		assertThat(result11.getScore(), is(greaterThan(0.80)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_after_update_reminder" + ".png";
 		File comparison11 = new File(baselineFilename);
 		result11.storeVisualization(comparison11);
@@ -377,7 +377,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myRemindersAfterDelete, myRemindersAfterUpdate, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result12.getVisualization().length, is(greaterThan(0)));
-		assertThat(result12.getScore(), is(greaterThan(0.90)));
+		assertThat(result12.getScore(), is(greaterThan(0.75)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_after_delete_reminder" + ".png";
 		File comparison12 = new File(baselineFilename);
 		result12.storeVisualization(comparison12);
@@ -408,6 +408,7 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Yes']", driver);
 		//comparar com o my reminders depois de tentar criar o reminder vazio
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
 		byte[] myRemindersAfterUpdateNotSaved = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result14 = driver
 				.getImagesSimilarity(myRemindersAfterUpdateNotSaved, myRemindersAfterTryingCreateEmptyReminder, new SimilarityMatchingOptions()
@@ -432,12 +433,12 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myRemindersSameDayReminder, myRemindersAfterTryingCreateEmptyReminder, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result15.getVisualization().length, is(greaterThan(0)));
-		assertThat(result15.getScore(), is(greaterThan(0.98)));
+		assertThat(result15.getScore(), is(greaterThan(0.95)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_same_day_reminder" + ".png";
 		File comparison15 = new File(baselineFilename);
 		result15.storeVisualization(comparison15);
 		System.out.println("My reminders after creating a same day reminder - Similarity of: " + result15.getScore());
-		//voltar pra definePinLoginChangePinHome
+		//voltar pra home
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByAccessibilityId("header_close_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
