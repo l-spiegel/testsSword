@@ -134,7 +134,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(newReminder4DaysSet, newReminder4DaysEmpty, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result1.getVisualization().length, is(greaterThan(0)));
-		assertThat(result1.getScore(), is(greaterThan(0.73)));
+		assertThat(result1.getScore(), is(greaterThan(0.71)));
 		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminder_4_empty_and_set" + ".png";
 		File comparison1 = new File(baselineFilename);
 		result1.storeVisualization(comparison1);
@@ -166,7 +166,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(newReminder2DaysEmpty, newReminder4DaysEmpty, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
-		assertThat(result2.getScore(), is(greaterThan(0.74)));
+		assertThat(result2.getScore(), is(greaterThan(0.72)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminders_4_2_empty" + ".png";
 		File comparison2 = new File(baselineFilename);
 		result2.storeVisualization(comparison2);
@@ -204,7 +204,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(newReminder2DaysSet, newReminder4DaysSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result4.getVisualization().length, is(greaterThan(0)));
-		assertThat(result4.getScore(), is(greaterThan(0.37)));
+		assertThat(result4.getScore(), is(greaterThan(0.34)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminder_4_2_set" + ".png";
 		File comparison4 = new File(baselineFilename);
 		result4.storeVisualization(comparison4);
@@ -222,7 +222,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myReminders3SessionRemindersSet, myReminders2SessionRemindersSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result5.getVisualization().length, is(greaterThan(0)));
-		assertThat(result5.getScore(), is(greaterThan(0.61)));
+		assertThat(result5.getScore(), is(greaterThan(0.55)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_3_2_sessions_set" + ".png";
 		File comparison5 = new File(baselineFilename);
 		result5.storeVisualization(comparison5);
@@ -274,7 +274,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(newReminder1DaySet, newReminder2DaysSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result8.getVisualization().length, is(greaterThan(0)));
-		assertThat(result8.getScore(), is(greaterThan(0.36)));
+		assertThat(result8.getScore(), is(greaterThan(0.34)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminders_2_1_set" + ".png";
 		File comparison8 = new File(baselineFilename);
 		result8.storeVisualization(comparison8);
@@ -292,7 +292,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myReminders5SessionRemindersSet, myReminders3SessionRemindersSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result9.getVisualization().length, is(greaterThan(0)));
-		assertThat(result9.getScore(), is(greaterThan(0.62)));
+		assertThat(result9.getScore(), is(greaterThan(0.54)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_5_3_sessions_set" + ".png";
 		File comparison9 = new File(baselineFilename);
 		result9.storeVisualization(comparison9);

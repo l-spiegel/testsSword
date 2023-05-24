@@ -44,7 +44,7 @@ public class SwordRegressionLoginLogoutiOS {
 		utilitiesiOS.clickByAccessibilityId("loginQRCodeButton", driver);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Application permissions']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='The app needs the following permissions to work correctly:']");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We use the camera to read your patient card QR code and sign you into Sword']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sword will only use the camera to scan the QR code on the card or tablet.']");
 		visualCheck.doVisualCheck(CHECK_QR_CODE_1);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Next']", driver);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Present your card']");
@@ -73,6 +73,7 @@ public class SwordRegressionLoginLogoutiOS {
 		}
 		mobileActions.tapByCoordinates(198, 348);
 		utilitiesiOS.clickByAccessibilityId("ic close button", driver);
+		//adicionar testes visuais da client list
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"Danaher Canada\"]")).size() > 0) {
 			utilitiesiOS.clickByAccessibilityId("Danaher Canada", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
@@ -129,7 +130,7 @@ public class SwordRegressionLoginLogoutiOS {
 		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
 		//email certo e senha errada + ecrã de bloqueio
 		emailTextfield.clear();
-		emailTextfield.sendKeys("luiza@marco.com");
+		emailTextfield.sendKeys("l.spiegel+3@swordhealth.com");
 		MobileElement passwordTextfield = driver.findElementByAccessibilityId("loginPasswordTextfield");
 		passwordTextfield.click();
 		passwordTextfield.sendKeys("12345");
@@ -159,13 +160,13 @@ public class SwordRegressionLoginLogoutiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 	  
 		//login + not now
-		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		//login + create pin + set pin code later
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"You can use your PIN code to log in any time your session expires.\"]");
@@ -181,7 +182,7 @@ public class SwordRegressionLoginLogoutiOS {
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		//login + define pin
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);

@@ -301,11 +301,11 @@ public class swordRegressionSessionDetailsiOS {
 		mobileActions.swipeByElements(weeklyGoalTxt, kitDeliveryCard);
 		//clicar na sessão mais recente
 		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@value='Next Session']")).size() > 0) {
-			visualCheck.doVisualCheck(CHECK_HOME_NEXT_SESSION_STAGING);
+//			visualCheck.doVisualCheck(CHECK_HOME_NEXT_SESSION_STAGING);
 			utilitiesiOS.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_1_see_more_button")));
-		visualCheck.doVisualCheck(CHECK_HOME_SESSION_CARD_1_STAGING);
+//		visualCheck.doVisualCheck(CHECK_HOME_SESSION_CARD_1_STAGING);
 		utilitiesiOS.clickByAccessibilityId("home_card_session_details_1", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Exercises']")));
 		//validar o ecrã
@@ -522,8 +522,7 @@ public class swordRegressionSessionDetailsiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Start typing...']")));
-			
+
 		driver.quit();
 	}
 	

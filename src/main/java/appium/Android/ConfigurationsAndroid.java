@@ -24,7 +24,7 @@ public class ConfigurationsAndroid {
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
         desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/release500/app-sword-release.apk");
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/app-sword-qa1932.apk");
         desiredCapabilities.setCapability("appium:noReset", "false");
         desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
 
