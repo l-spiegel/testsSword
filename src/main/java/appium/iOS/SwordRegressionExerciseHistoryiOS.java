@@ -129,8 +129,13 @@ public class SwordRegressionExerciseHistoryiOS {
         utilitiesiOS.clickByAccessibilityId("session_details_exercise_1_card_see_more", driver);
         utilitiesiOS.clickByAccessibilityId("session_details_exercise_1_card_exercise_history", driver);
         //validar ecrã
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Trunk side bend']");
-        String exerciseDescription2 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='exercise_history_video_description']").getText();
+        String exerciseDescription2 = driver.findElementByAccessibilityId("exercise_history_video_description").getText();
         Assert.assertEquals("Improve flexibility, mobility, & strength in back, core, & spine for ease of bending sideways", exerciseDescription2);
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Exercise results']");
         String totalStars2 = driver.findElementByAccessibilityId("exercise_history_results_total_stars_label").getText();
