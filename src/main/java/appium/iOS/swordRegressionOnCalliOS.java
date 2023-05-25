@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.lessThan;
 public class swordRegressionOnCalliOS {
 	private IOSDriver<MobileElement> driver;
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/iOS";
+	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/iOS/virtual pt";
 	private final static String BASELINE = "COMP_";
 	private final static String CHECK_ON_CALL_NO_CHAT_SCREEN = "on_call_empty_screen";
 	private final static String CHECK_TERMS_CONDITIONS = "terms_and_conditions_screen";
@@ -215,7 +215,7 @@ public class swordRegressionOnCalliOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 		
 		//login
-		utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
 		//abrir hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		utilitiesiOS.clickByAccessibilityId("bottom_navigation_hub_tab", driver);
@@ -311,7 +311,7 @@ public class swordRegressionOnCalliOS {
 		//voltar
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
@@ -341,7 +341,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
 		//fazer login no mesmo user de novo
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not now']", driver);
@@ -365,7 +365,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton", driver);
 		utilitiesiOS.clickByAccessibilityId("Photos and videos", driver);
 		utilitiesiOS.clickByAccessibilityId("Allow Access to All Photos", driver);
-		utilitiesiOS.clickByAccessibilityId("Screenshot, 10 May, 1:16 PM", driver); //precisa atualizar pra uma que apareça no rolo
+		utilitiesiOS.clickByAccessibilityId("Screenshot, 25 May, 12:09 PM", driver); //precisa atualizar pra uma que apareça no rolo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView[@name='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
