@@ -10,9 +10,9 @@ import java.io.File;
 
 public class VisualCheck {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/iOS/virtual pt";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression home/iOS";
     private final static String BASELINE = "BASELINE_";
-    private final static double MATCH_THRESHOLD = 0.80;
+    private final static double MATCH_THRESHOLD = 0.95;
 
     private static IOSDriver<MobileElement> driver;
     public VisualCheck(IOSDriver<MobileElement> driver) {

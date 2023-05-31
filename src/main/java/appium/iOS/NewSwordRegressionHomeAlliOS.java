@@ -69,10 +69,15 @@ public class NewSwordRegressionHomeAlliOS {
         VisualCheck visualCheck = new VisualCheck(driver);
 
         //login
-        utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+        utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         VisualCheck.doVisualCheck(CHECK_HOME_SCREEN_TOP);
         //clicar no botão do chat do card
         utilitiesiOS.clickByAccessibilityId("home_card_pt_button", driver);
@@ -96,7 +101,7 @@ public class NewSwordRegressionHomeAlliOS {
         }
         //validar o kit delivery
         if (driver.findElements(By.id("home_card_delivery_kit_status")).size() > 0) { //não encontra os elementos dentro do card
-//            VisualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
+            VisualCheck.doVisualCheck(CHECK_KIT_DELIVERY_CARD);
             //scroll pra mostrar o program status inteiro
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
@@ -663,7 +668,7 @@ public class NewSwordRegressionHomeAlliOS {
         //back to login
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
-        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
         utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
