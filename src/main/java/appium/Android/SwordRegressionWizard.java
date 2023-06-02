@@ -82,7 +82,7 @@ public class SwordRegressionWizard {
             //validar 3rd screen
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -117,25 +117,22 @@ public class SwordRegressionWizard {
 
             utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.TextView", driver);
 
-            //fazer logout - fazer login com mesmo user
-            //ALTERAR PARA PULL TO REFRESH para mostrar o wizard e eliminar aqui estes steps
-            utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
-            utilitiesAndroid.clickByAccessibilityId("menu_option_logout", driver);
-            utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+            //PULL TO REFRESH para mostrar o wizard
+            MobileElement ptCard = driver.findElementByAccessibilityId("home_card_pt");
+            MobileElement weeklyCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
+            mobileActions.swipeByElements(weeklyCard, ptCard);
             wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='How it works']")));
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
 
-             //no 1st screen - Skip button - validar que abriu a home
-            //ver aqui o scroll porque usei o mesmo de cima e estava a deu erro ?????
-
-            MobileElement firstCard1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[8]");
-            MobileElement title1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[1]");
-            mobileActions.swipeByElements(firstCard1, title1);
+            //no 1st screen - Skip button - validar que abriu a home
+            firstCard = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[8]");
+            title = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[1]");
+            mobileActions.swipeByElements(firstCard, title);
             utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[2]/android.widget.TextView", driver);
 
             ConfigurationsAndroid.killDriver();
