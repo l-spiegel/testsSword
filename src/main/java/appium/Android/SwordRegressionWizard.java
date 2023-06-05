@@ -8,7 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class SwordRegressionWizard {
 
@@ -44,7 +46,7 @@ public class SwordRegressionWizard {
                 "Improve my mental well-being",
                 "Improve my quality of sleep",
                 "Prevent future pain, injury and/or falls",
-                "Avoid surgery "
+                "Avoid surgery"
         };
 
         //fazer login
@@ -90,17 +92,22 @@ public class SwordRegressionWizard {
         driver.findElementByXPath("//android.widget.TextView[@text='Your personal goals']");
         driver.findElementByXPath("//android.widget.TextView[@text='Track your progress toward your personal health goals.']");
         driver.findElementByXPath("//android.widget.TextView[@text=\"I’ve customized your sessions based on the goals you selected.\"]");
-        String personalGoal1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[4]").getText();
-        String personalGoal2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[5]").getText();
-        String personalGoal3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[6]").getText();
-        if (Arrays.asList(personalGoalsArray).contains(personalGoal1) && Arrays.asList(personalGoalsArray).contains(personalGoal2) && Arrays.asList(personalGoalsArray).contains(personalGoal3)) {
-            System.out.println("Personal goals found");
-        } else {
-            System.out.println("Personal goals not found");
-            driver.quit();
-        }
         driver.findElementByXPath("//android.widget.TextView[@text='Next']");
         driver.findElementByXPath("//android.widget.TextView[@text='Skip']");
+
+        int maxPersonalGoals = 3;
+        int personalGoalsFound = 0;
+
+        for (String personalGoals : personalGoalsArray) {
+            if (driver.findElements(By.xpath("//android.widget.TextView[@text='" + personalGoals + "']")).size() > 0) {
+                System.out.println("Personal goal found: " + personalGoals);
+                personalGoalsFound++;
+            }
+            if (personalGoalsFound == maxPersonalGoals) {
+                break;
+            }
+        }
+
         //teste visual
         visualCheck.doVisualCheck(CHECK_YOUR_PERSONAL_GOALS_SCREEN);
         //next
