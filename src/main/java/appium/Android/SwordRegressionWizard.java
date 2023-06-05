@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
+import java.util.Arrays;
 
 public class SwordRegressionWizard {
 
@@ -25,11 +26,26 @@ public class SwordRegressionWizard {
     }
 
     @Test
-    public void live() throws Exception {
+    public void wizard() throws Exception {
         MobileActions mobileActions = new MobileActions(driver);
         WebDriverWait wait = new WebDriverWait(driver,50);
         UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
         VisualCheck visualCheck = new VisualCheck(driver);
+
+        String [] personalGoalsArray = {
+                "Decrease my pain or symptoms",
+                "Decrease/avoid pain using medications",
+                "Return to my hobbies/daily activities",
+                "Return to my exercise routine",
+                "Return to playing sports",
+                "Return to my regular work duties",
+                "Return to my usual family routine",
+                "Improve my physical fitness",
+                "Improve my mental well-being",
+                "Improve my quality of sleep",
+                "Prevent future pain, injury and/or falls",
+                "Avoid surgery "
+        };
 
         //fazer login
         utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
@@ -70,13 +86,19 @@ public class SwordRegressionWizard {
         visualCheck.doVisualCheck(CHECK_YOUR_PROGRAM_SCREEN_2);
         //next
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-        //validar your personal goals - só é visível se tiver program goals - muda de user pra user -> ver como posso distinguir o user de staging do de prod -> goals do l.spiegel+3
+        //validar your personal goals - só é visível se tiver program goals - muda de user pra user
         driver.findElementByXPath("//android.widget.TextView[@text='Your personal goals']");
         driver.findElementByXPath("//android.widget.TextView[@text='Track your progress toward your personal health goals.']");
         driver.findElementByXPath("//android.widget.TextView[@text=\"I’ve customized your sessions based on the goals you selected.\"]");
-        driver.findElementByXPath("//android.widget.TextView[@text='Decrease my pain or symptoms']");
-        driver.findElementByXPath("//android.widget.TextView[@text='Decrease/avoid pain using medications']");
-        driver.findElementByXPath("//android.widget.TextView[@text='Return to my hobbies/daily activities']");
+        String personalGoal1 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[4]").getText();
+        String personalGoal2 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[5]").getText();
+        String personalGoal3 = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.TextView[6]").getText();
+        if (Arrays.asList(personalGoalsArray).contains(personalGoal1) && Arrays.asList(personalGoalsArray).contains(personalGoal2) && Arrays.asList(personalGoalsArray).contains(personalGoal3)) {
+            System.out.println("Personal goals found");
+        } else {
+            System.out.println("Personal goals not found");
+            driver.quit();
+        }
         driver.findElementByXPath("//android.widget.TextView[@text='Next']");
         driver.findElementByXPath("//android.widget.TextView[@text='Skip']");
         //teste visual

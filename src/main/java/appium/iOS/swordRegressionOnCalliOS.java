@@ -65,11 +65,11 @@ public class swordRegressionOnCalliOS {
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Explore our programs\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Learn more about our programs below to find the best fit for you.\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Eligible\"]");
-			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Digital Physical Therapy\"]");
-			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Physical therapy you can do anytime, anywhere.\"]");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Bloom\"]"); //mudou pro card da Bloom
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Sensitive, clinical-grade grade care for pelvic health designed just for you.\"]"); //mudou pro card da Bloom
 			//clicar get started
 			utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_get_started_button", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage[@name=\"Sword Health\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Seja bem-vinda à Bloom!\"]")));
 			//voltar
 			utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 			try {
@@ -151,7 +151,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		//validar on-call card novo
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
@@ -232,7 +232,7 @@ public class swordRegressionOnCalliOS {
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Eligible\"]");
 			//clicar enroll now
 			utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_get_started_button", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage[@name=\"Sword Health\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Areas we treat\"]")));
 			//voltar
 			utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 			try {
@@ -365,7 +365,7 @@ public class swordRegressionOnCalliOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton", driver);
 		utilitiesiOS.clickByAccessibilityId("Photos and videos", driver);
 		utilitiesiOS.clickByAccessibilityId("Allow Access to All Photos", driver);
-		utilitiesiOS.clickByAccessibilityId("Screenshot, 25 May, 12:09 PM", driver); //precisa atualizar pra uma que apareça no rolo
+		utilitiesiOS.clickByAccessibilityId("Screenshot, 02 June, 4:34 PM", driver); //precisa atualizar pra uma que apareça no rolo
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeTextView[@name='Tests. Please ignore']")));
 		File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(scrFile3, new File("screen3.jpg"));
