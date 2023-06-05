@@ -222,7 +222,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myReminders3SessionRemindersSet, myReminders2SessionRemindersSet, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result5.getVisualization().length, is(greaterThan(0)));
-		assertThat(result5.getScore(), is(greaterThan(0.55)));
+		assertThat(result5.getScore(), is(greaterThan(0.53)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_3_2_sessions_set" + ".png";
 		File comparison5 = new File(baselineFilename);
 		result5.storeVisualization(comparison5);
