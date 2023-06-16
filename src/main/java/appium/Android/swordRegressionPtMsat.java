@@ -64,7 +64,8 @@ public class swordRegressionPtMsat {
         visualCheck.doVisualCheck(PTMSAT_SCREEN_EMPTY);
         byte[] ptMSatEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //Tap "Share feedback" button → Error message
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button", driver);
+        MobileElement shareFeedbackButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button");
+        shareFeedbackButton.click();
         driver.findElementByXPath("//android.widget.TextView[@text='Please rate your experience']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_RATE_EXPERIENCE_ERROR);
@@ -80,8 +81,8 @@ public class swordRegressionPtMsat {
         assertThat(result1.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result1.getScore());
         //Tap on the fourth star → Tap "Share feedback" button → Error message
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[4]/android.view.View", driver);
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[4]", driver);
+        shareFeedbackButton.click();
         driver.findElementByXPath("//android.widget.TextView[@text='Please select at least one option']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SELECT_OPTION_ERROR);
@@ -98,7 +99,7 @@ public class swordRegressionPtMsat {
         System.out.println("Similarity of: " + result2.getScore());
         //Select some options (other include) → Tap "Share feedback" button → Error message
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button", driver);
+        shareFeedbackButton.click();
         driver.findElementByXPath("//android.widget.TextView[@text='Please share some feedback']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SHARE_FEEDBACK_ERROR);
@@ -114,7 +115,7 @@ public class swordRegressionPtMsat {
         assertThat(result3.getScore(), is(greaterThan(0.93)));
         System.out.println("Similarity of: " + result3.getScore());
         //Write something on the text box
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button", driver);
+        shareFeedbackButton.click();
         MobileElement sendMessage = driver.findElementByXPath("//android.widget.EditText");
         sendMessage.click();
         sendMessage.sendKeys("Tests. Please ignore. Thank you!");
@@ -152,7 +153,7 @@ public class swordRegressionPtMsat {
             Thread.currentThread().interrupt();
         }
         //Tap 2x same star - Tap fifth star → tap on the same star - nothing should happen
-        MobileElement fifthStar = driver. findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[5]");
+        MobileElement fifthStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[5]");
         fifthStar.click();
         fifthStar.click();
         //teste visual - build antiga
@@ -169,7 +170,7 @@ public class swordRegressionPtMsat {
         assertThat(result5.getScore(), is(greaterThan(0.97)));
         System.out.println("Similarity of: " + result5.getScore());
         //Tap one star (fifth one) → unselect one star → Tap on "Other" option → Select one more star
-        MobileElement fourthStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[4]");
+        MobileElement fourthStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[4]");
         fourthStar.click();
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
@@ -193,7 +194,7 @@ public class swordRegressionPtMsat {
         assertThat(result6.getVisualization().length, is(greaterThan(0)));
         assertThat(result6.getScore(), is(greaterThan(0.90)));
         System.out.println("Similarity of: " + result6.getScore());
-        MobileElement thirdStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[3]");
+        MobileElement thirdStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[3]");
         thirdStar.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_3_STARS);
@@ -208,7 +209,7 @@ public class swordRegressionPtMsat {
         assertThat(result7.getVisualization().length, is(greaterThan(0)));
         assertThat(result7.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result7.getScore());
-        MobileElement secondStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[2]");
+        MobileElement secondStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[2]");
         secondStar.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_2_STARS);
@@ -223,7 +224,7 @@ public class swordRegressionPtMsat {
         assertThat(result8.getVisualization().length, is(greaterThan(0)));
         assertThat(result8.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result8.getScore());
-        MobileElement firstStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[1]");
+        MobileElement firstStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View/android.view.View[1]");
         firstStar.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_1_STAR);

@@ -46,7 +46,7 @@ public class SwordRegressionLoginLogout {
 		utilitiesAndroid.clickByAccessibilityId("loginQRCodeButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Application permissions']");
 		driver.findElementByXPath("//android.widget.TextView[@text='The app needs the following permissions to work correctly:']");
-		driver.findElementByXPath("//android.widget.TextView[@text='We use the camera to read your patient card QR code and sign you into Sword']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Sword will only use the camera to scan the QR code on the card or tablet.']");
 		visualCheck.doVisualCheck(CHECK_QR_CODE_1);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Present your card']");
@@ -55,7 +55,7 @@ public class SwordRegressionLoginLogout {
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementById("com.android.permissioncontroller:id/permission_allow_foreground_only_button").click();
 		//back no leitor de qr code
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View", driver);
+		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Back']", driver);
 		MobileElement el11 = driver.findElementByAccessibilityId("Navigate up");
 		el11.click();
 		el11.click();
@@ -76,7 +76,7 @@ public class SwordRegressionLoginLogout {
 			Thread.currentThread().interrupt();
 		}
 		mobileActions.tapByCoordinates(780, 1070);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.c1/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Danaher Canada']")).size() > 0) {
 			utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Danaher Canada']", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
@@ -88,8 +88,8 @@ public class SwordRegressionLoginLogout {
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
 		}
 		//voltar para login screen
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View", driver);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.c1/android.view.View/android.view.View/android.view.View", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.c1/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		//recover pass
 		utilitiesAndroid.clickByAccessibilityId("loginRecoverPasswordButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Recover my password']")));
@@ -224,7 +224,7 @@ public class SwordRegressionLoginLogout {
 		confirmPin6.click();
 		confirmPin6.click();
 		//apagar um número
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[12]", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.c1/android.view.View/android.view.View[12]", driver);
 		MobileElement confirmPin8 = driver.findElementByXPath("//android.widget.TextView[@text='8']");
 		confirmPin8.click();
 		confirmPin8.click();
