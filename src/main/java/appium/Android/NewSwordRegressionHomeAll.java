@@ -17,7 +17,6 @@ import java.net.MalformedURLException;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
 
 public class NewSwordRegressionHomeAll {
 
@@ -122,7 +121,7 @@ public class NewSwordRegressionHomeAll {
         if (driver.findElements(By.xpath("//android.view.View[@content-desc='home_card_program_goal']")).size() > 0) {
             String programGoalTitle = driver.findElementByXPath("//android.view.View[@content-desc='home_card_program_goal']/android.widget.TextView[1]").getText();
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
-            Assert.assertEquals("Program goal: 9+ sessions ", programGoalTitle);
+            Assert.assertEquals("Goal: Complete 9 or more sessions", programGoalTitle);
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
 //            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
@@ -142,7 +141,7 @@ public class NewSwordRegressionHomeAll {
             VisualCheck.doVisualCheck(CHECK_MY_PROGRAM_1);
             //scroll
             MobileElement myProgramReduceTxt = driver.findElementByXPath("//android.widget.TextView[@text='Reduce your symptoms']");
-            MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Program goal: 9+ sessions ']");
+            MobileElement myProgramProgramGoalTxt = driver.findElementByXPath("//android.widget.TextView[@text='Goal: Complete 9 or more sessions']");
             mobileActions.swipeByElements(myProgramReduceTxt, myProgramProgramGoalTxt);
             //validar o restante do my program
             driver.findElementByXPath("//android.widget.TextView[@text=\"Handle more reps\"]");
