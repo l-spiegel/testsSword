@@ -42,7 +42,7 @@ public class NewSwordRegressionSessionDetails {
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION = "session_details_next_session";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION_STAGING = "session_details_next_session_staging";
 	private final static String CHECK_SESSION_DETAILS_SESSION_1_STAGING = "session_details_session_1_staging";
-	private final static String CHECK_SESSION_DETAILS_SESSION_4 = "session_details_session_4";
+	private final static String CHECK_SESSION_DETAILS_SESSION_5 = "session_details_session_5";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION = "session_details_popup_session";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING = "session_details_popup_session_staging";
 	private final static String CHECK_SESSION_DETAILS_POPUP_EXERCISE = "session_details_popup_exercise";
@@ -488,12 +488,12 @@ public class NewSwordRegressionSessionDetails {
 			utilitiesAndroid.clickByAccessibilityId("home_card_session_details_10", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Overview']")));
 			//validar que abriu a sessão certa
-			visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_4);
+			visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_5);
 			byte[] session4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 			SimilarityMatchingResult result3 = driver
 					.getImagesSimilarity(session10, session4, new SimilarityMatchingOptions()
 							.withEnabledVisualization());
-			baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session10_session4.png";
+			baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session10_session5.png";
 			File comparison3 = new File(baselineFilename);
 			result3.storeVisualization(comparison3);
 			assertThat(result3.getVisualization().length, is(greaterThan(0)));

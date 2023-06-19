@@ -53,7 +53,7 @@ public class SwordRegressionExerciseHistory {
         utilitiesAndroid.clickByAccessibilityId("home_card_session_details_0_prev_date_button", driver);
         utilitiesAndroid.clickByXPath("//android.view.View[@content-desc=\"home_card_session_details_1\"]/android.view.View/android.view.View", driver);
         //abrir exercise history do exercício 1
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[1]/android.view.View[2]/android.widget.Button", driver);
         utilitiesAndroid.clickByAccessibilityId("session_details_exercise_0_card_exercise_history", driver);
         //validar ecrã
         driver.findElementByXPath("//android.widget.TextView[@text='Trunk forward bend']");
@@ -98,7 +98,7 @@ public class SwordRegressionExerciseHistory {
         driver.findElementByXPath("//android.widget.TextView[@text='Close']");
         visualCheckAndroid.doVisualCheck(CHECK_STARS_BOTTOM_SHEET);
         //fechar no close
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View[2]/android.view.View/android.widget.Button", driver);
         //abrir bottom sheet do tempo
         utilitiesAndroid.clickByXPath("//android.view.View[@content-desc=\"exercise_history_results_total_time_card\"]/android.view.View/android.widget.Button", driver);
         //validar bottom sheet do tempo
@@ -109,8 +109,8 @@ public class SwordRegressionExerciseHistory {
         //fechar clicando fora
         mobileActions.tapByCoordinates(593, 797);
         //abrir exercise history do exercício 2
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.view.View[2]/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[3]/android.view.View[2]/android.view.View[2]/android.widget.Button", driver);
         utilitiesAndroid.clickByAccessibilityId("session_details_exercise_1_card_exercise_history", driver);
         //validar ecrã
         driver.findElementByXPath("//android.widget.TextView[@text='Trunk side bend']");
@@ -148,8 +148,8 @@ public class SwordRegressionExerciseHistory {
         driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
         visualCheckAndroid.doVisualCheck(CHECK_EXERCISE_HISTORY_2_SCROLL);
         //voltar pra home
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
         driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
 
         ConfigurationsAndroid.killDriver();
