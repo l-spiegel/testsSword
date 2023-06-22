@@ -10,7 +10,7 @@ import java.io.File;
 
 public class VisualCheck {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/repos/testsSword/src/visual tests";
+    public final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
     private final static String BASELINE = "BASELINE_";
     private final static double MATCH_THRESHOLD = 0.95;
 

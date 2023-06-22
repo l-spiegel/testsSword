@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationsAndroid {
 
+    public final static String VALIDATION_PATH = "src/visual tests";
     private static AndroidDriver<MobileElement> driver;
 
     public static AndroidDriver<MobileElement> getDriver() throws MalformedURLException {
