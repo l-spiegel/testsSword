@@ -23,7 +23,7 @@ public class SwordRegressionExerciseHistory {
     private final static String CHECK_TIME_BOTTOM_SHEET = "time_bottom_sheet";
     private final static String CHECK_EXERCISE_HISTORY_2 = "exercise_history_2";
     private final static String CHECK_EXERCISE_HISTORY_2_SCROLL = "exercise_history_2_scroll";
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression exercise history/Android";
+    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/repos/testsSword/src/visual tests";
     private final static String BASELINE = "COMPARISION_";
 
     private AndroidDriver<MobileElement> driver;
