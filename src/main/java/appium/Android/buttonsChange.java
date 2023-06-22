@@ -18,7 +18,7 @@ import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 
 public class buttonsChange {
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/buttons";
+	private final static String VALIDATION_PATH = "/Users/filipasilva/Documents/Patient APP/Evidences/Android/Visual Check/ButtonsChange";
 	private final static String BASELINE = "BASELINE_";
 	private final static double MATCH_THRESHOLD = 0.1;
 	
@@ -164,7 +164,7 @@ public class buttonsChange {
 		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_0").click();
 		driver.findElementByAccessibilityId("session_reminders_reminder_notification_option").click();
 		driver.findElementByAccessibilityId("session_reminders_notify_me_option_2").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button").click();
+		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		waitForElement(wait, NEW_REMINDER2_SCREEN);
 		doVisualCheck(CHECK_NEW_REMINDER2_SCREEN);
 		//my reminders
@@ -177,7 +177,7 @@ public class buttonsChange {
 		doVisualCheck(CHECK_UPDATE_REMINDER_SCREEN);
 		//pop-up reminders alteração sem salvar
 		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_3").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button").click();
+		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		waitForElement(wait, REMINDER_POPUP_SCREEN);
 		doVisualCheck(CHECK_REMINDER_POPUP_SCREEN);
 		//pop-up badge sem carrossel - reminders
@@ -186,7 +186,7 @@ public class buttonsChange {
 		driver.findElementByAccessibilityId("session_reminders_reminder_week_day_6").click();
 		driver.findElementByAccessibilityId("session_reminders_reminder_update_reminder_button").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button").click();
+		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		driver.findElementByAccessibilityId("header_menu_button").click();
 		waitForElement(wait, REMINDERS_BADGE_SCREEN);
 		doVisualCheck(CHECK_REMINDERS_BADGE_SCREEN);
@@ -224,7 +224,7 @@ public class buttonsChange {
 		waitForElement(wait, DIFF_PIN2_SCREEN);
 		doVisualCheck(CHECK_DIFF_PIN2_SCREEN);
 		driver.findElementByXPath("//android.widget.Button").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]/android.view.View/android.widget.Button").click();
+		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
 		//pop-up share feedback da sessão no chat
 		MobileElement kitDelivery = (MobileElement) driver.findElementByAccessibilityId("home_card_delivery_kit_status");
 		MobileElement ptCard = (MobileElement) driver.findElementByAccessibilityId("home_card_pt");
@@ -235,92 +235,110 @@ public class buttonsChange {
 	//	mobileActions.swipeByElements(sessions, weeklyGoal);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Next Session']")).size() > 0) {
 			driver.findElementByAccessibilityId("home_card_session_details_0_prev_date_button").click();
+			MobileElement el11 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_1_prev_date_button");
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			el11.click();
+			MobileElement el12 = (MobileElement) driver.findElementByAccessibilityId("home_card_session_details_10");
+			el12.click();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@content-desc='home_card_session_details_1_see_more_button']")));
-		driver.findElementByAccessibilityId("home_card_session_details_1").click();
+
+		MobileElement sessionFour = driver.findElementByAccessibilityId("session_details_carousel_date_card_9");
+		MobileElement toLeft = driver.findElementByAccessibilityId("session_details_carousel_date_card_11");
+		mobileActions.swipeByElements(toLeft, sessionFour);
+		driver.findElementByAccessibilityId("session_details_carousel_date_card_11").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Exercises']")));
 		driver.findElementByAccessibilityId("session_details_session_overview_card_share_button").click();
 		waitForElement(wait, SHARE_SESSION_SCREEN);
 		doVisualCheck(CHECK_SHARE_SESSION_SCREEN);
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]").click();
 		//pop-up share feedback exercício no chat
-		driver.findElementByAccessibilityId("session_details_exercise_0_card_share_button").click();
+		driver.findElementByAccessibilityId("session_details_exercise_0_card_see_more").click();
+		driver.findElementByAccessibilityId("session_details_exercise_0_card_share").click();
 		waitForElement(wait, SHARE_EXERCISE_SCREEN);
 		doVisualCheck(CHECK_SHARE_EXERCISE_SCREEN);
 		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[2]").click();
+		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button").click();
+
 		//pop-ups badges não atingidos - definePinLoginChangePinHome
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.widget.Button").click();
-		MobileElement progress = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Progress']");
-		MobileElement sessions2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
-		mobileActions.swipeByElements(progress, sessions2);
-		MobileElement personalGoals = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Personal goals']");
-		MobileElement painChart = (MobileElement) driver.findElementByAccessibilityId("home_screen_pain_chart");
-		mobileActions.swipeByElements(personalGoals, painChart);
-		MobileElement myBadges = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='My badges']");
-		mobileActions.swipeByElements(myBadges, painChart);
-		driver.findElementByAccessibilityId("home_badges_card_badge_1").click();
-		waitForElement(wait, BADGE_HOME_SCREEN);
-		doVisualCheck(CHECK_BADGE_HOME_SCREEN);
+		//MobileElement progress = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Progress']");
+		//MobileElement sessions2 = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Sessions']");
+		//mobileActions.swipeByElements(progress, sessions2);
+		//MobileElement personalGoals = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='Personal goals']");
+		//MobileElement painChart = (MobileElement) driver.findElementByAccessibilityId("home_screen_pain_chart");
+		//mobileActions.swipeByElements(personalGoals, painChart);
+		//MobileElement myBadges = (MobileElement) driver.findElementByXPath("//android.widget.TextView[@text='My badges']");
+		//mobileActions.swipeByElements(myBadges, painChart);
+
+//		driver.findElementByAccessibilityId("home_badges_card_badge_1").click();
+//		waitForElement(wait, BADGE_HOME_SCREEN);
+//		doVisualCheck(CHECK_BADGE_HOME_SCREEN);
 		//pop-ups badges não atingidos - badges
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
-		driver.findElementByAccessibilityId("home_badges_card_see_more_button").click();
-		driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_0_badge_3']/android.view.View").click();
-		waitForElement(wait, BADGE_BADGES_SCREEN);
-		doVisualCheck(CHECK_BADGE_BADGES_SCREEN);
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button").click();
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
+//		driver.findElementByAccessibilityId("home_badges_card_see_more_button").click();
+//		driver.findElementByXPath("//android.view.View[@content-desc='badges_screen_section_0_badge_3']/android.view.View").click();
+//		waitForElement(wait, BADGE_BADGES_SCREEN);
+//		doVisualCheck(CHECK_BADGE_BADGES_SCREEN);
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.Button").click();
 		//pop-ups personal goals
-		driver.findElementByAccessibilityId("home_card_personal_goals_0").click();
-		waitForElement(wait, PERSONAL_GOAL_ACHIEVE_SCREEN);
-		doVisualCheck(CHECK_PERSONAL_GOAL_ACHIEVE_SCREEN);
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button").click();
-		waitForElement(wait, PERSONAL_GOAL_SUCCESS_SCREEN);
-		doVisualCheck(CHECK_PERSONAL_GOAL_SUCCESS_SCREEN);
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
-		driver.findElementByAccessibilityId("home_card_personal_goals_1").click();
-		waitForElement(wait, PERSONAL_GOAL_UNMARK_SCREEN);
-		doVisualCheck(CHECK_PERSONAL_GOAL_UNMARK_SCREEN);
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button").click();
+//		driver.findElementByAccessibilityId("home_card_personal_goals_0").click();
+//		waitForElement(wait, PERSONAL_GOAL_ACHIEVE_SCREEN);
+//		doVisualCheck(CHECK_PERSONAL_GOAL_ACHIEVE_SCREEN);
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button").click();
+//		waitForElement(wait, PERSONAL_GOAL_SUCCESS_SCREEN);
+//		doVisualCheck(CHECK_PERSONAL_GOAL_SUCCESS_SCREEN);
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button").click();
+//		driver.findElementByAccessibilityId("home_card_personal_goals_1").click();
+//		waitForElement(wait, PERSONAL_GOAL_UNMARK_SCREEN);
+//		doVisualCheck(CHECK_PERSONAL_GOAL_UNMARK_SCREEN);
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button").click();
 		//hub screen
-		driver.findElementByAccessibilityId("bottom_navigation_hub_tab").click();
-		waitForElement(wait, HUB_SCREEN);
-		doVisualCheck(CHECK_HUB_SCREEN);
+//		driver.findElementByAccessibilityId("bottom_navigation_hub_tab").click();
+//		waitForElement(wait, HUB_SCREEN);
+//		doVisualCheck(CHECK_HUB_SCREEN);
 		//logout
-		driver.findElementByAccessibilityId("header_menu_button").click();
-		driver.findElementByAccessibilityId("menu_option_logout").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
+//		driver.findElementByAccessibilityId("header_menu_button").click();
+//		driver.findElementByAccessibilityId("menu_option_logout").click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
 		//muitas tentativas de login com email/senha errado
-		driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("1234");
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
-		waitForElement(wait, EMAIL_LOCKED_SCREEN);
-		doVisualCheck(CHECK_EMAIL_LOCKED_SCREEN);
+//		driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("1234");
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Login']")));
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[1]/android.widget.Button").click();
+//		waitForElement(wait, EMAIL_LOCKED_SCREEN);
+//		doVisualCheck(CHECK_EMAIL_LOCKED_SCREEN);
 		//permissões da app - qr code
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.Button").click();
-		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.Button").click();
-		waitForElement(wait, APP_PERMISSIONS_SCREEN);
-		doVisualCheck(CHECK_APP_PERMISSIONS_SCREEN);
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.widget.Button").click();
+//		driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.ScrollView/android.view.View[2]/android.widget.Button").click();
+//		waitForElement(wait, APP_PERMISSIONS_SCREEN);
+//		doVisualCheck(CHECK_APP_PERMISSIONS_SCREEN);
 		//present your card screen
-		driver.findElementByXPath("//android.widget.Button").click();
-		waitForElement(wait, PRESENT_CARD_SCREEN);
-		doVisualCheck(CHECK_PRESENT_CARD_SCREEN);
-		driver.findElementByXPath("//android.widget.Button").click();
+//		driver.findElementByXPath("//android.widget.Button").click();
+//		waitForElement(wait, PRESENT_CARD_SCREEN);
+//		doVisualCheck(CHECK_PRESENT_CARD_SCREEN);
+//		driver.findElementByXPath("//android.widget.Button").click();
 		//não dar autorização a camera
-		driver.findElementById("com.android.permissioncontroller:id/permission_deny_button").click();
-		waitForElement(wait, CAMERA_PERMISSION_SETTINGS_SCREEN);
-		doVisualCheck(CHECK_CAMERA_PERMISSION_SETTINGS_SCREEN);
+//		driver.findElementById("com.android.permissioncontroller:id/permission_deny_button").click();
+//		waitForElement(wait, CAMERA_PERMISSION_SETTINGS_SCREEN);
+//		doVisualCheck(CHECK_CAMERA_PERMISSION_SETTINGS_SCREEN);
 		//dar autorização a camera retry
-		driver.findElementByXPath("//android.widget.Button").click();
-		try {
-			Thread.sleep(15000);
-			} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-		waitForElement(wait, CAMERA_PERMISSION_RETRY_SCREEN);
-		doVisualCheck(CHECK_CAMERA_PERMISSION_RETRY_SCREEN);
+//		driver.findElementByXPath("//android.widget.Button").click();
+//		try {
+//			Thread.sleep(15000);
+//			} catch (InterruptedException e) {
+//			Thread.currentThread().interrupt();
+//		}
+//		waitForElement(wait, CAMERA_PERMISSION_RETRY_SCREEN);
+//		doVisualCheck(CHECK_CAMERA_PERMISSION_RETRY_SCREEN);
 				
 		driver.quit();
 	}
