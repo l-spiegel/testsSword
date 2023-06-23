@@ -389,7 +389,7 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByAccessibilityId("home_on_call_card", driver);
 		driver.findElementById("com.swordhealth.guarda.dev:id/ibtnAdd").click();
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.appcompat.widget.LinearLayoutCompat/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[3]", driver);
-		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc=\"Photo taken on May 8, 2023, 10:29:02 AM\"]/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("//android.widget.FrameLayout[@content-desc=\"Photo taken on Jun 19, 2023, 2:57:03 PM\"]/androidx.cardview.widget.CardView/android.widget.FrameLayout/android.widget.ImageView", driver);
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
@@ -519,7 +519,7 @@ public class swordRegressionOnCall {
 		utilitiesAndroid.clickByAccessibilityId("on_call_headaches_card", driver);
 		//validar bottom sheet
 		driver.findElementByXPath("//android.widget.TextView[@text='You already have an open chat']");
-		driver.findElementByXPath("//android.widget.TextView[@text='It looks like you have an open chat with a Headaches specialist. Once this conversation is closed, you can start a new one!']");
+		driver.findElementByXPath("//android.widget.TextView[@text='It looks like you have an open chat with a Pelvic health specialist. Once this conversation is closed, you can start a new one!']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Close']");
 		visualCheck.doVisualCheck(CHECK_BOTTOM_SHEET);
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button", driver);
