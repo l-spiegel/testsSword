@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class SwordRegressionReminders {
 
-	private final static String VALIDATION_PATH = "/Users/filipasilva/Documents/Patient APP/Evidences/Android/Visual Check/RegressionTests Reminders";
+	private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
 	private final static String BASELINE = "COMP_";
 	private final static String CHECK_SET_REMINDER_4_MORE_DAYS_EMPTY_SCREEN = "set_reminder_4_more_days_empty";
 	private final static String CHECK_NOTIFY_ME_SCREEN = "notify_me";

@@ -23,7 +23,7 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class swordRegressionOnCall {
 
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/Android";
+	private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
 	private final static String BASELINE = "COMP_";
 	private final static String CHECK_ON_CALL_NO_CHAT_SCREEN = "on_call_empty_screen";
 	private final static String CHECK_TERMS_CONDITIONS = "terms_and_conditions_screen";

@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.lessThan;
 
 public class swordRegressionSessionDetails {
 
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression session details/Android";
+	private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
 	private final static String BASELINE = "COMP_";
 
 	private AndroidDriver<MobileElement> driver;

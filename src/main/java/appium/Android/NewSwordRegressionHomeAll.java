@@ -26,7 +26,7 @@ public class NewSwordRegressionHomeAll {
         driver = ConfigurationsAndroid.getDriver();
     }
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression home/Android";
+    private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
     private final static String BASELINE = "COMP_";
 
     private final static String CHECK_HOME_SCREEN_TOP = "home_screen_top";

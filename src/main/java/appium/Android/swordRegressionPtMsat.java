@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class swordRegressionPtMsat {
 
-    private final static String VALIDATION_PATH = "/Users/filipasilva/Documents/Patient APP/Evidences/Android/Visual Check/RegressionTests PTMsat";
+    private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
     private final static String BASELINE = "COMP_";
     private final static String PTMSAT_SCREEN_EMPTY = "ptmsat_empty";
     private final static String PTMSAT_SCREEN_RATE_EXPERIENCE_ERROR = "ptmsat_rate_experience_error";
