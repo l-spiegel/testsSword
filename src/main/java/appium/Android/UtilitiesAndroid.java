@@ -30,4 +30,20 @@ public class UtilitiesAndroid {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
     }
+
+    public void newLogin(String email, String password, AndroidDriver<MobileElement> driver) {
+        WebDriverWait wait = new WebDriverWait(driver,20);
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Your journey to a pain-free life starts here']")));
+        MobileElement emailField = driver.findElementByXPath("//android.widget.EditText");
+        emailField.clear();
+        emailField.sendKeys(email);
+        driver.findElementByAccessibilityId("continueButton").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Password']")));
+        MobileElement passField = driver.findElementByXPath("//android.widget.EditText");
+        passField.sendKeys(password);
+        driver.findElementByAccessibilityId("loginButton").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
+    }
 }
