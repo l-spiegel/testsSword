@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationsiOS {
 
+    public final static String VALIDATION_PATH = "src/visual tests/iPhone/PT MSat";
     private static IOSDriver<MobileElement> driver;
 
     public static IOSDriver<MobileElement> getDriver() throws MalformedURLException {
@@ -27,7 +28,7 @@ public class ConfigurationsiOS {
         desiredCapabilities.setCapability("automationName", "XCUITest");
         desiredCapabilities.setCapability("xcodeOrgId", "698N4JU9B9");
         desiredCapabilities.setCapability("xcodeSigningId", "iPhone Developer");
-        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth2064.ipa");
+        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealthRelease510-1243.ipa");
         desiredCapabilities.setCapability("updatedWDABundleId", "com.luizateste2.wda.runner");
         desiredCapabilities.setCapability("showXcodeLog", "true");
         desiredCapabilities.setCapability("wdaLocalPort", "8205");
