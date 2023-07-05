@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 public class SwordRegressionPtMsatiOS {
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression pt msat/iOS";
+    private final static String VALIDATION_PATH = ConfigurationsiOS.VALIDATION_PATH;
     private final static String BASELINE = "COMP_";
     private final static String PTMSAT_SCREEN_EMPTY = "ptmsat_empty";
     private final static String PTMSAT_SCREEN_RATE_EXPERIENCE_ERROR = "ptmsat_rate_experience_error";
@@ -48,14 +48,14 @@ public class SwordRegressionPtMsatiOS {
 
         System.out.println("Ligar proxy - Mudar PTMSAT para TRUE");
         //fazer login
-        utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesiOS.login("luiza@marco.com", "10março!", driver);
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //validar ecrã PTMSAT
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Luiza Almeida?']"); //o nome do pt muda de acordo com o user
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Bigodes Cousin?']"); //o nome do pt muda de acordo com o user
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How could we improve your experience?']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Share your thoughts here']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Share feedback']");
@@ -122,7 +122,7 @@ public class SwordRegressionPtMsatiOS {
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_FILLED);
         //fazer scroll pra poder comparar direito
-        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Luiza Almeida?\"]");
+        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Bigodes Cousin?\"]");
         MobileElement improveExperienceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How could we improve your experience? *\"]");
         mobileActions.swipeByElements(rateYourPtTxt, improveExperienceTxt);
         //teste visual - comparar com o ptmsat_share_feedback_error
