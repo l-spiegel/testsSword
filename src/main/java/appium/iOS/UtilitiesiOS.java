@@ -31,4 +31,22 @@ public class UtilitiesiOS {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']").click();
     }
+
+    public static void newLogin(String email, String password, IOSDriver<MobileElement> driver) {
+        WebDriverWait wait = new WebDriverWait(driver,20);
+
+        driver.findElementByAccessibilityId("Allow").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Your journey to a pain-free life starts here']")));
+        MobileElement emailField = driver.findElementByAccessibilityId("loginEmailTextfield");
+        emailField.clear();
+        emailField.sendKeys(email);
+        driver.findElementByAccessibilityId("continueButton"). click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
+        MobileElement passField = driver.findElementByAccessibilityId("loginPasswordTextfield");
+        passField.click();
+        passField.sendKeys(password);
+        driver.findElementByAccessibilityId("loginButton").click();
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']").click();
+    }
 }
