@@ -48,24 +48,24 @@ public class SwordRegressionPtMsatiOS {
 
         System.out.println("Ligar proxy - Mudar PTMSAT para TRUE");
         //fazer login
-        utilitiesiOS.login("luiza@marco.com", "10março!", driver);
+        utilitiesiOS.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //validar ecrã PTMSAT
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Bigodes Cousin?']"); //o nome do pt muda de acordo com o user
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Luiza Almeida?']"); //o nome do pt muda de acordo com o user
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How could we improve your experience?']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Share your thoughts here']");
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Share feedback']");
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Later']");
+        driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Share feedback\"]");
+        driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Later\"]");
         //teste visual
         visualCheck.doVisualCheck(PTMSAT_SCREEN_EMPTY);
         byte[] ptMSatEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //Tap "Share feedback" button → Error message
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Share feedback\"]", driver);
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please rate your experience']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please complete your experience rating']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_RATE_EXPERIENCE_ERROR);
         //teste visual - comparar com o ptmsat_empty
@@ -80,9 +80,9 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result1.getScore(), is(greaterThan(0.94)));
         System.out.println("Similarity of: " + result1.getScore());
         //Tap on the fourth star → Tap "Share feedback" button → Error message
-        utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name='Sword Health']/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[4]", driver);
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name='starEmpty'])[4]", driver);
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Share feedback']", driver);
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please select at least one option']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please make a selection above']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SELECT_OPTION_ERROR);
         //teste visual - comparar com o ptmsat_rate_experience_error
@@ -97,7 +97,7 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result2.getScore(), is(greaterThan(0.71)));
         System.out.println("Similarity of: " + result2.getScore());
         //Select some options (other include) → Tap "Share feedback" button → Error message
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Other']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Other\"]", driver);
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Share feedback']", driver);
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please share some feedback']");
         //teste visual - comparar com build anterior
@@ -118,12 +118,12 @@ public class SwordRegressionPtMsatiOS {
         sendMessage.click();
         sendMessage.sendKeys("Tests. Please ignore. Thank you!");
         //tap fora da caixa de texto
-        mobileActions.tapByCoordinates(316, 190);
+        mobileActions.tapByCoordinates(264, 256);
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_FILLED);
         //fazer scroll pra poder comparar direito
-        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Bigodes Cousin?\"]");
-        MobileElement improveExperienceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How could we improve your experience? *\"]");
+        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Luiza Almeida?\"]");
+        MobileElement improveExperienceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How could we improve your experience?\"]");
         mobileActions.swipeByElements(rateYourPtTxt, improveExperienceTxt);
         //teste visual - comparar com o ptmsat_share_feedback_error
         byte[] ptMSatFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -137,24 +137,25 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result4.getScore(), is(greaterThan(0.92)));
         System.out.println("Similarity of: " + result4.getScore());
         //Unselected the option "Other"
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Other']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
         //Select all options
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Lack of expertise']", driver);
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Lack of support']", driver);
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not responsive']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Other']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
         //Tap "Later button"
-        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Later']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Later\"]", driver);
         //Pull to refresh não mostra o pt msat -> matar e abrir manualmente
         try {
-            Thread.sleep(10000);
+            Thread.sleep(12000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //Tap 2x same star - Tap fifth star → tap on the same star - nothing should happen
-        MobileElement fifthStar = driver. findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[5]");
-        fifthStar.click();
-        fifthStar.click();
+        MobileElement fifthStarEmpty = driver. findElementByXPath("(//XCUIElementTypeImage[@name='starEmpty'])[5]");
+        fifthStarEmpty.click();
+        MobileElement fithStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[5]");
+        fithStarFilled.click();
         //teste visual - build antiga
         visualCheck.doVisualCheck(PTMSAT_SCREEN_5_STARS);
         //teste visual - comparar ptmsat empty?
@@ -169,12 +170,11 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result5.getScore(), is(greaterThan(0.88)));
         System.out.println("Similarity of: " + result5.getScore());
         //Tap one star (fifth one) → unselect one star → Tap on "Other" option → Select one more star
-        MobileElement fourthStar = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[4]");
-        fourthStar.click();
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Other']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Other']", driver);
-        fifthStar.click();
-        fourthStar.click();
+        MobileElement fourthStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[4]");
+        fourthStarFilled.click();
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeImage[@name=\"starEmpty\"]", driver);
+        fourthStarFilled.click();
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -193,8 +193,8 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result6.getVisualization().length, is(greaterThan(0)));
         assertThat(result6.getScore(), is(greaterThan(0.77)));
         System.out.println("Similarity of: " + result6.getScore());
-        MobileElement thirdStar = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[3]");
-        thirdStar.click();
+        MobileElement thirdStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[3]");
+        thirdStarFilled.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_3_STARS);
         //teste visual - comparar com 4 estrelas
@@ -208,8 +208,8 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result7.getVisualization().length, is(greaterThan(0)));
         assertThat(result7.getScore(), is(greaterThan(0.93)));
         System.out.println("Similarity of: " + result7.getScore());
-        MobileElement secondStar = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[2]");
-        secondStar.click();
+        MobileElement secondStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[2]");
+        secondStarFilled.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_2_STARS);
         //teste visual - comparar com 3 estrelas
@@ -223,7 +223,7 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result8.getVisualization().length, is(greaterThan(0)));
         assertThat(result8.getScore(), is(greaterThan(0.93)));
         System.out.println("Similarity of: " + result8.getScore());
-        MobileElement firstStar = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeImage[1]");
+        MobileElement firstStar = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[1]");
         firstStar.click();
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_1_STAR);
@@ -240,25 +240,25 @@ public class SwordRegressionPtMsatiOS {
         System.out.println("Similarity of: " + result9.getScore());
         //clicar em todas as estrelas de novo
         firstStar.click();
-        thirdStar.click();
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[2]", driver); //terceira estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        fourthStar.click();
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[1]", driver); //quarta estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        secondStar.click();
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"star\"])[2]", driver); //segunda estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        fifthStar.click();
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[3]", driver); //quinta estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -266,15 +266,17 @@ public class SwordRegressionPtMsatiOS {
         }
         //Tap "Share feedback" button
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Share feedback\"]", driver);
-        //validar ecrã de sucesso
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Thank you!']");
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We appreciate your feedback.']");
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Close']");
+        //validar ecrã de sucesso - vai sumir depois do merge das alterações da bloom
+        //driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Thank you!']");
+       // driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We appreciate your feedback.']");
+        //driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Close']");
+        //toaster de sucesso - implementado depois das alterações da bloom
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thank you! We appreciate your feedback.\"]");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SHARE_SUCCESS);
-        //Tap "Close" button
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]",driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']")));
+        //Tap "Close" button - também vai sumir depois do merge das alterações da bloom
+        //utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]",driver);
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']")));
 
         ConfigurationsiOS.killDriver();
     }

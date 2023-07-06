@@ -48,9 +48,10 @@ public class swordRegressionPtMsat {
 
         System.out.println("Ligar proxy - Mudar PTMSAT para TRUE");
         //fazer login
-        utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesAndroid.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        //agora a bottom sheet aparece assim que carrega a home
         try {
-            Thread.sleep(10000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -60,13 +61,13 @@ public class swordRegressionPtMsat {
         driver.findElementByXPath("//android.widget.TextView[@text='Share your thoughts here']");
         driver.findElementByXPath("//android.widget.TextView[@text='Share feedback']");
         driver.findElementByXPath("//android.widget.TextView[@text='Later']");
-        //teste visual
+        //teste visual - pra já a status bar vai ficar mais clara
         visualCheck.doVisualCheck(PTMSAT_SCREEN_EMPTY);
         byte[] ptMSatEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //Tap "Share feedback" button → Error message
-        MobileElement shareFeedbackButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]/android.widget.Button");
+        MobileElement shareFeedbackButton = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.Button");
         shareFeedbackButton.click();
-        driver.findElementByXPath("//android.widget.TextView[@text='Please rate your experience']");
+        driver.findElementByXPath("//android.widget.TextView[@text='Please complete your experience rating']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_RATE_EXPERIENCE_ERROR);
         //teste visual - comparar com o ptmsat_empty
@@ -81,9 +82,9 @@ public class swordRegressionPtMsat {
         assertThat(result1.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result1.getScore());
         //Tap on the fourth star → Tap "Share feedback" button → Error message
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[4]/android.view.View", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[4]", driver);
         shareFeedbackButton.click();
-        driver.findElementByXPath("//android.widget.TextView[@text='Please select at least one option']");
+        driver.findElementByXPath("//android.widget.TextView[@text='Please make a selection above']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SELECT_OPTION_ERROR);
         //teste visual - comparar com o ptmsat_rate_experience_error
@@ -137,9 +138,9 @@ public class swordRegressionPtMsat {
         //Unselected the option "Other" - não funciona
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
         //Select all options
-        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Lack of expertise']", driver);
-        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Lack of support']", driver);
-        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Not responsive']", driver);
+        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Better expertise/knowledge']", driver);
+        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='More support']", driver);
+        utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Better responsiveness']", driver);
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='How would you rate your experience with Luiza Almeida?']", driver);
 
@@ -150,12 +151,12 @@ public class swordRegressionPtMsat {
         MobileElement weeklyCard = driver.findElementByAccessibilityId("home_card_weekly_goal");
         mobileActions.swipeByElements(ptCard, weeklyCard);
         try {
-            Thread.sleep(10000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //Tap 2x same star - Tap fifth star → tap on the same star - nothing should happen
-        MobileElement fifthStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[5]/android.view.View");
+        MobileElement fifthStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[5]");
         fifthStar.click();
         fifthStar.click();
         //teste visual - build antiga
@@ -172,7 +173,7 @@ public class swordRegressionPtMsat {
         assertThat(result5.getScore(), is(greaterThan(0.85)));
         System.out.println("Similarity of: " + result5.getScore());
         //Tap one star (fifth one) → unselect one star → Tap on "Other" option → Select one more star
-        MobileElement fourthStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[4]/android.view.View");
+        MobileElement fourthStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[4]");
         fourthStar.click();
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
@@ -196,8 +197,13 @@ public class swordRegressionPtMsat {
         assertThat(result6.getVisualization().length, is(greaterThan(0)));
         assertThat(result6.getScore(), is(greaterThan(0.80)));
         System.out.println("Similarity of: " + result6.getScore());
-        MobileElement thirdStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[3]/android.view.View");
+        MobileElement thirdStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[3]");
         thirdStar.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_3_STARS);
         //teste visual - comparar com 4 estrelas
@@ -211,8 +217,13 @@ public class swordRegressionPtMsat {
         assertThat(result7.getVisualization().length, is(greaterThan(0)));
         assertThat(result7.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result7.getScore());
-        MobileElement secondStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[2]/android.view.View");
+        MobileElement secondStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[2]");
         secondStar.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_2_STARS);
         //teste visual - comparar com 3 estrelas
@@ -226,8 +237,13 @@ public class swordRegressionPtMsat {
         assertThat(result8.getVisualization().length, is(greaterThan(0)));
         assertThat(result8.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result8.getScore());
-        MobileElement firstStar = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.ScrollView/android.view.View[1]/android.view.View");
+        MobileElement firstStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[1]");
         firstStar.click();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_1_STAR);
         //teste visual - comparar com 2 estrelas
@@ -268,16 +284,18 @@ public class swordRegressionPtMsat {
             Thread.currentThread().interrupt();
         }
         //Tap "Share feedback" button
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View[1]", driver);
-        //validar ecrã de sucesso
-        driver.findElementByXPath("//android.widget.TextView[@text='Thank you!']");
-        driver.findElementByXPath("//android.widget.TextView[@text='We appreciate your feedback.']");
-        driver.findElementByXPath("//android.widget.TextView[@text='Close']");
+        utilitiesAndroid.clickByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.Button", driver);
+        //validar ecrã de sucesso - não tem mais com as alterações da bloom - deletar depois que fizerem o merge
+        //driver.findElementByXPath("//android.widget.TextView[@text='Thank you!']");
+        //driver.findElementByXPath("//android.widget.TextView[@text='We appreciate your feedback.']");
+        //driver.findElementByXPath("//android.widget.TextView[@text='Close']");
+        //validar o toaster de sucesso - entra no lugar do ecrã de sucesso
+        driver.findElementByXPath("//android.widget.TextView[@text='Thank you! We appreciate your feedback.']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SHARE_SUCCESS);
-        //Tap "Close" button
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button",driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Your Physical Therapist']")));
+        //Tap "Close" button - deletar depois do merge da bloom
+        //utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button",driver);
+        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Your Physical Therapist']")));
 
         ConfigurationsAndroid.killDriver();
     }
