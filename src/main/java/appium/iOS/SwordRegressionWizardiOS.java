@@ -47,7 +47,7 @@ public class SwordRegressionWizardiOS {
         };
 
         //fazer login
-        utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesiOS.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
         //validar your program
         try {
             Thread.sleep(3000);
@@ -146,6 +146,11 @@ public class SwordRegressionWizardiOS {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Congrats! You earned a new badge!']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reminders Scheduled']");
         //teste visual
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         visualCheck.doVisualCheck(CHECK_REMINDERS_POPUP);
         //clicar em ok
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Ok\"]", driver);
