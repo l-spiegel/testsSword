@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationsAndroid {
 
-    public final static String VALIDATION_PATH = "src/visual tests";
+    public final static String VALIDATION_PATH = "src/visual tests/Pixel 4a/reminders";
     private static AndroidDriver<MobileElement> driver;
 
     public static AndroidDriver<MobileElement> getDriver() throws MalformedURLException {
@@ -25,7 +25,7 @@ public class ConfigurationsAndroid {
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
         desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/build release 510 2039/app-sword-release.apk");
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/release 5.2.0/app-sword-release.apk");
         desiredCapabilities.setCapability("appium:noReset", "false");
         desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
 
