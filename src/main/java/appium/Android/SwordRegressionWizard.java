@@ -50,7 +50,7 @@ public class SwordRegressionWizard {
         };
 
         //fazer login
-        utilitiesAndroid.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesAndroid.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
         //validar your program
         try {
             Thread.sleep(3000);
@@ -136,7 +136,7 @@ public class SwordRegressionWizard {
         //teste visual
         visualCheck.doVisualCheck(CHECK_YOUR_WEEKLY_GOAL_SCREEN_2);
         //clicar em set a reminder
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View[1]", driver);
         //criar um reminder com dias = weekly goal
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set a new reminder']")));
         utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_0", driver);
@@ -144,10 +144,10 @@ public class SwordRegressionWizard {
         utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_2", driver);
         utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_3", driver);
         //salvar
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]/android.widget.Button", driver);
+        utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
         //voltar
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
-        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
         //see my program
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //validar popup dos reminders
