@@ -46,14 +46,14 @@ public class SwordRegressionPtMsatiOS {
 
         System.out.println("Ligar proxy - Mudar PTMSAT para TRUE");
         //fazer login
-        utilitiesiOS.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         //validar ecrã PTMSAT
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Luiza Almeida?']"); //o nome do pt muda de acordo com o user
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How would you rate your experience with Bigodes Cousin?']"); //o nome do pt muda de acordo com o user
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='How could we improve your experience?']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Share your thoughts here']");
         driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Share feedback\"]");
@@ -78,7 +78,7 @@ public class SwordRegressionPtMsatiOS {
         assertThat(result1.getScore(), is(greaterThan(0.94)));
         System.out.println("Similarity of: " + result1.getScore());
         //Tap on the fourth star → Tap "Share feedback" button → Error message
-        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name='starEmpty'])[4]", driver);
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"dptStarEmpty\"])[4]", driver);
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Share feedback']", driver);
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Please make a selection above']");
         //teste visual - comparar com build anterior
@@ -120,7 +120,7 @@ public class SwordRegressionPtMsatiOS {
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_FILLED);
         //fazer scroll pra poder comparar direito
-        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Luiza Almeida?\"]");
+        MobileElement rateYourPtTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How would you rate your experience with Bigodes Cousin?\"]");
         MobileElement improveExperienceTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"How could we improve your experience?\"]");
         mobileActions.swipeByElements(rateYourPtTxt, improveExperienceTxt);
         //teste visual - comparar com o ptmsat_share_feedback_error
@@ -137,10 +137,10 @@ public class SwordRegressionPtMsatiOS {
         //Unselected the option "Other"
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
         //Select all options
-        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Lack of expertise']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Lack of support']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Not responsive']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"More support\"]", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Better responsiveness\"]", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Better expertise/knowledge\"]", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Other\"]", driver);
         //Tap "Later button"
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Later\"]", driver);
         //Pull to refresh não mostra o pt msat -> matar e abrir manualmente
@@ -150,7 +150,7 @@ public class SwordRegressionPtMsatiOS {
             Thread.currentThread().interrupt();
         }
         //Tap 2x same star - Tap fifth star → tap on the same star - nothing should happen
-        MobileElement fifthStarEmpty = driver. findElementByXPath("(//XCUIElementTypeImage[@name='starEmpty'])[5]");
+        MobileElement fifthStarEmpty = driver. findElementByXPath("(//XCUIElementTypeImage[@name=\"dptStarEmpty\"])[5]");
         fifthStarEmpty.click();
         MobileElement fithStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[5]");
         fithStarFilled.click();
@@ -171,7 +171,12 @@ public class SwordRegressionPtMsatiOS {
         MobileElement fourthStarFilled = driver.findElementByXPath("(//XCUIElementTypeImage[@name=\"star\"])[4]");
         fourthStarFilled.click();
         utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Other']", driver);
-        utilitiesiOS.clickByXPath("//XCUIElementTypeImage[@name=\"starEmpty\"]", driver);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        utilitiesiOS.clickByXPath("//XCUIElementTypeImage[@name=\"dptStarEmpty\"]", driver);
         fourthStarFilled.click();
         try {
             Thread.sleep(500);
@@ -238,13 +243,13 @@ public class SwordRegressionPtMsatiOS {
         System.out.println("Similarity of: " + result9.getScore());
         //clicar em todas as estrelas de novo
         firstStar.click();
-        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[2]", driver); //terceira estrela
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"dptStarEmpty\"])[2]", driver); //terceira estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[1]", driver); //quarta estrela
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"dptStarEmpty\"])[1]", driver); //quarta estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -256,7 +261,7 @@ public class SwordRegressionPtMsatiOS {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"starEmpty\"])[3]", driver); //quinta estrela
+        utilitiesiOS.clickByXPath("(//XCUIElementTypeImage[@name=\"dptStarEmpty\"])[3]", driver); //quinta estrela
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
