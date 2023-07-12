@@ -173,7 +173,7 @@ public class swordRegressionBadgesiOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		VisualCheck visualCheck = new VisualCheck(driver);
 
-		utilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
+		utilitiesiOS.newLogin("f.silva@swordhealth.com", "Cabixuda12", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//fazer swipe pra mostrar o card das badges
 		MobileElement remindersButton = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
@@ -313,7 +313,8 @@ public class swordRegressionBadgesiOS {
 		System.out.println("PROGRAM MILESTONES BADGES ACHIEVED: " + numberOfBadgesAchieved4);
 		VisualCheck.doVisualCheck(CHECK_BADGE_SCREEN_4);
 		//clicar na badge do enrollment
-		utilitiesiOS.clickByAccessibilityId("badges_screen_section_2_badge_2", driver);
+		utilitiesiOS.clickByAccessibilityId("enrolment_done_active", driver);
+		utilitiesiOS.clickByAccessibilityId("Enrollment", driver);
 		//voltar
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My badges']")));
