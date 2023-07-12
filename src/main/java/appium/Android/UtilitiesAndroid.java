@@ -39,6 +39,11 @@ public class UtilitiesAndroid {
         emailField.clear();
         emailField.sendKeys(email);
         driver.findElementByAccessibilityId("continueButton").click();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Password']")));
         MobileElement passField = driver.findElementByXPath("//android.widget.EditText");
         passField.sendKeys(password);

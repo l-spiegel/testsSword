@@ -76,11 +76,11 @@ public class SwordRegressionReminders {
 		//voltar
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
 		//clicar set reminders de novo
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Security']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='PIN code and Biometrics']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set a reminder']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set reminders']")));
 		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
 		//screenshot set reminder 4 more days empty screen
 		try {

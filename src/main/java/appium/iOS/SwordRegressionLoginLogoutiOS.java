@@ -160,13 +160,15 @@ public class SwordRegressionLoginLogoutiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 	  
 		//login + not now
-		utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
+		utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		//login + create pin + set pin code later
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Continue']")));
+		utilitiesiOS.clickByAccessibilityId("continueButton", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"You can use your PIN code to log in any time your session expires.\"]");
@@ -182,7 +184,10 @@ public class SwordRegressionLoginLogoutiOS {
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
 		//login + define pin
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Continue']")));
+		utilitiesiOS.clickByAccessibilityId("continueButton", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);

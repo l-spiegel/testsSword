@@ -27,7 +27,7 @@ public class NewSwordRegressionHomeAlliOS {
         driver = ConfigurationsiOS.getDriver();
     }
 
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression home/iOS";
+    private final static String VALIDATION_PATH = ConfigurationsiOS.VALIDATION_PATH;
     private final static String BASELINE = "COMP_";
 
     private final static String CHECK_HOME_SCREEN_TOP = "home_screen_top";
@@ -69,7 +69,7 @@ public class NewSwordRegressionHomeAlliOS {
         VisualCheck visualCheck = new VisualCheck(driver);
 
         //login
-        utilitiesiOS.login("vinteum@sword.com", "Test1234!", driver);
+        utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']");
@@ -115,7 +115,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
             String programStatusLabel = driver.findElementByAccessibilityId("home_card_program_status_creating_program_label").getText();
             Assert.assertEquals("Hi, Vinte Seis! I'm creating your program now. ", programStatusLabel);
-//            VisualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
+            VisualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
             mobileActions.swipeByElements(programStatusCard, kitDeliveryCard);
@@ -127,7 +127,7 @@ public class NewSwordRegressionHomeAlliOS {
         if (driver.findElements(By.id("home_card_program_goal")).size() > 0) {
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
-//            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
+            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
@@ -165,7 +165,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set reminders']");
             //clicar nas informações do weekly goal
-//            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
+            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
             utilitiesiOS.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My weekly goal']");
@@ -189,7 +189,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
             String nextSession = driver.findElementByAccessibilityId("home_card_session_details_0_date_label").getText();
             Assert.assertEquals("Next Session", nextSession);
-//            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
+            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement progressTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
             MobileElement sessionsCardLabel = driver.findElementByAccessibilityId("home_card_session_details_0_date_label");
@@ -204,7 +204,7 @@ public class NewSwordRegressionHomeAlliOS {
             String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pain level during session']"); //não tem o id
             Assert.assertEquals("78", progressTotalStarsNumber);
-//            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
+            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart_card");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -668,7 +668,10 @@ public class NewSwordRegressionHomeAlliOS {
         //back to login
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Back to login']", driver);
         //fazer login
-        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Continue']")));
+        utilitiesiOS.clickByAccessibilityId("continueButton", driver);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
+        driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
         utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
