@@ -12,10 +12,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.io.File;
 import java.net.MalformedURLException;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -28,7 +26,7 @@ public class SwordRegressionExerciseHistoryiOS {
     private final static String CHECK_TIME_BOTTOM_SHEET = "time_bottom_sheet";
     private final static String CHECK_EXERCISE_HISTORY_2 = "exercise_history_2";
     private final static String CHECK_EXERCISE_HISTORY_2_SCROLL = "exercise_history_2_scroll";
-    private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression exercise history/iOS";
+    private final static String VALIDATION_PATH = ConfigurationsiOS.VALIDATION_PATH;
     private final static String BASELINE = "COMPARISION_";
     private IOSDriver<MobileElement> driver;
     @Before
@@ -49,7 +47,7 @@ public class SwordRegressionExerciseHistoryiOS {
             Thread.currentThread().interrupt();
         }
         //fazer login
-        UtilitiesiOS.login("f.silva@swordhealth.com", "Cabixuda12", driver);
+        UtilitiesiOS.newLogin("f.silva@swordhealth.com", "Cabixuda12", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
         //abrir session details
         MobileElement sessionsTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
