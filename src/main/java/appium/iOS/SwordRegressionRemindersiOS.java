@@ -22,7 +22,7 @@ import io.appium.java_client.ios.IOSDriver;
 
 public class SwordRegressionRemindersiOS {
 
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression reminders/iOS";
+	private final static String VALIDATION_PATH = ConfigurationsiOS.VALIDATION_PATH;
 	private final static String BASELINE = "COMP_";
 
 	private final static String CHECK_SET_REMINDER_4_MORE_DAYS_EMPTY_SCREEN = "set_reminder_4_more_days_empty";
@@ -56,7 +56,7 @@ public class SwordRegressionRemindersiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//fazer login
-		utilitiesiOS.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
+		utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
 		//wait carregar home
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
