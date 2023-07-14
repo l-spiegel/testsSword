@@ -68,7 +68,7 @@ public class NewSwordRegressionHomeAll {
         UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
 
         //login
-        utilitiesAndroid.login("vinteum@sword.com", "Test1234!", driver);
+        utilitiesAndroid.newLogin("vinteum@sword.com", "Test1234!", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Luiza Almeida']")));
         //validar card virtual PT
         driver.findElementByXPath("//android.widget.TextView[@text='Your Physical Therapist']");
@@ -129,8 +129,8 @@ public class NewSwordRegressionHomeAll {
             //validar my program do program goal
             driver.findElementByXPath("//android.widget.TextView[@text=\"My program\"]");
             driver.findElementByXPath("//android.widget.TextView[@text=\"We set up the goals until your first reassessment after session 9.\"]");
-            String myProgramProgramGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
-            String myProgramProgramGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[3]").getText();
+            String myProgramProgramGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView[2]").getText();
+            String myProgramProgramGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView[3]").getText();
             driver.findElementByXPath("//android.widget.TextView[@text=\"For best results, try to complete at least 9 sessions (you can always do more!), plus a reassessment with me.\"]");
             driver.findElementByXPath("//android.widget.TextView[@text=\"Prepare your body\"]");
             driver.findElementByXPath("//android.widget.TextView[@text=\"Activate your muscles\"]");
@@ -173,8 +173,8 @@ public class NewSwordRegressionHomeAll {
             //validar my program do weekly goal
             driver.findElementByXPath("//android.widget.TextView[@text=\"My weekly goal\"]");
             driver.findElementByXPath("//android.widget.TextView[@text=\"We set 4 goal sessions per week\"]");
-            String myProgramWeeklyGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[2]").getText();
-            String myProgramWeeklyGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.widget.TextView[5]").getText();
+            String myProgramWeeklyGoal = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView[2]").getText();
+            String myProgramWeeklyGoalLabel = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.widget.TextView[5]").getText();
             driver.findElementByXPath("//android.widget.TextView[@text=\"Quick tip: You can set reminders for yourself to make sure you never miss a session. You can also customize the days and times you receive them.\"]");
             Assert.assertEquals(weeklyGoalSubtitle, myProgramWeeklyGoal);
             Assert.assertEquals(weeklyGoalLabel, myProgramWeeklyGoalLabel);
@@ -338,7 +338,7 @@ public class NewSwordRegressionHomeAll {
         number1CreatePin.click();
         //voltar pra create pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
-        utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
+        utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[12]/android.view.View/android.widget.Button", driver);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
         //comparar com o createpin1
         byte[] createPinSettings4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -709,7 +709,9 @@ public class NewSwordRegressionHomeAll {
         //back to login
         utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
         //fazer login
-        driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("Test1234!");
+        utilitiesAndroid.clickByAccessibilityId("continueButton", driver);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Log in']")));
+        driver.findElementByXPath("//android.widget.EditText").sendKeys("Test1234!");
         utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
         //definir pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
