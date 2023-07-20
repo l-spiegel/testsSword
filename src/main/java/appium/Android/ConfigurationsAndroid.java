@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationsAndroid {
 
-    public final static String VALIDATION_PATH = "src/visual tests";
+    public final static String VALIDATION_PATH = "src/visual tests"; //GitHub path to baselines. It should be something like "src/visual tests/DEVICE/TEST" and must be changed for every test performed
     private static AndroidDriver<MobileElement> driver;
 
     public static AndroidDriver<MobileElement> getDriver() throws MalformedURLException {
@@ -20,17 +20,17 @@ public class ConfigurationsAndroid {
         return driver;
     }
 
-    private static void createDriver() throws MalformedURLException {
+    private static void createDriver() {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         desiredCapabilities.setCapability("platformName", "android");
         desiredCapabilities.setCapability("appium:automationName", "uiautomator2");
-        desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460");
-        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/build release 510 2039/app-sword-release.apk");
+        desiredCapabilities.setCapability("appium:deviceName", "07111JEC201460"); //your device name foun with adb devices
+        desiredCapabilities.setCapability(MobileCapabilityType.APP, "/Users/luizaspiegel/Downloads/build release 510 2039/app-sword-release.apk"); //your local path to the test build
         desiredCapabilities.setCapability("appium:noReset", "false");
-        desiredCapabilities.setCapability("appium:autoGrantPermissions", "true");
+        desiredCapabilities.setCapability("appium:autoGrantPermissions", "true"); //if you want to show the app permissions, this must be turned to false
 
         try {
-            driver = new AndroidDriver<MobileElement>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
+            driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), desiredCapabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
