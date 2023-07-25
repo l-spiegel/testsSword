@@ -56,7 +56,7 @@ public class SwordRegressionRemindersiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//fazer login
-		utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.newLogin("vinteum@sword.com", "Test1234!", driver);
 		//wait carregar home
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
@@ -409,6 +409,11 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Yes']", driver);
 		//comparar com o my reminders depois de tentar criar o reminder vazio
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		byte[] myRemindersAfterUpdateNotSaved = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result14 = driver
 				.getImagesSimilarity(myRemindersAfterUpdateNotSaved, myRemindersAfterTryingCreateEmptyReminder, new SimilarityMatchingOptions()
