@@ -31,6 +31,7 @@ public class SwordRegressionLoginLogoutiOS {
 	private final static String CHECK_LOGIN_EMAIL_EMPTY = "login_empty_email";
 	private final static String CHECK_LOGIN_EMAIL_INVALID = "login_invalid_email";
 	private final static String CHECK_LOGIN_EMAIL_PASS_WRONG = "login_wrong_email_pass";
+	private final static String CHECK_LOGIN_EMPTY_PASS_AFTER_BACK = "login_enter_pass_after_back";
 
 	@Test
 	public void errosELoginPage() throws Exception {
@@ -40,7 +41,7 @@ public class SwordRegressionLoginLogoutiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 
 		driver.findElementByAccessibilityId("Allow").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Login']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		utilitiesiOS.clickByAccessibilityId("loginQRCodeButton", driver);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Application permissions']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='The app needs the following permissions to work correctly:']");
@@ -74,12 +75,9 @@ public class SwordRegressionLoginLogoutiOS {
 		mobileActions.tapByCoordinates(198, 348);
 		utilitiesiOS.clickByAccessibilityId("ic close button", driver);
 		//adicionar testes visuais da client list
-		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"Danaher Canada\"]")).size() > 0) {
-			utilitiesiOS.clickByAccessibilityId("Danaher Canada", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
-		} if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"AAA Club Alliance\"]")).size() > 0) {
+		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name=\"AAA Club Alliance\"]")).size() > 0) {
 			utilitiesiOS.clickByAccessibilityId("AAA Club Alliance", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Good news! These benefits are offered by AAA Club Alliance.\"]")));
 		} else {
 			utilitiesiOS.clickByAccessibilityId("Magnolia", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
@@ -111,44 +109,68 @@ public class SwordRegressionLoginLogoutiOS {
 		visualCheck.doVisualCheck(CHECK_RECOVER_PASS_SUCCESS);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
 		//erros do login
-		//email válido + pass em branco
+		//email vazio
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
+		MobileElement emailTextField = driver.findElementByAccessibilityId("loginEmailTextfield");
+		emailTextField.clear();
+		MobileElement continueButton = driver.findElementByAccessibilityId("continueButton");
+		continueButton.click();
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Please enter your email address\"]");
+		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_EMPTY);
+		//email inválido
+		emailTextField.sendKeys("jfeiow");
+		continueButton.click();
+		emailTextField.clear();
+		emailTextField.sendKeys("jfioejirfo@rfoe");
+		mobileActions.tapByCoordinates(302, 186);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Invalid email\"]");
+		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
+		//email válido + senha vazia
+		emailTextField.clear();
+		emailTextField.sendKeys("luiza@marco.com");
+		continueButton.click();
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
 		MobileElement loginButton = driver.findElementByAccessibilityId("loginButton");
 		loginButton.click();
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='  Please enter your password']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Please enter your password\"]");
 		visualCheck.doVisualCheck(CHECK_LOGIN_PASS_EMPTY);
-		//email vazio + senha vazia
-		MobileElement emailTextfield = driver.findElementByAccessibilityId("loginEmailTextfield");
-		emailTextfield.clear();
-		loginButton.click();
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='  Please enter your email address']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_EMPTY);
-		//email invalido
-		emailTextfield.sendKeys("uefhiwuehfiwe.com");
-		mobileActions.tapByCoordinates(302, 186);
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='  Invalid email']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
+		//mostrar senha
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("12345");
+		utilitiesiOS.clickByAccessibilityId("loginShowPasswordButton", driver);
+		//esconder senha
+		utilitiesiOS.clickByAccessibilityId("loginShowPasswordButton", driver);
 		//email certo e senha errada + ecrã de bloqueio
-		emailTextfield.clear();
-		emailTextfield.sendKeys("l.spiegel+3@swordhealth.com");
-		MobileElement passwordTextfield = driver.findElementByAccessibilityId("loginPasswordTextfield");
-		passwordTextfield.click();
-		passwordTextfield.sendKeys("12345");
 		loginButton.click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//XCUIElementTypeStaticText[@name='Login'])")));
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Your email or password is incorrect\"]");
 		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_PASS_WRONG);
 		loginButton.click();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		loginButton.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeImage")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Uh-oh!']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"You've reached the maximum number of login attempts. Please try again in a few minutes.\"]");
 		visualCheck.doVisualCheck(CHECK_ACCOUNT_TEMP_LOCKED);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
+		//voltar pro primeiro ecrã
+		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Continue\"]")));
+		continueButton.click();
+		//bug que a pass não volta vazia
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		visualCheck.doVisualCheck(CHECK_LOGIN_EMPTY_PASS_AFTER_BACK);
 
 		ConfigurationsiOS.killDriver();
 	}
