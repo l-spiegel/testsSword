@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.lessThan;
 public class swordRegressionOnCalliOS {
 	private IOSDriver<MobileElement> driver;
 	
-	private final static String VALIDATION_PATH = "/Users/luizaspiegel/Documents/image check/regression oncall/iOS/virtual pt";
+	private final static String VALIDATION_PATH = ConfigurationsiOS.VALIDATION_PATH;
 	private final static String BASELINE = "COMP_";
 	private final static String CHECK_ON_CALL_NO_CHAT_SCREEN = "on_call_empty_screen";
 	private final static String CHECK_TERMS_CONDITIONS = "terms_and_conditions_screen";
@@ -54,7 +54,7 @@ public class swordRegressionOnCalliOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 		
 		//login
-		utilitiesiOS.login("luiza.preventive@sword.com", "Test1234!", driver);
+		utilitiesiOS.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
 		//validar hub screen
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_on_call_card")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='On-Call']");
@@ -65,13 +65,13 @@ public class swordRegressionOnCalliOS {
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Explore our programs\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Learn more about our programs below to find the best fit for you.\"]");
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Eligible\"]");
-			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Bloom\"]"); //mudou pro card da Bloom
-			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Sensitive, clinical-grade grade care for pelvic health designed just for you.\"]"); //mudou pro card da Bloom
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Digital Physical Therapy\"]");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Physical therapy you can do anytime, anywhere.\"]");
 			//clicar get started
 			utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_get_started_button", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Seja bem-vinda à Bloom!\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Welcome to Digital Physical Therapy\"]")));
 			//voltar
-			utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
+			utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
