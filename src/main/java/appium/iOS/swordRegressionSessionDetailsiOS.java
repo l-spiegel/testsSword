@@ -41,7 +41,7 @@ public class swordRegressionSessionDetailsiOS {
 	private final static String CHECK_SESSION_DETAILS_LATEST_SESSION_STAGING = "session_details_latest_session_staging";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION = "session_details_next_session";
 	private final static String CHECK_SESSION_DETAILS_NEXT_SESSION_STAGING = "session_details_next_session_staging";
-	private final static String CHECK_SESSION_DETAILS_SESSION_3_STAGING = "session_details_session_3_staging";
+	private final static String CHECK_SESSION_DETAILS_SESSION_4_STAGING = "session_details_session_3_staging";
 	private final static String CHECK_SESSION_DETAILS_SESSION_5 = "session_details_session_5";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION = "session_details_popup_session";
 	private final static String CHECK_SESSION_DETAILS_POPUP_SESSION_STAGING = "session_details_popup_session_staging";
@@ -291,7 +291,7 @@ public class swordRegressionSessionDetailsiOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		VisualCheck visualCheck = new VisualCheck(driver);
 
-		utilitiesiOS.login("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+		utilitiesiOS.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Luiza Almeida']")));
 		//mostrar o card do lastest sessions
 		MobileElement weeklyGoalTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
@@ -380,9 +380,9 @@ public class swordRegressionSessionDetailsiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Session overview\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Goal:\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Time:\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"38 minutes\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"3 minutes\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Exercises:\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"22 exercises\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"6 exercises\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"What you’ll need\"]");
 		String swordGoTitle = driver.findElementByAccessibilityId("sword_go_card_title").getText();
 		String swordGoSubtitle = driver.findElementByAccessibilityId("sword_go_card_subtitle").getText();
@@ -401,20 +401,20 @@ public class swordRegressionSessionDetailsiOS {
 		}
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Next session exercises\"]");
 		String nextSessionEx1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
-		Assert.assertEquals("Trunk forward bend", nextSessionEx1);
+		Assert.assertEquals("Squat against the wall", nextSessionEx1);
 		//selecionar outro dia
 		utilitiesiOS.clickByAccessibilityId("session_details_carousel_date_card_2", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@label='Exercises']")));
-		//validar que está diferente - sessão 11 e next session
-		byte[] session8 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		//validar que está diferente - sessão 12 e next session
+		byte[] session12 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result1 = driver
-				.getImagesSimilarity(session8, nextSession, new SimilarityMatchingOptions()
+				.getImagesSimilarity(session12, nextSession, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		String baselineFilename = VALIDATION_PATH + "/" + "next_session_and_session8" + ".png";
+		String baselineFilename = VALIDATION_PATH + "/" + "next_session_and_session12" + ".png";
 		File comparison1 = new File(baselineFilename);
 		result1.storeVisualization(comparison1);
 		assertThat(result1.getVisualization().length, is(greaterThan(0)));
-		assertThat(result1.getScore(), is(lessThan(0.95)));
+		assertThat(result1.getScore(), is(lessThan(0.23)));
 		System.out.println("Different sessions");
 		//pull to refresh
 		overviewTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Overview\"]");
@@ -435,7 +435,7 @@ public class swordRegressionSessionDetailsiOS {
 		utilitiesiOS.clickByAccessibilityId("home_card_session_details_2_see_more_button", driver);
 		//fazer scroll do carrossel
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
-		byte[] session11 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		byte[] session122 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		MobileElement carouselSession9 = driver.findElementByAccessibilityId("session_details_carousel_date_card_1");
 		MobileElement carouselSession7 = driver.findElementByAccessibilityId("session_details_carousel_date_card_3");
 		mobileActions.swipeByElements(carouselSession9, carouselSession7);
@@ -450,15 +450,15 @@ public class swordRegressionSessionDetailsiOS {
 			Thread.currentThread().interrupt();
 		}
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Overview\"]")));
-		byte[] session9 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		byte[] session10 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result2 = driver
-				.getImagesSimilarity(session11, session9, new SimilarityMatchingOptions()
+				.getImagesSimilarity(session122, session10, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session9_session11.png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session10_session12.png";
 		File comparison2 = new File(baselineFilename);
 		result2.storeVisualization(comparison2);
 		assertThat(result2.getVisualization().length, is(greaterThan(0)));
-		assertThat(result2.getScore(), is(lessThan(0.95)));
+		assertThat(result2.getScore(), is(lessThan(0.55)));
 		System.out.println("Different sessions");
 		//voltar pra home
 		driver.findElementByAccessibilityId("ic arrow left").click();
@@ -480,25 +480,33 @@ public class swordRegressionSessionDetailsiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("home_card_session_details_9")));
 		utilitiesiOS.clickByAccessibilityId("home_card_session_details_9_prev_date_button", driver);
 		utilitiesiOS.clickByAccessibilityId("home_card_session_details_10", driver);
-		//validar que abriu sessão certa - user l.spiegel+3 - sessão 3
+		//validar que abriu sessão certa - user l.spiegel+3 - sessão 4
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Overview']")));
 		String session1Exercise1 = driver.findElementByAccessibilityId("session_details_exercise_0_card_name").getText();
 		Assert.assertEquals("One leg stand", session1Exercise1);
-		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_3_STAGING);
-		byte[] session3 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		visualCheck.doVisualCheck(CHECK_SESSION_DETAILS_SESSION_4_STAGING);
+		byte[] session4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result3 = driver
-				.getImagesSimilarity(session9, session3, new SimilarityMatchingOptions()
+				.getImagesSimilarity(session10, session4, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session1_session6.png";
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "session4_session10.png";
 		File comparison3 = new File(baselineFilename);
 		result3.storeVisualization(comparison3);
 		assertThat(result3.getVisualization().length, is(greaterThan(0)));
-		assertThat(result3.getScore(), is(lessThan(0.95)));
+		assertThat(result3.getScore(), is(lessThan(0.54)));
 		System.out.println("Different sessions");
 		//mudar pra sessão 2
-		utilitiesiOS.clickByAccessibilityId("session_details_carousel_date_card_11", driver);
+		MobileElement session3 = driver.findElementByAccessibilityId("session_details_carousel_date_card_11");
+		MobileElement session5 = driver.findElementByAccessibilityId("session_details_carousel_date_card_9");
+		mobileActions.swipeByElements(session3, session5);
 		try {
 			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		utilitiesiOS.clickByAccessibilityId("session_details_carousel_date_card_12", driver);
+		try {
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
