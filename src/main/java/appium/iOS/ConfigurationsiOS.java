@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class ConfigurationsiOS {
 
-    public final static String VALIDATION_PATH = "src/visual tests/iPhone 11 Pro/PT MSat"; //GitHub path to baselines. It should be something like "src/visual tests/DEVICE/TEST" and must be changed for every test performed
+    public final static String VALIDATION_PATH = "src/visual tests/iPhone 11 Pro/Login"; //GitHub path to baselines. It should be something like "src/visual tests/DEVICE/TEST" and must be changed for every test performed
     private static IOSDriver<MobileElement> driver;
 
     public static IOSDriver<MobileElement> getDriver() throws MalformedURLException {
@@ -28,7 +28,7 @@ public class ConfigurationsiOS {
         desiredCapabilities.setCapability("automationName", "XCUITest");
         desiredCapabilities.setCapability("xcodeOrgId", "698N4JU9B9");
         desiredCapabilities.setCapability("xcodeSigningId", "iPhone Developer");
-        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth6004.ipa"); //local path to the test build
+        desiredCapabilities.setCapability("app", "/Users/luizaspiegel/Downloads/SWORDHealth2321.ipa"); //local path to the test build
         desiredCapabilities.setCapability("updatedWDABundleId", "com.luizateste2.wda.runner"); //your WDA bundle id
         desiredCapabilities.setCapability("showXcodeLog", "true");
         desiredCapabilities.setCapability("wdaLocalPort", "8205");
