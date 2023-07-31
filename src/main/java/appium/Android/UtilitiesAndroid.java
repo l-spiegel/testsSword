@@ -27,7 +27,7 @@ public class UtilitiesAndroid {
         passField.click();
         passField.sendKeys(password);
         driver.findElementByAccessibilityId("loginButton").click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create PIN code']")));
         driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
     }
 
@@ -48,7 +48,7 @@ public class UtilitiesAndroid {
         MobileElement passField = driver.findElementByXPath("//android.widget.EditText");
         passField.sendKeys(password);
         driver.findElementByAccessibilityId("loginButton").click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Create PIN code']")));
         driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
     }
 }
