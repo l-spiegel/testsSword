@@ -74,7 +74,7 @@ public class SwordRegressionLoginLogout {
 			Thread.currentThread().interrupt();
 		}
 		mobileActions.tapByCoordinates(780, 1070);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Danaher Canada']")).size() > 0) {
 			utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Danaher Canada']", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
@@ -86,13 +86,15 @@ public class SwordRegressionLoginLogout {
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Good news! Magnolia Tree offers Sword as a benefit.\"]")));
 		}
 		//voltar para login screen
-		//colocar um if aqui pra validar se é nativo ou webview
-		//xpath de webview
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View", driver);
-		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-		//xpath do signup nativo
-		//utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
-		//utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		if (driver.findElements(By.xpath("//android.webkit.WebView")).size() > 0) {
+			//xpath de webview
+			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View", driver);
+			utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
+		} else {
+			//xpath do signup nativo
+			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
+			utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
+		}
 		//recover pass
 		utilitiesAndroid.clickByAccessibilityId("loginRecoverPasswordButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Recover my password']")));
@@ -179,7 +181,7 @@ public class SwordRegressionLoginLogout {
 		//login + create pin + set pin code later
 		MobileElement enterEmail = driver.findElementByXPath("//android.widget.EditText");
 		enterEmail.clear();
-		enterEmail.sendKeys("luiza@marco.com");
+		enterEmail.sendKeys("vinteum@sword.com");
 		utilitiesAndroid.clickByAccessibilityId("continueButton", driver);
 		try {
 			Thread.sleep(1500);
@@ -188,13 +190,13 @@ public class SwordRegressionLoginLogout {
 		}
 		MobileElement enterPass = driver.findElementByXPath("//android.widget.EditText");
 		enterPass.click();
-		enterPass.sendKeys("10março!");
+		enterPass.sendKeys("Test1234!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
-		driver.findElementByXPath("//android.widget.TextView[@text='Create your PIN code']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
 		visualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-		driver.findElementByXPath("//android.widget.TextView[@text='Create your PIN code']");
+		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Set PIN code later']");
 		visualCheck.doVisualCheck(CHECK_CREATE_PIN);
 		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Set PIN code later']", driver);
@@ -209,7 +211,7 @@ public class SwordRegressionLoginLogout {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.EditText").sendKeys("10março!");
+		driver.findElementByXPath("//android.widget.EditText").sendKeys("Test1234!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
@@ -223,7 +225,7 @@ public class SwordRegressionLoginLogout {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.EditText").sendKeys("10março!");
+		driver.findElementByXPath("//android.widget.EditText").sendKeys("Test1234!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		MobileElement createPin0 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
@@ -248,7 +250,7 @@ public class SwordRegressionLoginLogout {
 		confirmPin6.click();
 		confirmPin6.click();
 		//apagar um número
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View[11]", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[11]", driver);
 		MobileElement confirmPin8 = driver.findElementByXPath("//android.widget.TextView[@text='8']");
 		confirmPin8.click();
 		confirmPin8.click();
