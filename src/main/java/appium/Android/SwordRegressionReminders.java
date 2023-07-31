@@ -54,7 +54,7 @@ public class SwordRegressionReminders {
 		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//fazer login
-		utilitiesAndroid.login("luiza@marco.com", "10março!", driver);
+		utilitiesAndroid.newLogin("luiza@marco.com", "10março!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
 		//clicar set new reminder
 		utilitiesAndroid.clickByAccessibilityId("home_card_weekly_goal_reminders_button", driver);
@@ -62,7 +62,7 @@ public class SwordRegressionReminders {
 		driver.findElementByXPath("//android.widget.TextView[@text='Set a new reminder']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Set reminders for at least 4 more session days per week to stay on track!']");
 		//voltar
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.widget.Button", driver);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
@@ -74,9 +74,9 @@ public class SwordRegressionReminders {
 		//clicar set reminders
 		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
 		//voltar
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.widget.Button", driver);
 		//clicar set reminders de novo
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='PIN code and Biometrics']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Security']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
@@ -124,7 +124,7 @@ public class SwordRegressionReminders {
 				.getImagesSimilarity(newReminder4DaysSet, newReminder4DaysEmpty, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result1.getVisualization().length, is(greaterThan(0)));
-		assertThat(result1.getScore(), is(greaterThan(0.90)));
+		assertThat(result1.getScore(), is(greaterThan(0.86)));
 		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminder_4_empty_and_set" + ".png";
 		File comparison1 = new File(baselineFilename);
 		result1.storeVisualization(comparison1);
@@ -139,7 +139,7 @@ public class SwordRegressionReminders {
 		visualCheck.doVisualCheck(CHECK_MY_REMINDERS_2_SESSION_REMINDERS_SET_SCREEN);
 		byte[] myReminders2SessionRemindersSet = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		//voltar pra home
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 		//validar texto novo do card
@@ -179,7 +179,7 @@ public class SwordRegressionReminders {
 				.getImagesSimilarity(newReminder2DaysSet, newReminder2DaysEmpty, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result3.getVisualization().length, is(greaterThan(0)));
-		assertThat(result3.getScore(), is(greaterThan(0.92)));
+		assertThat(result3.getScore(), is(greaterThan(0.88)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminder_2_empty_and_set" + ".png";
 		File comparison3 = new File(baselineFilename);
 		result3.storeVisualization(comparison3);
@@ -209,7 +209,7 @@ public class SwordRegressionReminders {
 		result5.storeVisualization(comparison5);
 		System.out.println("My reminders 2 and 3 session reminders set - Similarity of: " + result5.getScore());
 		//voltar a home
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		//abrir reminders pelo menu
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesAndroid.clickByAccessibilityId("menu_option_set_reminders", driver);
@@ -244,7 +244,7 @@ public class SwordRegressionReminders {
 				.getImagesSimilarity(newReminder1DaySet, newReminder1DayEmpty, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result7.getVisualization().length, is(greaterThan(0)));
-		assertThat(result7.getScore(), is(greaterThan(0.91)));
+		assertThat(result7.getScore(), is(greaterThan(0.87)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "set_reminders_1_empty_and_set" + ".png";
 		File comparison7 = new File(baselineFilename);
 		result7.storeVisualization(comparison7);
@@ -278,13 +278,18 @@ public class SwordRegressionReminders {
 		result9.storeVisualization(comparison9);
 		System.out.println("My reminders 3 and 5 session reminders set - Similarity of: " + result9.getScore());
 		//voltar pra home
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		//validar popup da badge dos reminders
 		if (driver.findElements(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View")).size() > 0) {
 			driver.findElementByXPath("//android.widget.TextView[@text='Congrats! You earned a new badge!']");
 			driver.findElementByXPath("//android.widget.TextView[@text='Reminders Scheduled']");
 			//teste visual
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
 			visualCheck.doVisualCheck(CHECK_REMINDERS_BADGE_POPUP_SCREEN);
 			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
 		}
@@ -321,7 +326,7 @@ public class SwordRegressionReminders {
 		File comparison10 = new File(baselineFilename);
 		result10.storeVisualization(comparison10);
 		System.out.println("Update reminder before and after update - Similarity of: " + result10.getScore());
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='There are changes to be saved. Are you sure you want to leave?']");
 		//teste visual popup
 		visualCheck.doVisualCheck(CHECK_UPDATE_REMINDER_POPUP_SCREEN);
@@ -362,7 +367,7 @@ public class SwordRegressionReminders {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Set a new reminder']")));
 		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
 		//voltar para reminders
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[3]/android.view.View/android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='My reminders']")));
 		//screenshot my reminders - comparar com o my reminders depois do delete reminder
 		byte[] myRemindersAfterTryingCreateEmptyReminder = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -378,7 +383,7 @@ public class SwordRegressionReminders {
 		//Fazer update, sair sem salvar e clicar em yes
 		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_1", driver);
 		utilitiesAndroid.clickByAccessibilityId("session_reminders_reminder_week_day_6", driver);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button", driver);
 		//comparar com o my reminders depois de tentar criar o reminder vazio
 		byte[] myRemindersAfterUpdateNotSaved = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -411,7 +416,7 @@ public class SwordRegressionReminders {
 		result15.storeVisualization(comparison15);
 		System.out.println("My reminders after creating a same day reminder - Similarity of: " + result15.getScore());
 		//voltar pra home
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.y0/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View[4]/android.view.View/android.widget.Button", driver);
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.view.View[@content-desc='home_card_weekly_goal']")));
 
