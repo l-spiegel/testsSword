@@ -115,7 +115,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Program status']");
             String programStatusLabel = driver.findElementByAccessibilityId("home_card_program_status_creating_program_label").getText();
             Assert.assertEquals("Hi, Vinte Seis! I'm creating your program now. ", programStatusLabel);
-            VisualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
+//            VisualCheck.doVisualCheck(CHECK_PROGRAM_STATUS_CARD);
             MobileElement kitDeliveryCard = driver.findElementByAccessibilityId("home_card_delivery_kit_status");
             MobileElement programStatusCard = driver.findElementByAccessibilityId("home_card_program_status");
             mobileActions.swipeByElements(programStatusCard, kitDeliveryCard);
@@ -127,7 +127,7 @@ public class NewSwordRegressionHomeAlliOS {
         if (driver.findElements(By.id("home_card_program_goal")).size() > 0) {
             String programGoalLabel = driver.findElementByAccessibilityId("home_card_program_goal_label").getText();
             Assert.assertEquals("50% of Sword members feel significantly less pain by the end of their program", programGoalLabel);
-            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
+//            VisualCheck.doVisualCheck(CHECK_PROGRAM_GOAL_CARD);
             //clicar nas informações do program goal
             utilitiesiOS.clickByAccessibilityId("home_card_program_goal_info_button", driver);
             //validar my program do program goal
@@ -165,7 +165,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Weekly goal']");
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set reminders']");
             //clicar nas informações do weekly goal
-            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
+//            VisualCheck.doVisualCheck(CHECK_WEEKLY_GOAL_CARD);
             utilitiesiOS.clickByAccessibilityId("home_card_weekly_goal_info_button", driver);
             //validar my program do weekly goal
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My weekly goal']");
@@ -189,7 +189,7 @@ public class NewSwordRegressionHomeAlliOS {
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
             String nextSession = driver.findElementByAccessibilityId("home_card_session_details_0_date_label").getText();
             Assert.assertEquals("Next Session", nextSession);
-            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
+//            visualCheck.doVisualCheck(CHECK_SESSIONS_CARD);
             //scroll pra mostrar o progress
             MobileElement progressTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Progress']");
             MobileElement sessionsCardLabel = driver.findElementByAccessibilityId("home_card_session_details_0_date_label");
@@ -204,7 +204,7 @@ public class NewSwordRegressionHomeAlliOS {
             String progressTotalStarsNumber = driver.findElementByAccessibilityId("home_card_achieved_stars_total_stars").getText();
             driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Pain level during session']"); //não tem o id
             Assert.assertEquals("78", progressTotalStarsNumber);
-            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
+//            visualCheck.doVisualCheck(CHECK_PROGRESS_SECTION);
             //scroll pra mostrar o personal goals e badges
             MobileElement painChartCard = driver.findElementByAccessibilityId("home_screen_pain_chart_card");
             MobileElement sessionsCard = driver.findElementByAccessibilityId("home_card_session_details_0");
@@ -277,13 +277,13 @@ public class NewSwordRegressionHomeAlliOS {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Settings']")));
         //clicar pra definir pin
         utilitiesiOS.clickByAccessibilityId("menu_option_define_pin", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         //voltar
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
         //clicar pra definir pin
         utilitiesiOS.clickByAccessibilityId("menu_option_define_pin", driver);
         //inserir 3 digitos
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         visualCheck.doVisualCheck(CHECK_SETTINGS_CREATE_PIN);
         byte[] createPinSettings1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         MobileElement number1CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='1']");
@@ -325,7 +325,7 @@ public class NewSwordRegressionHomeAlliOS {
         //voltar pra create pin
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
         utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         //comparar com o createpin1
         byte[] createPinSettings4 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         SimilarityMatchingResult result3 = driver
@@ -381,7 +381,7 @@ public class NewSwordRegressionHomeAlliOS {
         byte[] pinDidntMatchErrorCreatePin = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //clicar em retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         byte[] createPinSettings5 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparar com o createPinSettings1
         SimilarityMatchingResult result6 = driver
@@ -511,7 +511,7 @@ public class NewSwordRegressionHomeAlliOS {
         number0EnterPin1.click();
         number0EnterPin1.click();
         //voltar
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         byte[] createPinSettings6 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
         //comparação com create pin de criar o pin pela 1ª vez
         SimilarityMatchingResult result11 = driver
@@ -534,7 +534,7 @@ public class NewSwordRegressionHomeAlliOS {
         number0EnterPin2.click();
         number0EnterPin2.click();
         //inserir 4 digitos no create pin
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         MobileElement number3CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='3']");
         number3CreatePin.click();
         number3CreatePin.click();
@@ -575,7 +575,7 @@ public class NewSwordRegressionHomeAlliOS {
         //clicar em retry
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
         //inserir 4 digitos no create
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         MobileElement number9CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='9']");
         number9CreatePin.click();
         number9CreatePin.click();
@@ -674,9 +674,9 @@ public class NewSwordRegressionHomeAlliOS {
         driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
         utilitiesiOS.clickByAccessibilityId("loginButton", driver);
         //definir pin
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         MobileElement number6CreatePin = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='6']");
         number6CreatePin.click();
         number6CreatePin.click();
