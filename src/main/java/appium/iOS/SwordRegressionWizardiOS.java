@@ -47,7 +47,7 @@ public class SwordRegressionWizardiOS {
         };
 
         //fazer login
-        utilitiesiOS.newLogin("l.spiegel+3@swordhealth.com", "Test1234!", driver);
+        utilitiesiOS.newLogin("luizaspiegel@gmail.com", "Stella2020", driver);
         //validar your program
         try {
             Thread.sleep(3000);
@@ -127,7 +127,7 @@ public class SwordRegressionWizardiOS {
         MobileElement yourWeeklyGoalTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your weekly goal']");
         mobileActions.swipeByElements(getMovingTxt, yourWeeklyGoalTxt);
         //validar o resto do your weekly goal
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='See my program']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Go to my program']");
         //teste visual
         visualCheck.doVisualCheck(CHECK_YOUR_WEEKLY_GOAL_SCREEN_2);
         //clicar em set a reminder
@@ -141,7 +141,7 @@ public class SwordRegressionWizardiOS {
         //salvar
         utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
         //see my program
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"See my program\"]", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Go to my program\"]", driver);
         //validar popup dos reminders
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Congrats! You earned a new badge!']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reminders Scheduled']");
