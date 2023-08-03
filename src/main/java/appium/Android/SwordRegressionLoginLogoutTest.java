@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 
-public class SwordRegressionLoginLogout {
+public class SwordRegressionLoginLogoutTest {
 
 	private AndroidDriver<MobileElement> driver;
 	@Before
@@ -32,24 +32,24 @@ public class SwordRegressionLoginLogout {
 	private final static String CHECK_LOGIN_EMAIL_EMPTY = "login_empty_email";
 	private final static String CHECK_LOGIN_EMAIL_INVALID = "login_invalid_email";
 	private final static String CHECK_LOGIN_EMAIL_PASS_WRONG = "login_wrong_email_pass";
+	private final static String CHECK_LOGIN_EMPTY_PASS_AFTER_BACK = "login_enter_pass_after_back";
 
 	@Test
 	public void errosELoginPage() throws Exception {
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
-		VisualCheck visualCheck = new VisualCheck(driver);
-		
+
 		//login qr code
 		utilitiesAndroid.clickByAccessibilityId("loginQRCodeButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Application permissions']");
 		driver.findElementByXPath("//android.widget.TextView[@text='The app needs the following permissions to work correctly:']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Sword will only use the camera to scan the QR code on the card or tablet.']");
-		visualCheck.doVisualCheck(CHECK_QR_CODE_1);
+		VisualCheck.doVisualCheck(CHECK_QR_CODE_1);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Present your card']");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Hold the card still for a few seconds and don't cover the red square\"]");
-		visualCheck.doVisualCheck(CHECK_QR_CODE_2);
+		VisualCheck.doVisualCheck(CHECK_QR_CODE_2);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementById("com.android.permissioncontroller:id/permission_allow_foreground_only_button").click();
 		//back no leitor de qr code
@@ -74,7 +74,7 @@ public class SwordRegressionLoginLogout {
 			Thread.currentThread().interrupt();
 		}
 		mobileActions.tapByCoordinates(780, 1070);
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View[2]/android.widget.EditText/android.view.View/android.widget.ImageView", driver);
 		if (driver.findElements(By.xpath("//android.widget.TextView[@text='Danaher Canada']")).size() > 0) {
 			utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Danaher Canada']", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
@@ -88,24 +88,24 @@ public class SwordRegressionLoginLogout {
 		//voltar para login screen
 		if (driver.findElements(By.xpath("//android.webkit.WebView")).size() > 0) {
 			//xpath de webview
-			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View", driver);
+			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View", driver);
 			utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		} else {
 			//xpath do signup nativo
-			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
+			utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
 			utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		}
 		//recover pass
 		utilitiesAndroid.clickByAccessibilityId("loginRecoverPasswordButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Recover my password']")));
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Enter the email associated with your account. Then, we'll send you an email showing you how to reset your password\"]");
-		visualCheck.doVisualCheck(CHECK_RECOVER_PASS_EMPTY);
+		VisualCheck.doVisualCheck(CHECK_RECOVER_PASS_EMPTY);
 		MobileElement recoverPassTextField = driver.findElementByXPath("//android.widget.EditText");
 		recoverPassTextField.click();
 		recoverPassTextField.sendKeys("hjvhik");
 		mobileActions.tapByCoordinates(769, 963);
 		driver.findElementByXPath("//android.widget.TextView[@text='Invalid email']");
-		visualCheck.doVisualCheck(CHECK_RECOVER_PASS_INVALID);
+		VisualCheck.doVisualCheck(CHECK_RECOVER_PASS_INVALID);
 		recoverPassTextField.click();
 		recoverPassTextField.sendKeys("jwjwj@jjho");
 		utilitiesAndroid.clickByAccessibilityId("recoverPasswordButton", driver);
@@ -116,7 +116,7 @@ public class SwordRegressionLoginLogout {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Check your email']");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"If you have an active Sword account, you'll see an email from us showing you how to reset your password\"]");
-		visualCheck.doVisualCheck(CHECK_RECOVER_PASS_SUCCESS);
+		VisualCheck.doVisualCheck(CHECK_RECOVER_PASS_SUCCESS);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		//erros do login
 		//email vazio + senha vazia
@@ -124,50 +124,67 @@ public class SwordRegressionLoginLogout {
 		MobileElement continueButton = driver.findElementByAccessibilityId("continueButton");
 		continueButton.click();
 		driver.findElementByXPath("//android.widget.TextView[@text='Please enter your email address']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_EMPTY);
+		VisualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_EMPTY);
 		//email invalido
 		MobileElement emailTextfield = driver.findElementByXPath("//android.widget.EditText[1]");
 		emailTextfield.click();
 		emailTextfield.sendKeys("uefhiwuehfiwe.com");
 		mobileActions.tapByCoordinates(302, 186);
 		driver.findElementByXPath("//android.widget.TextView[@text='Invalid email']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
+		VisualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
 		//email válido + pass em branco
 		emailTextfield.clear();
 		emailTextfield.sendKeys("luiza@marco.com");
 		continueButton.click();
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Log in']")));
+		MobileElement loginButton = driver.findElementByAccessibilityId("loginButton");
+		loginButton.click();
+		driver.findElementByXPath("//android.widget.TextView[@text='Please enter your password']");
+		VisualCheck.doVisualCheck(CHECK_LOGIN_PASS_EMPTY);
+		//email certo e senha errada + ecrã de bloqueio
+		MobileElement passwordTextfield = driver.findElementByXPath("//android.widget.EditText");
+		passwordTextfield.click();
+		passwordTextfield.sendKeys("12345");
+		//mostrar a pass
+		utilitiesAndroid.clickByAccessibilityId("show_password_button", driver);
+		//esconder a pass
+		utilitiesAndroid.clickByAccessibilityId("show_password_button", driver);
+		loginButton.click();
+		driver.findElementByXPath("//android.widget.TextView[@text='Your email or password is incorrect']");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		VisualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_PASS_WRONG);
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.TextView[@text='Please enter your password']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_PASS_EMPTY);
-		//email certo e senha errada + ecrã de bloqueio
-		MobileElement passwordTextfield = driver.findElementByXPath("//android.widget.EditText[2]");
-		passwordTextfield.click();
-		passwordTextfield.sendKeys("12345");
-		continueButton.click();
-		driver.findElementByXPath("//android.widget.TextView[@text='Your email or password is incorrect']");
-		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_PASS_WRONG);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("(//android.widget.TextView[@text='Login'])")));
-		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Uh-oh!']");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"You've reached the maximum number of login attempts. Please try again in a few minutes.\"]");
-		visualCheck.doVisualCheck(CHECK_ACCOUNT_TEMP_LOCKED);
+		VisualCheck.doVisualCheck(CHECK_ACCOUNT_TEMP_LOCKED);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
-		//adicionar teste de email inválido e senha inválida
-		driver.findElementByXPath("//android.widget.EditText[1]").clear();
-		driver.findElementByXPath("//android.widget.EditText[1]").sendKeys("fhuihfie@iohfo.com");
-		driver.findElementByXPath("//android.widget.EditText[2]").click();
-		driver.findElementByXPath("//android.widget.EditText[2]").sendKeys("1234");
-		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
-		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
-		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
-		driver.findElementByXPath("//android.widget.TextView[@text='Your email or password is incorrect']");
+		//voltar para o primeiro ecrã
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View/android.view.View/android.widget.Button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Continue\"]")));
+		utilitiesAndroid.clickByAccessibilityId("continueButton", driver);
+		//abrir o ecrã da pass sem a pass preenchida
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		VisualCheck.doVisualCheck(CHECK_LOGIN_EMPTY_PASS_AFTER_BACK);
 
 		ConfigurationsAndroid.killDriver();
 	}
@@ -176,7 +193,6 @@ public class SwordRegressionLoginLogout {
 	public void fazerLogin() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
-		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//login + create pin + set pin code later
 		MobileElement enterEmail = driver.findElementByXPath("//android.widget.EditText");
@@ -194,11 +210,11 @@ public class SwordRegressionLoginLogout {
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
-		visualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
+		VisualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Set PIN code later']");
-		visualCheck.doVisualCheck(CHECK_CREATE_PIN);
+		VisualCheck.doVisualCheck(CHECK_CREATE_PIN);
 		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Set PIN code later']", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
@@ -243,21 +259,21 @@ public class SwordRegressionLoginLogout {
 		confirmPin3.click();
 		confirmPin3.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Confirm your PIN code']")));
-		visualCheck.doVisualCheck(CHECK_CONFIRM_PIN);
+		VisualCheck.doVisualCheck(CHECK_CONFIRM_PIN);
 		//começa a digitar pin diferente, apaga um e continua
 		utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='1']", driver);
 		MobileElement confirmPin6 = driver.findElementByXPath("//android.widget.TextView[@text='6']");
 		confirmPin6.click();
 		confirmPin6.click();
 		//apagar um número
-		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[11]", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/androidx.compose.ui.platform.p1/android.view.View/android.view.View[11]", driver);
 		MobileElement confirmPin8 = driver.findElementByXPath("//android.widget.TextView[@text='8']");
 		confirmPin8.click();
 		confirmPin8.click();
 		//erro screen pins diferentes
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
-		visualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_LOGIN);
+		VisualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		createPin0 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
 		createPin0.click();
@@ -272,7 +288,7 @@ public class SwordRegressionLoginLogout {
 		confirmPin0.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.ImageView")));
 		driver.findElementByXPath("//android.widget.TextView[@text='Want to use biometrics for future logins? You can activate it now, or activate it later in Settings.']");
-		visualCheck.doVisualCheck(CHECK_BIOMETRICS_LOGIN);
+		VisualCheck.doVisualCheck(CHECK_BIOMETRICS_LOGIN);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
 		utilitiesAndroid.clickByAccessibilityId("header_menu_button", driver);
