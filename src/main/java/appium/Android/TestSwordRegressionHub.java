@@ -33,6 +33,10 @@ public class TestSwordRegressionHub {
 	private final static String CHECK_LEARN_MORE_DPT_NOT_ELIGIBLE_SCREEN = "dpt_not_eligible";
 	private final static String CHECK_LEARN_MORE_BLOOM_NOT_ELIGIBLE_SCREEN = "bloom_not_eligible";
 	private final static String CHECK_LEARN_MORE_MOVE_NOT_ELIGIBLE_SCREEN = "move_not_eligible";
+	private final static String CHECK_LEARN_MORE_BLOOM_UNDERAGE_BOTTOMSHEET = "bloom_learn_more_underage_bottom_sheet";
+	private final static String CHECK_LEARN_MORE_MOVE_UNDERAGE_BOTTOMSHEET = "move_learn_more_underage_bottom_sheet";
+	private final static String CHECK_HUB_BLOOM_UNDERAGE_BOTTOMSHEET = "hub_bloom_underage_bottom_sheet";
+	private final static String CHECK_HUB_MOVE_UNDERAGE_BOTTOMSHEET = "hub_move_underage_bottom_sheet";
 
 	private AndroidDriver<MobileElement> driver;
 	@Before
@@ -291,6 +295,7 @@ public class TestSwordRegressionHub {
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Bloom!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_HUB_BLOOM_UNDERAGE_BOTTOMSHEET);
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button", driver);
 		//tap move get started button
 		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_2_get_started_button", driver);
@@ -298,6 +303,7 @@ public class TestSwordRegressionHub {
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Move!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_HUB_MOVE_UNDERAGE_BOTTOMSHEET);
 		mobileActions.tapByCoordinates(785, 1181);
 
 		ConfigurationsAndroid.killDriver();
@@ -547,6 +553,96 @@ public class TestSwordRegressionHub {
 		utilitiesAndroid.clickByAccessibilityId("close_button", driver);
 		try {
 			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
+		ConfigurationsAndroid.killDriver();
+	}
+
+	@Test
+	public void learnMoreUnderage() throws Exception {
+		WebDriverWait wait = new WebDriverWait(driver,20);
+		MobileActions mobileActions = new MobileActions(driver);
+		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		new VisualCheck(driver);
+
+		//login
+		utilitiesAndroid.newLogin("underage@sword.com", "Test1234!", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//validate dpt learn more screen underage
+		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_0_learn_more_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Digital Physical Therapy']")));
+		//tap get started button
+		utilitiesAndroid.clickByAccessibilityId("get_started_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Welcome to Digital Physical Therapy']")));
+		//back to hub screen
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//scroll to show more cards
+		MobileElement programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
+		MobileElement homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
+		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//validate bloom learn more screen underage
+		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
+		//tap get started
+		utilitiesAndroid.clickByAccessibilityId("get_started_button", driver);
+		//validate the underage bottom sheet
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Bloom!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_UNDERAGE_BOTTOMSHEET);
+		//tap got it button
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
+		//back to hub screen
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//scroll to show more cards
+		programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
+		homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
+		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
+		mobileActions.swipeByElements(programsCard2, programsCard0);
+		//validate move learn more screen underage
+		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
+		//tap get started
+		utilitiesAndroid.clickByAccessibilityId("get_started_button", driver);
+		//validate the underage bottom sheet
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Move!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_UNDERAGE_BOTTOMSHEET);
+		//tap outside the bottom sheet
+		mobileActions.tapByCoordinates(799, 632);
+		//back to hub screen
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		try {
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
