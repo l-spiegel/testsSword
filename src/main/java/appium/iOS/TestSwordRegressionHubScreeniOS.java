@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 
-public class TestSwordRegressionHubScreen {
+public class TestSwordRegressionHubScreeniOS {
 
 	private final static String CHECK_HUB_WITHOUT_PROGRAMS_SCREEN = "hub_without_programs";
 	private final static String CHECK_HUB_ELIGIBLE_TOP_SCREEN = "hub_eligible_top";
