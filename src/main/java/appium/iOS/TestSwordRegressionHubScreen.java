@@ -166,7 +166,7 @@ public class TestSwordRegressionHubScreen {
 
 		//login
 		System.out.println("Ligou o proxy??");
-		utilitiesiOS.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
+		UtilitiesiOS.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -223,7 +223,7 @@ public class TestSwordRegressionHubScreen {
 
 		//login
 		System.out.println("Ligou o proxy??");
-		utilitiesiOS.newLogin("underage@sword.com", "Test1234!", driver);
+		UtilitiesiOS.newLogin("underage@sword.com", "Test1234!", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
