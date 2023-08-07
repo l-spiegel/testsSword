@@ -37,6 +37,10 @@ public class TestSwordRegressionHub {
 	private final static String CHECK_LEARN_MORE_MOVE_UNDERAGE_BOTTOMSHEET = "move_learn_more_underage_bottom_sheet";
 	private final static String CHECK_HUB_BLOOM_UNDERAGE_BOTTOMSHEET = "hub_bloom_underage_bottom_sheet";
 	private final static String CHECK_HUB_MOVE_UNDERAGE_BOTTOMSHEET = "hub_move_underage_bottom_sheet";
+	private final static String CHECK_LEARN_MORE_BLOOM_ENROLLED_SCREEN = "bloom_learn_more_enrolled_screen";
+	private final static String CHECK_LEARN_MORE_BLOOM_ENROLLED_BOTTOMSHEET = "bloom_learn_more_enrolled_bottom_sheet";
+	private final static String CHECK_LEARN_MORE_MOVE_ENROLLED_SCREEN = "move_learn_more_enrolled_screen";
+	private final static String CHECK_LEARN_MORE_MOVE_ENROLLED_BOTTOMSHEET = "move_learn_more_enrolled_bottom_sheet";
 
 	private AndroidDriver<MobileElement> driver;
 	@Before
@@ -643,6 +647,86 @@ public class TestSwordRegressionHub {
 		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
 		try {
 			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+
+		ConfigurationsAndroid.killDriver();
+	}
+
+	@Test
+	public void learnMoreEnrolled() throws Exception {
+		WebDriverWait wait = new WebDriverWait(driver,20);
+		MobileActions mobileActions = new MobileActions(driver);
+		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		new VisualCheck(driver);
+
+		//login
+		System.out.println("Ligou o proxy?");
+		utilitiesAndroid.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Currently enrolled\"]")));
+		//scroll to show more cards
+		MobileElement programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
+		MobileElement homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
+		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//validate bloom learn more screen enrolled
+		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_SCREEN);
+		//tap get started
+		utilitiesAndroid.clickByAccessibilityId("get_started_button", driver);
+		//validate the bottom sheet
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_BOTTOMSHEET);
+		//close bottom sheet
+		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
+		//back to hub screen
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//scroll to show more cards
+		programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
+		homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
+		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
+		mobileActions.swipeByElements(programsCard2, programsCard0);
+		//validate move learn more screen enrolled
+		utilitiesAndroid.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_SCREEN);
+		//tap get started
+		utilitiesAndroid.clickByAccessibilityId("get_started_button", driver);
+		//validate the bottom sheet
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
+		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_BOTTOMSHEET);
+		//close bottom sheet
+		mobileActions.tapByCoordinates(854, 1056);
+		//back to hub screen
+		utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		try {
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
