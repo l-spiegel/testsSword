@@ -9,13 +9,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class TestSwordRegressionHub {
 
-	private final static String VALIDATION_PATH = ConfigurationsAndroid.VALIDATION_PATH;
-	private final static String BASELINE = "COMP_";
 	private final static String CHECK_HUB_WITHOUT_PROGRAMS_SCREEN = "hub_without_programs";
 	private final static String CHECK_HUB_ELIGIBLE_TOP_SCREEN = "hub_eligible_top";
 	private final static String CHECK_HUB_ELIGIBLE_BOTTOM_SCREEN = "hub_eligible_bottom";
