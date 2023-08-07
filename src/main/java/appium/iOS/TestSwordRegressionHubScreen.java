@@ -172,8 +172,8 @@ public class TestSwordRegressionHubScreen {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.TextView[@text='Active']");
-		driver.findElementByXPath("//android.widget.TextView[@text='Currently enrolled']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Active\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@label=\"Currently enrolled\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_ENROLLED_TOP_SCREEN);
 		//scroll to show more cards
 		MobileElement programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
@@ -184,28 +184,28 @@ public class TestSwordRegressionHubScreen {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
+		MobileElement programsCard2 = driver.findElementByXPath("//XCUIElementTypeOther[@name=\"on_call_programs_card_2\"]/XCUIElementTypeImage");
 		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//tap bloom get started button
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_get_started_button", driver);
 		//validate bloom get started enrolled popup
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Since you're already enrolled in a program, you'll need to complete it first.\n" +
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Since you're already enrolled in a program, you'll need to complete it first.\n" +
 				"\n" +
 				"Then, you can enroll in a new program.\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text='Close']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Close\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_ENROLLED_BLOOM_POPUP);
 		//close popup
-		utilitiesiOS.clickByXPath("//android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
 		//tap move get started button
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_get_started_button", driver);
 		//validate move get started enrolled popup
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Since you're already enrolled in a program, you'll need to complete it first.\n" +
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Since you're already enrolled in a program, you'll need to complete it first.\n" +
 				"\n" +
 				"Then, you can enroll in a new program.\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text='Close']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Close\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_ENROLLED_MOVE_POPUP);
 		//close popup
-		mobileActions.tapByCoordinates(382, 1945);
+		mobileActions.tapByCoordinates(145, 658);
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
