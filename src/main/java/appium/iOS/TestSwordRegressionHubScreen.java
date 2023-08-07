@@ -230,14 +230,14 @@ public class TestSwordRegressionHubScreen {
 			Thread.currentThread().interrupt();
 		}
 		//validate not eligible card
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Not eligible\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"I’m interested\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Not eligible\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@label=\"I’m interested\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_NOT_ELIGIBLE_TOP_SCREEN);
 		//validate not eligible popup
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_interested_button", driver);
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Thank you for your interest. We'll notify your benefits manager.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thank you for your interest. We'll notify your benefits manager.\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_INTERESTED_POPUP);
-		utilitiesiOS.clickByXPath("//android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
 		//scroll to show more cards
 		MobileElement programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
 		MobileElement homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
@@ -247,24 +247,24 @@ public class TestSwordRegressionHubScreen {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
+		MobileElement programsCard2 = driver.findElementByXPath("//XCUIElementTypeOther[@name=\"on_call_programs_card_2\"]/XCUIElementTypeImage");
 		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//tap bloom get started button
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_get_started_button", driver);
 		//validate bloom underage bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Bloom!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thanks for your interest in Bloom!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_BLOOM_UNDERAGE_BOTTOMSHEET);
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Got it\"]", driver);
 		//tap move get started button
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_get_started_button", driver);
 		//validate move underage bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Move!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thanks for your interest in Move!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_HUB_MOVE_UNDERAGE_BOTTOMSHEET);
-		mobileActions.tapByCoordinates(785, 1181);
+		mobileActions.tapByCoordinates(280, 375);
 
 		ConfigurationsiOS.killDriver();
 	}
