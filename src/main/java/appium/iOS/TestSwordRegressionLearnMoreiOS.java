@@ -186,20 +186,19 @@ public class TestSwordRegressionLearnMoreiOS {
 		MobileElement moveFourthDotTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Who have low pain levels\"]");
 		MobileElement moveTitleTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Move\"]");
 		mobileActions.swipeByElements(moveFourthDotTxt, moveTitleTxt);
-		MobileElement aboutMoveTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[3]");
+		MobileElement aboutMoveTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"About Move\"]");
 		mobileActions.swipeByElements(aboutMoveTxt, moveFourthDotTxt);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"About Move\"]");
-		VisualCheck.doVisualCheck(CHECK_MOVE_LEARN_MORE_2_SCREEN);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Sword Move empowers you to move more, and move right. With Move, you have access to your own personal trainer, who will get to know you, create your own personalized activity programs, and be there to support you throughout your journey.\n" +
 				"\n" +
 				"Connect a wearable device to help track your sleep, steps, and other biometric data so you can see and feel your results. That data also helps provide your personal trainer with valuable insights to help tailor your program as you progress over time.\"]");
 		VisualCheck.doVisualCheck(CHECK_MOVE_LEARN_MORE_2_SCREEN);
 		//tap get started
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Welcome to Move\"]")));
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {

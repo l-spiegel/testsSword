@@ -191,7 +191,6 @@ public class TestSwordRegressionLearnMore {
 		MobileElement aboutMoveTxt = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.widget.TextView[3]");
 		mobileActions.swipeByElements(aboutMoveTxt, moveFourthDotTxt);
 		driver.findElementByXPath("//android.widget.TextView[@text=\"About Move\"]");
-		VisualCheck.doVisualCheck(CHECK_MOVE_LEARN_MORE_2_SCREEN);
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Sword Move empowers you to move more, and move right. With Move, you have access to your own personal trainer, who will get to know you, create your own personalized activity programs, and be there to support you throughout your journey.\n" +
 				"\n" +
 				"Connect a wearable device to help track your sleep, steps, and other biometric data so you can see and feel your results. That data also helps provide your personal trainer with valuable insights to help tailor your program as you progress over time.\"]");
