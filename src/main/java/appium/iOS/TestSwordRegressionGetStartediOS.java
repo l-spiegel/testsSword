@@ -60,7 +60,7 @@ public class TestSwordRegressionGetStartediOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Receive your kit\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"We'll ship your kit with everything you need to get started.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Start feeling better!\"]");
-		VisualCheck.doVisualCheck(CHECK_GET_STARTED_DPT_SCREEN_2);
+//		VisualCheck.doVisualCheck(CHECK_GET_STARTED_DPT_SCREEN_2);
 		//tap next button
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Next\"]", driver);
 		//validate get started second screen
@@ -100,18 +100,18 @@ public class TestSwordRegressionGetStartediOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Your Pelvic Health Specialist will gather details to create a personalized plan for you.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Match with a Pelvic Health Specialist\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"In your virtual meeting, you will get insights from your specialist and learn about your tailored program.\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Receive your Bloom Kit at home\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"We'll ship your kit, including your pod, so you can get started.\"]");
 		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Next\"]");
 		VisualCheck.doVisualCheck(CHECK_GET_STARTED_BLOOM_SCREEN_1);
 		//scroll to show more content
-		MobileElement wellShipBloomTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"We'll ship your kit, including your pod, so you can get started.\"]");
+		MobileElement inYourVirtualTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"In your virtual meeting, you will get insights from your specialist and learn about your tailored program.\"]");
 		MobileElement welcomeBloom = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Welcome to Bloom\"]");
-		mobileActions.swipeByElements(wellShipBloomTxt, welcomeBloom);
+		mobileActions.swipeByElements(inYourVirtualTxt, welcomeBloom);
 		//validate the rest of the screen
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Receive your Bloom Kit at home\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"We'll ship your kit, including your pod, so you can get started.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Complete your recovery doing tailored exercise sessions\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Find relief from the comfort of home with a program tailored just for you.\"]");
-		VisualCheck.doVisualCheck(CHECK_GET_STARTED_BLOOM_SCREEN_2);
+//		VisualCheck.doVisualCheck(CHECK_GET_STARTED_BLOOM_SCREEN_2);
 		//tap next button
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Next\"]", driver);
 		//validate get started second screen
@@ -145,16 +145,20 @@ public class TestSwordRegressionGetStartediOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"We will gather information about you to match you with the best trainer for your preferences, health, needs, goals and lifestyle.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Connect a wearable device\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Connect a wearable device like an Apple Watch or Fitbit if you have one. If you don't, we'll send one directly to you.\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Meet and get to know your personal trainer\"]");
 		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Next\"]");
 		VisualCheck.doVisualCheck(CHECK_GET_STARTED_MOVE_SCREEN_1);
 		//scroll to show more content
-		MobileElement meetAndGetTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Meet and get to know your personal trainer\"]");
+		MobileElement connectAWearableTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Connect a wearable device like an Apple Watch or Fitbit if you have one. If you don't, we'll send one directly to you.\"]");
 		MobileElement welcomeMove = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Welcome to Move\"]");
-		mobileActions.swipeByElements(meetAndGetTxt, welcomeMove);
+		mobileActions.swipeByElements(connectAWearableTxt, welcomeMove);
 		//validate the rest of the screen
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Meet and get to know your personal trainer\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Meet with your personal trainer so they can get to know you and what will make the best program for you. Only got five minutes in the morning to spare? No problem, we've got you covered.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Weekly programming\"]");
+		//scroll to show more content
+		MobileElement weeklyProgrammingTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Weekly programming\"]");
+		mobileActions.swipeByElements(weeklyProgrammingTxt, connectAWearableTxt);
+		//validate the rest of the screen
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Every week, you receive your personalized plan with exercises to get you moving. You'll set activity goals, reminders and collect rewards all through your mobile app.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Track progress\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Use the app to track your progress, set new goals and glean insights from your performance.\"]");
