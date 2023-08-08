@@ -36,7 +36,7 @@ public class TestSwordRegressionGetStartediOS {
 		new VisualCheck(driver);
 
 		//login
-		utilitiesiOS.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
+		UtilitiesiOS.newLogin("luiza.preventive@sword.com", "Test1234!", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
