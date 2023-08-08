@@ -290,13 +290,13 @@ public class TestSwordRegressionLearnMoreiOS {
 		}
 		//validate dpt learn more screen underage
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Digital Physical Therapy']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Digital Physical Therapy']")));
 		//tap get started button
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Welcome to Digital Physical Therapy']")));
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Digital Physical Therapy']")));
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -311,52 +311,43 @@ public class TestSwordRegressionLearnMoreiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		MobileElement programsCard2 = driver.findElementByXPath("//XCUIElementTypeOther[@name=\"on_call_programs_card_2\"]/XCUIElementTypeImage");
+		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate bloom learn more screen underage
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Bloom\"]")));
 		//tap get started
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the underage bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Bloom!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thanks for your interest in Bloom!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require Bloom members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_UNDERAGE_BOTTOMSHEET);
 		//tap got it button
-		utilitiesiOS.clickByXPath("//android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Got it\"]", driver);
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		//scroll to show more cards
-		programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
-		homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
-		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
-		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate move learn more screen underage
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Move\"]")));
 		//tap get started
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the underage bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Thanks for your interest in Move!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thanks for your interest in Move!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require Move members to be at least 18 years old. We hope to see you enroll in the future!\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_UNDERAGE_BOTTOMSHEET);
 		//tap outside the bottom sheet
 		mobileActions.tapByCoordinates(799, 632);
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
@@ -394,14 +385,14 @@ public class TestSwordRegressionLearnMoreiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_SCREEN);
 		//tap get started
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the bottom sheet
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_BOTTOMSHEET);
 		//close bottom sheet
-		utilitiesiOS.clickByXPath("//android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Got it\"]", driver);
 		//back to hub screen
 		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
 		try {
@@ -425,7 +416,7 @@ public class TestSwordRegressionLearnMoreiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_SCREEN);
 		//tap get started
-		utilitiesiOS.clickByAccessibilityId("get_started_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the bottom sheet
 		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
 		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
