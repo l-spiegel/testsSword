@@ -370,7 +370,7 @@ public class TestSwordRegressionLearnMoreiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Currently enrolled\"]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Active\"]")));
 		//scroll to show more cards
 		MobileElement programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
 		MobileElement homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
@@ -380,52 +380,43 @@ public class TestSwordRegressionLearnMoreiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		MobileElement programsCard2 = driver.findElementByXPath("//XCUIElementTypeOther[@name=\"on_call_programs_card_2\"]/XCUIElementTypeImage");
+		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate bloom learn more screen enrolled
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Bloom\"]")));
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_SCREEN);
 		//tap get started
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_BOTTOMSHEET);
 		//close bottom sheet
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Got it\"]", driver);
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		//scroll to show more cards
-		programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
-		homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
-		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
-		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate move learn more screen enrolled
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Move\"]")));
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_SCREEN);
 		//tap get started
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
 		//validate the bottom sheet
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Uh-oh!\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Got it\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh!\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"It looks like you're already enrolled in a program. Before you start a new program, you'll need to complete your current one.\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Got it\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_BOTTOMSHEET);
 		//close bottom sheet
 		mobileActions.tapByCoordinates(854, 1056);
 		//back to hub screen
-		utilitiesiOS.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[1]/android.widget.Button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeButton[1]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
