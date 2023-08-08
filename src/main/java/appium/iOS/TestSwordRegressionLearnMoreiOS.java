@@ -384,7 +384,11 @@ public class TestSwordRegressionLearnMoreiOS {
 		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate bloom learn more screen enrolled
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Bloom\"]")));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_ENROLLED_SCREEN);
 		//tap get started
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
@@ -404,7 +408,11 @@ public class TestSwordRegressionLearnMoreiOS {
 		}
 		//validate move learn more screen enrolled
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Move\"]")));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_ENROLLED_SCREEN);
 		//tap get started
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Get started\"]", driver);
