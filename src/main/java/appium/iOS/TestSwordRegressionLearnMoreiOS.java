@@ -225,11 +225,11 @@ public class TestSwordRegressionLearnMoreiOS {
 		}
 		//validate dpt learn more screen not eligible
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_0_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Digital Physical Therapy']")));
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Close\"]");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Digital Physical Therapy']")));
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Close\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_DPT_NOT_ELIGIBLE_SCREEN);
 		//tap close button
-		utilitiesiOS.clickByAccessibilityId("close_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
@@ -244,36 +244,27 @@ public class TestSwordRegressionLearnMoreiOS {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		MobileElement programsCard2 = driver.findElementByXPath("//XCUIElementTypeOther[@name=\"on_call_programs_card_2\"]/XCUIElementTypeImage");
+		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate bloom learn more screen not eligible
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_1_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Bloom\"]")));
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Close\"]");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Bloom\"]")));
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Close\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_BLOOM_NOT_ELIGIBLE_SCREEN);
 		//tap close button
-		utilitiesiOS.clickByAccessibilityId("close_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		//scroll to show more cards
-		programsCard0 = driver.findElementByAccessibilityId("on_call_programs_card_0");
-		homeOnCallCard = driver.findElementByAccessibilityId("home_on_call_card");
-		mobileActions.swipeByElements(programsCard0, homeOnCallCard);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
-		MobileElement programsCard2 = driver.findElementByAccessibilityId("on_call_programs_card_2");
-		mobileActions.swipeByElements(programsCard2, programsCard0);
 		//validate move learn more screen not eligible
 		utilitiesiOS.clickByAccessibilityId("on_call_programs_card_2_learn_more_button", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Move\"]")));
-		driver.findElementByXPath("//android.widget.TextView[@text=\"Close\"]");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Move\"]")));
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Close\"]");
 		VisualCheck.doVisualCheck(CHECK_LEARN_MORE_MOVE_NOT_ELIGIBLE_SCREEN);
 		//tap close button
-		utilitiesiOS.clickByAccessibilityId("close_button", driver);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]", driver);
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
