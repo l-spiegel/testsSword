@@ -46,7 +46,7 @@ public class UtilitiesiOS {
         passField.click();
         passField.sendKeys(password);
         driver.findElementByAccessibilityId("loginButton").click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Not now']").click();
     }
 }
