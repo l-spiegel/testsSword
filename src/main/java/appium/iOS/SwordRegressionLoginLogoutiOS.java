@@ -80,7 +80,7 @@ public class SwordRegressionLoginLogoutiOS {
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Good news! These benefits are offered by AAA Club Alliance.\"]")));
 		} else {
 			utilitiesiOS.clickByAccessibilityId("Magnolia", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Let's confirm Sword is right for you\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name=\"Good news! Magnolia Tree offers Sword as a benefit.\"]")));
 		}
 		//voltar para login screen
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
@@ -127,7 +127,7 @@ public class SwordRegressionLoginLogoutiOS {
 		visualCheck.doVisualCheck(CHECK_LOGIN_EMAIL_INVALID);
 		//email válido + senha vazia
 		emailTextField.clear();
-		emailTextField.sendKeys("luiza@marco.com");
+		emailTextField.sendKeys("vinteum@sword.com");
 		continueButton.click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
 		MobileElement loginButton = driver.findElementByAccessibilityId("loginButton");
@@ -182,7 +182,7 @@ public class SwordRegressionLoginLogoutiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 	  
 		//login + not now
-		utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.newLogin("vinteum@sword.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		utilitiesiOS.clickByAccessibilityId("header_menu_button", driver);
 		utilitiesiOS.clickByAccessibilityId("menu_option_logout", driver);
@@ -190,15 +190,15 @@ public class SwordRegressionLoginLogoutiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Continue']")));
 		utilitiesiOS.clickByAccessibilityId("continueButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"You can use your PIN code to log in any time your session expires.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Create PIN\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Not now\"]");
 		visualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Set PIN code later']");
 		visualCheck.doVisualCheck(CHECK_CREATE_PIN);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name='Set PIN code later']", driver);
@@ -209,11 +209,11 @@ public class SwordRegressionLoginLogoutiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Continue']")));
 		utilitiesiOS.clickByAccessibilityId("continueButton", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Log in']")));
-		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("10março!");
+		driver.findElementByAccessibilityId("loginPasswordTextfield").sendKeys("Test1234!");
 		utilitiesiOS.clickByAccessibilityId("loginButton", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Create PIN']", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		MobileElement createPin0 = driver.findElementByXPath("//XCUIElementTypeButton[@name='0']");
 		createPin0.click();
 		createPin0.click();
@@ -224,7 +224,7 @@ public class SwordRegressionLoginLogoutiOS {
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Confirm your PIN code']")));
 		visualCheck.doVisualCheck(CHECK_CONFIRM_PIN);
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		MobileElement createPin2 = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='2']");
 		createPin2.click();
 		createPin2.click();
@@ -240,7 +240,7 @@ public class SwordRegressionLoginLogoutiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Uh-oh! The PIN codes didn't match. Please try again.\"]");
 		visualCheck.doVisualCheck(CHECK_PIN_DOESNT_MATCH_LOGIN);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Retry']", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create your PIN code']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create PIN code']")));
 		MobileElement createPin5 = driver.findElementByXPath("//XCUIElementTypeButton[@name='5']");
 		createPin5.click();
 		createPin5.click();
