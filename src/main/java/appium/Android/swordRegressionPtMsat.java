@@ -77,7 +77,7 @@ public class swordRegressionPtMsat {
         File comparison1 = new File(baselineFilename);
         result1.storeVisualization(comparison1);
         assertThat(result1.getVisualization().length, is(greaterThan(0)));
-        assertThat(result1.getScore(), is(greaterThan(0.98)));
+        assertThat(result1.getScore(), is(greaterThan(0.97)));
         System.out.println("Similarity of: " + result1.getScore());
         //Tap on the fourth star → Tap "Share feedback" button → Error message
         utilitiesAndroid.clickByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[4]", driver);
@@ -94,7 +94,7 @@ public class swordRegressionPtMsat {
         File comparison2 = new File(baselineFilename);
         result2.storeVisualization(comparison2);
         assertThat(result2.getVisualization().length, is(greaterThan(0)));
-        assertThat(result2.getScore(), is(greaterThan(0.75)));
+        assertThat(result2.getScore(), is(greaterThan(0.85)));
         System.out.println("Similarity of: " + result2.getScore());
         //Select some options (other include) → Tap "Share feedback" button → Error message
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
@@ -111,7 +111,7 @@ public class swordRegressionPtMsat {
         File comparison3 = new File(baselineFilename);
         result3.storeVisualization(comparison3);
         assertThat(result3.getVisualization().length, is(greaterThan(0)));
-        assertThat(result3.getScore(), is(greaterThan(0.75)));
+        assertThat(result3.getScore(), is(greaterThan(0.94)));
         System.out.println("Similarity of: " + result3.getScore());
         //Write something on the text box
         shareFeedbackButton.click();
@@ -131,7 +131,7 @@ public class swordRegressionPtMsat {
         File comparison4 = new File(baselineFilename);
         result4.storeVisualization(comparison4);
         assertThat(result4.getVisualization().length, is(greaterThan(0)));
-        assertThat(result4.getScore(), is(greaterThan(0.01)));
+        assertThat(result4.getScore(), is(greaterThan(0.95)));
         System.out.println("Similarity of: " + result4.getScore());
         //Unselected the option "Other" - não funciona
         utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Other']", driver);
@@ -168,7 +168,7 @@ public class swordRegressionPtMsat {
         File comparison5 = new File(baselineFilename);
         result5.storeVisualization(comparison5);
         assertThat(result5.getVisualization().length, is(greaterThan(0)));
-        assertThat(result5.getScore(), is(greaterThan(0.85)));
+        assertThat(result5.getScore(), is(greaterThan(0.98)));
         System.out.println("Similarity of: " + result5.getScore());
         //Tap one star (fifth one) → unselect one star → Tap on "Other" option → Select one more star
         MobileElement fourthStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[4]");
@@ -193,7 +193,7 @@ public class swordRegressionPtMsat {
         File comparison6 = new File(baselineFilename);
         result6.storeVisualization(comparison6);
         assertThat(result6.getVisualization().length, is(greaterThan(0)));
-        assertThat(result6.getScore(), is(greaterThan(0.80)));
+        assertThat(result6.getScore(), is(greaterThan(0.94)));
         System.out.println("Similarity of: " + result6.getScore());
         MobileElement thirdStar = driver.findElementByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[3]");
         thirdStar.click();
@@ -283,17 +283,10 @@ public class swordRegressionPtMsat {
         }
         //Tap "Share feedback" button
         utilitiesAndroid.clickByXPath("/hierarchy/android.view.ViewGroup/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.Button", driver);
-        //validar ecrã de sucesso - não tem mais com as alterações da bloom - deletar depois que fizerem o merge
-        //driver.findElementByXPath("//android.widget.TextView[@text='Thank you!']");
-        //driver.findElementByXPath("//android.widget.TextView[@text='We appreciate your feedback.']");
-        //driver.findElementByXPath("//android.widget.TextView[@text='Close']");
         //validar o toaster de sucesso - entra no lugar do ecrã de sucesso
         driver.findElementByXPath("//android.widget.TextView[@text='Thank you! We appreciate your feedback.']");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SHARE_SUCCESS);
-        //Tap "Close" button - deletar depois do merge da bloom
-        //utilitiesAndroid.clickByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View[2]/android.view.View/android.widget.Button",driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Your Physical Therapist']")));
 
         ConfigurationsAndroid.killDriver();
     }
