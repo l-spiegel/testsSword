@@ -39,6 +39,7 @@ public class SwordRegressionLoginLogoutTest {
 		MobileActions mobileActions = new MobileActions(driver);
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//login qr code
 		utilitiesAndroid.clickByAccessibilityId("loginQRCodeButton", driver);
@@ -80,7 +81,7 @@ public class SwordRegressionLoginLogoutTest {
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Let's confirm Sword is right for you\"]")));
 		} if (driver.findElements(By.xpath("//android.widget.TextView[@text='AAA Club Alliance']")).size() > 0) {
 			utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='AAA Club Alliance']", driver);
-			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Good news! These benefits are offered by AAA Club Alliance.\"]")));
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Good news! AAA Club Alliance offers Sword as a benefit.\"]")));
 		} else {
 			utilitiesAndroid.clickByXPath("//android.widget.TextView[@text='Magnolia']", driver);
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text=\"Good news! Magnolia Tree offers Sword as a benefit.\"]")));
@@ -193,24 +194,26 @@ public class SwordRegressionLoginLogoutTest {
 	public void fazerLogin() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver,20);
 		UtilitiesAndroid utilitiesAndroid = new UtilitiesAndroid();
+		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//login + create pin + set pin code later
 		MobileElement enterEmail = driver.findElementByXPath("//android.widget.EditText");
 		enterEmail.clear();
-		enterEmail.sendKeys("vinteum@sword.com");
+		enterEmail.sendKeys("luiza@marco.com");
 		utilitiesAndroid.clickByAccessibilityId("continueButton", driver);
 		try {
 			Thread.sleep(1500);
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Password']")));
 		MobileElement enterPass = driver.findElementByXPath("//android.widget.EditText");
-		enterPass.click();
-		enterPass.sendKeys("Test1234!");
+		//enterPass.click();
+		enterPass.sendKeys("10março!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='You can use your PIN code to log in any time your session expires.']");
-		VisualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
+		visualCheck.doVisualCheck(CHECK_CREATE_PIN_INFO);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Create PIN code']");
 		driver.findElementByXPath("//android.widget.TextView[@text='Set PIN code later']");
@@ -227,7 +230,8 @@ public class SwordRegressionLoginLogoutTest {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.EditText").sendKeys("Test1234!");
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Password']")));
+		driver.findElementByXPath("//android.widget.EditText").sendKeys("10março!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		driver.findElementByXPath("//android.widget.TextView[@text='Not now']").click();
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//android.widget.TextView[@text='Weekly goal']")));
@@ -241,7 +245,7 @@ public class SwordRegressionLoginLogoutTest {
 		} catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
 		}
-		driver.findElementByXPath("//android.widget.EditText").sendKeys("Test1234!");
+		driver.findElementByXPath("//android.widget.EditText").sendKeys("10março!");
 		utilitiesAndroid.clickByAccessibilityId("loginButton", driver);
 		utilitiesAndroid.clickByXPath("//android.widget.Button", driver);
 		MobileElement createPin0 = driver.findElementByXPath("//android.widget.TextView[@text='0']");
