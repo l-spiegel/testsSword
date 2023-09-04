@@ -33,6 +33,7 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_ELIGIBILITY_FILLED_2 = "eligibility_page_filled2";
 	private final static String CHECK_ELIGIBILITY_ERROR_1 = "eligibility_page_error1";
 	private final static String CHECK_ELIGIBILITY_INVALID_ERROR = "eligibility_page_invalid_error";
+	private final static String CHECK_ELIGIBILITY_FILLED_1 = "eligibility_page_filled1";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -150,9 +151,12 @@ public class TestSwordRegressionSignupiOS {
 		result3.storeVisualization(comparison3);
 		System.out.println("Eligibility screen 1 empty and error - Similarity of: " + result3.getScore());
 		//fill first name, last name and email fields with invalid characters
-		driver.findElementByAccessibilityId("signup_first_name_textfield").sendKeys("hjsdk9");
-		driver.findElementByAccessibilityId("signup_last_name_textfield").sendKeys("hjsdk9");
-		driver.findElementByAccessibilityId("signup_email_textfield").sendKeys("hjsdk9@jdhidcom");
+		MobileElement firstNameTxtField = driver.findElementByAccessibilityId("signup_first_name_textfield");
+		firstNameTxtField.sendKeys("hjsdk9");
+		MobileElement lastNameTxtField = driver.findElementByAccessibilityId("signup_last_name_textfield");
+		lastNameTxtField.sendKeys("hjsdk9");
+		MobileElement emailTxtField = driver.findElementByAccessibilityId("signup_email_textfield");
+		emailTxtField.sendKeys("hjsdk9@jdhidcom");
 		mobileActions.tapByCoordinates(299, 147);
 		//scroll last name field to state field
 		MobileElement lastNameField = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[3]");
@@ -170,9 +174,30 @@ public class TestSwordRegressionSignupiOS {
 		result4.storeVisualization(comparison4);
 		System.out.println("Eligibility screen 1 empty and invalid errors - Similarity of: " + result4.getScore());
 		//fill correctly the fields
+		firstNameTxtField.clear();
+		firstNameTxtField.sendKeys("aeiou");
+		lastNameTxtField.clear();
+		lastNameTxtField.sendKeys("aeiou");
+		emailTxtField.clear();
+		emailTxtField.sendKeys("aeiou@aeiou.com");
+		mobileActions.tapByCoordinates(299, 147);
+		//scroll last name field to state field
+		mobileActions.swipeByElements(lastNameField, stateField);
+		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_FILLED_1);
 		//visual validation with invalid error
+		byte[] eligibilityFilled1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		SimilarityMatchingResult result5 = driver
+				.getImagesSimilarity(eligibilityFilled1, eligibilityInvalidError1, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result5.getVisualization().length, is(greaterThan(0)));
+		assertThat(result5.getScore(), is(greaterThan(0.87)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility1_invalid_error_filled" + ".png";
+		File comparison5 = new File(baselineFilename);
+		result5.storeVisualization(comparison5);
+		System.out.println("Eligibility screen 1 invalid error and filled - Similarity of: " + result5.getScore());
 		//tap continue
-
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate insurance information screen empty
 		//VisualCheck.doVisualCheck(SCROLL_TESTS);
 
 		//ConfigurationsiOS.killDriver();
