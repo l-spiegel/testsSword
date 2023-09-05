@@ -39,6 +39,10 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_INSURANCE_INVALID_CHAR_ERROR_SCREEN = "insurance_invalid_char_error_screen";
 	private final static String CHECK_INSURANCE_MAX_CHAR_ERROR_SCREEN = "insurance_maximum_char_error_screen";
 	private final static String CHECK_INSURANCE_FILLED_SCREEN = "insurance_filled_screen";
+	private final static String CHECK_GUARDIANS_EMPTY_SCREEN = "guardians_empty_screen";
+	private final static String CHECK_GUARDIANS_REQUIRED_FIELD_ERROR_SCREEN = "guardians_required_fields_error_screen";
+	private final static String CHECK_GUARDIANS_INVALID_CHAR_ERROR_SCREEN = "guardians_invalid_char_error_screen";
+	private final static String CHECK_GUARDIANS_FILLED_SCREEN = "guardians_filled_screen";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -286,24 +290,91 @@ public class TestSwordRegressionSignupiOS {
 		//tap continue
 		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//validate guardians screen
-
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Your guardian's information\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Guardian’s first name\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Guardian’s last name\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Guardian’s email\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@label=\"Why am I seeing this?\"]");
+		VisualCheck.doVisualCheck(CHECK_GUARDIANS_EMPTY_SCREEN);
+		byte[] guardiansEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		//tap why am I seeing this?
-
+		utilitiesiOS.clickByAccessibilityId("signup_guardian_seeing_this_button", driver);
 		//validate bottom sheet
-
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Why am I seeing this?\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Members under 18 years old requires permission from the guardian to participate in Sword Program. Your guardian will need to sign a consent that will be received by email.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Ok\"]");
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Ok\"]", driver);
 		//tap continue
-
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//compare required field error screen with empty screen
-
+		VisualCheck.doVisualCheck(CHECK_GUARDIANS_REQUIRED_FIELD_ERROR_SCREEN);
+		byte[] guardiansRequiredError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(guardiansRequiredError, guardiansEmpty, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.89)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "guardians_empty_required_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Guardians info page empty vs required field error - Similarity of: " + result.getScore());
 		//enter invalid first and last name and email
-
+		MobileElement guardiansFirstNameField = driver.findElementByAccessibilityId("signup_guardian_first_name_textfield");
+		MobileElement guardiansLastNameField = driver.findElementByAccessibilityId("signup_guardian_last_name_textfield");
+		MobileElement guardiansEmailField = driver.findElementByAccessibilityId("signup_guardian_email_textfield");
+		guardiansFirstNameField.sendKeys("abc1");
+		guardiansLastNameField.sendKeys("abc1");
+		guardiansEmailField.sendKeys("abc1abc.com");
+		mobileActions.tapByCoordinates(301, 480);
+		VisualCheck.doVisualCheck(CHECK_GUARDIANS_INVALID_CHAR_ERROR_SCREEN);
 		//campare invalid fields error screen with required field errors
-
+		byte[] guardiansInvalidError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(guardiansInvalidError, guardiansRequiredError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.89)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "guardians_required_field_invalid_char_errors" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Guardians info page required field error vs invalid character error - Similarity of: " + result.getScore());
 		//enter correct info
-
+		guardiansFirstNameField.clear();
+		guardiansFirstNameField.sendKeys("Abc");
+		guardiansLastNameField.clear();
+		guardiansLastNameField.sendKeys("Abc");
+		guardiansEmailField.clear();
+		guardiansEmailField.sendKeys("abd@abc.com");
+		mobileActions.tapByCoordinates(301, 480);
+		VisualCheck.doVisualCheck(CHECK_GUARDIANS_FILLED_SCREEN);
 		//compare filled screen with invalid field errors
+		byte[] guardiansFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(guardiansFilled, guardiansInvalidError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.87)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "guardians_invalid_error_filled" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Guardians info page invalid character error vs filled - Similarity of: " + result.getScore());
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate health coverage screen empty
 
-		//VisualCheck.doVisualCheck(SCROLL_TESTS);
+		//tap I'm covered option
+
+		//visual check
+
+		//tap I'm dependent option
+
+		//scroll
+
+		//validate the extra fields
+
+		//visual check
+
+
 
 		//ConfigurationsiOS.killDriver();
 	}
