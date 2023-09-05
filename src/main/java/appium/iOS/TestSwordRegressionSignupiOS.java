@@ -34,6 +34,11 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_ELIGIBILITY_ERROR_1 = "eligibility_page_error1";
 	private final static String CHECK_ELIGIBILITY_INVALID_ERROR = "eligibility_page_invalid_error";
 	private final static String CHECK_ELIGIBILITY_FILLED_1 = "eligibility_page_filled1";
+	private final static String CHECK_ELIGIBILITY_MINORS_2 = "eligibility_page_minors";
+	private final static String CHECK_INSURANCE_EMPTY_SCREEN = "insurance_empty_screen";
+	private final static String CHECK_INSURANCE_INVALID_CHAR_ERROR_SCREEN = "insurance_invalid_char_error_screen";
+	private final static String CHECK_INSURANCE_MAX_CHAR_ERROR_SCREEN = "insurance_maximum_char_error_screen";
+	private final static String CHECK_INSURANCE_FILLED_SCREEN = "insurance_filled_screen";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -92,15 +97,15 @@ public class TestSwordRegressionSignupiOS {
 		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_ERROR_2);
 		//compare to eligibilityEmpty2
 		byte[] eligibilityError2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		SimilarityMatchingResult result1 = driver
+		SimilarityMatchingResult result = driver
 				.getImagesSimilarity(eligibilityError2, eligibilityEmpty2, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		assertThat(result1.getVisualization().length, is(greaterThan(0)));
-		assertThat(result1.getScore(), is(greaterThan(0.93)));
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.93)));
 		String baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility2_empty_error" + ".png";
-		File comparison1 = new File(baselineFilename);
-		result1.storeVisualization(comparison1);
-		System.out.println("Eligibility screen 2 empty and error - Similarity of: " + result1.getScore());
+		File comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 2 empty vs error - Similarity of: " + result.getScore());
 		//tap checkboxes
 		utilitiesiOS.clickByAccessibilityId("signup_checkbox_3", driver);
 		utilitiesiOS.clickByAccessibilityId("signup_checkbox_2", driver);
@@ -115,15 +120,15 @@ public class TestSwordRegressionSignupiOS {
 		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_FILLED_2);
 		//compare eligibilityError2 with filled
 		byte[] eligibilityFilled2 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		SimilarityMatchingResult result2 = driver
+		result = driver
 				.getImagesSimilarity(eligibilityFilled2, eligibilityError2, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		assertThat(result2.getVisualization().length, is(greaterThan(0)));
-		assertThat(result2.getScore(), is(greaterThan(0.93)));
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.93)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility2_error_filled" + ".png";
-		File comparison2 = new File(baselineFilename);
-		result2.storeVisualization(comparison2);
-		System.out.println("Eligibility screen 2 error and filled - Similarity of: " + result2.getScore());
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 2 error vs filled - Similarity of: " + result.getScore());
 		//scroll state field to last checkbox
 		MobileElement stateField = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[6]");
 		MobileElement lastCheckbox = driver.findElementByXPath("(//XCUIElementTypeOther[@name=\"check_box_container\"])[4]");
@@ -141,15 +146,15 @@ public class TestSwordRegressionSignupiOS {
 		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_ERROR_1);
 		//compare eligibilityEmpty1 with error
 		byte[] eligibilityError1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		SimilarityMatchingResult result3 = driver
+		result = driver
 				.getImagesSimilarity(eligibilityError1, eligibilityEmpty1, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		assertThat(result3.getVisualization().length, is(greaterThan(0)));
-		assertThat(result3.getScore(), is(greaterThan(0.89)));
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.89)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility1_empty_error" + ".png";
-		File comparison3 = new File(baselineFilename);
-		result3.storeVisualization(comparison3);
-		System.out.println("Eligibility screen 1 empty and error - Similarity of: " + result3.getScore());
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 1 empty vs error - Similarity of: " + result.getScore());
 		//fill first name, last name and email fields with invalid characters
 		MobileElement firstNameTxtField = driver.findElementByAccessibilityId("signup_first_name_textfield");
 		firstNameTxtField.sendKeys("hjsdk9");
@@ -164,15 +169,15 @@ public class TestSwordRegressionSignupiOS {
 		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_INVALID_ERROR);
 		//compare invalid character error screen with required field error
 		byte[] eligibilityInvalidError1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		SimilarityMatchingResult result4 = driver
+		result = driver
 				.getImagesSimilarity(eligibilityInvalidError1, eligibilityError1, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		assertThat(result4.getVisualization().length, is(greaterThan(0)));
-		assertThat(result4.getScore(), is(greaterThan(0.92)));
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility1_empty_invalid_errors" + ".png";
-		File comparison4 = new File(baselineFilename);
-		result4.storeVisualization(comparison4);
-		System.out.println("Eligibility screen 1 empty and invalid errors - Similarity of: " + result4.getScore());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.92)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility1_required_field_error_invalid_errors" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 1 required field error vs invalid errors - Similarity of: " + result.getScore());
 		//fill correctly the fields
 		firstNameTxtField.clear();
 		firstNameTxtField.sendKeys("aeiou");
@@ -186,18 +191,118 @@ public class TestSwordRegressionSignupiOS {
 		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_FILLED_1);
 		//visual validation with invalid error
 		byte[] eligibilityFilled1 = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		SimilarityMatchingResult result5 = driver
+		result = driver
 				.getImagesSimilarity(eligibilityFilled1, eligibilityInvalidError1, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
-		assertThat(result5.getVisualization().length, is(greaterThan(0)));
-		assertThat(result5.getScore(), is(greaterThan(0.87)));
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.87)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility1_invalid_error_filled" + ".png";
-		File comparison5 = new File(baselineFilename);
-		result5.storeVisualization(comparison5);
-		System.out.println("Eligibility screen 1 invalid error and filled - Similarity of: " + result5.getScore());
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 1 invalid error vs filled - Similarity of: " + result.getScore());
+		//scroll down
+		mobileActions.swipeByElements(emailField, imageHeader);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		MobileElement secondCheckbox2 = driver.findElementByXPath("(//XCUIElementTypeOther[@name=\"check_box_container\"])[2]");
+		mobileActions.swipeByElements(secondCheckbox2, emailField);
+		//chompare minors consent with filled checkboxes
+		VisualCheck.doVisualCheck(CHECK_ELIGIBILITY_MINORS_2);
+		byte[] eligibilityMinors = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(eligibilityMinors, eligibilityFilled2, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.53)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "eligibility2_filled_minors" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Eligibility screen 2 filled vs minors - Similarity of: " + result.getScore());
+		//tap minors checkbox
+		utilitiesiOS.clickByAccessibilityId("signup_checkbox_4", driver);
 		//tap continue
 		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//validate insurance information screen empty
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Insurance information\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Member ID\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"This number is on your insurance card (e.g. 123456)\"]");
+		VisualCheck.doVisualCheck(CHECK_INSURANCE_EMPTY_SCREEN);
+		byte[] insuranceEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		MobileElement memberIdField = driver.findElementByAccessibilityId("signup_insurance_member_id_textfield");
+		//validate invalid characters error
+		memberIdField.sendKeys("aaa");
+		mobileActions.tapByCoordinates(340, 311);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Invalid character\"]");
+		VisualCheck.doVisualCheck(CHECK_INSURANCE_INVALID_CHAR_ERROR_SCREEN);
+		//compare invalid character with empty screen
+		byte[] insuranceInvalidCharError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(insuranceInvalidCharError, insuranceEmpty, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.92)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "insurance_empty_invalid_char_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Insurance screen empty vs invalid char error - Similarity of: " + result.getScore());
+		//validate maximum characters error
+		memberIdField.clear();
+		memberIdField.sendKeys("123456789012345678901");
+		mobileActions.tapByCoordinates(340, 311);
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Maximum character limit is 20\"]");
+		VisualCheck.doVisualCheck(CHECK_INSURANCE_MAX_CHAR_ERROR_SCREEN);
+		//compare maximum characters error with invalid character error
+		byte[] insuranceMaxCharError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(insuranceMaxCharError, insuranceInvalidCharError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.95)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "insurance_invalid_char_error_max_char_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Insurance invalid char error vs maximum char error - Similarity of: " + result.getScore());
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//fill correctly
+		memberIdField.clear();
+		memberIdField.sendKeys("12345678901234567890");
+		mobileActions.tapByCoordinates(340, 311);
+		VisualCheck.doVisualCheck(CHECK_INSURANCE_FILLED_SCREEN);
+		//compare filled with maximum characters error
+		byte[] insuranceFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(insuranceFilled, insuranceMaxCharError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.94)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "insurance_max_char_error_filled" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Insurance maximum char error vs filled - Similarity of: " + result.getScore());
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate guardians screen
+
+		//tap why am I seeing this?
+
+		//validate bottom sheet
+
+		//tap continue
+
+		//compare required field error screen with empty screen
+
+		//enter invalid first and last name and email
+
+		//campare invalid fields error screen with required field errors
+
+		//enter correct info
+
+		//compare filled screen with invalid field errors
+
 		//VisualCheck.doVisualCheck(SCROLL_TESTS);
 
 		//ConfigurationsiOS.killDriver();
