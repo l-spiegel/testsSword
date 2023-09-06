@@ -51,6 +51,11 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_COVERAGE_RELATIONSHIP_BOTTOM_SHEET = "coverage_relationship_bottom_sheet";
 	private final static String CHECK_COVERAGE_DEPENDENT_INVALID_CHAR_ERROR = "coverage_dependent_invalid_char_error";
 	private final static String CHECK_COVERAGE_DEPENDENT_FILLED_SCREEN = "coverage_dependent_filled_screen";
+	private final static String CHECK_FINISH_ACCOUNT_EMPTY_SCREEN = "finish_account_empty_screen";
+	private final static String CHECK_FINISH_ACCOUNT_PHONE_BOTTOM_SHEET = "finish_account_phone_bottom_sheet";
+	private final static String CHECK_FINISH_ACCOUNT_PASS_ERROR = "finish_account_pass_error";
+	private final static String CHECK_FINISH_ACCOUNT_COUNTRIES_BOTTOM_SHEET = "finish_account_countries_bottom_sheet";
+	private final static String CHECK_FINISH_ACCOUNT_FILLED_SCREEN = "finish_account_filled_screen";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -196,7 +201,7 @@ public class TestSwordRegressionSignupiOS {
 		lastNameTxtField.clear();
 		lastNameTxtField.sendKeys("aeiou");
 		emailTxtField.clear();
-		emailTxtField.sendKeys("aeiou@aeiou.com");
+		emailTxtField.sendKeys("seis@setembro.com"); //no fim do teste o user será criado e terá que ser um novo email sempre que correr o teste até o final
 		mobileActions.tapByCoordinates(299, 147);
 		//scroll last name field to state field
 		mobileActions.swipeByElements(lastNameField, stateField);
@@ -501,13 +506,77 @@ public class TestSwordRegressionSignupiOS {
 		//tap continue
 		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//validate finish account
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
-		driver.findElementByXPath("");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Finish your account setup\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Password\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Must be at least 8 characters\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Phone number\"]");
+		driver.findElementByXPath("//XCUIElementTypeButton[@name=\"Why do we need your phone number?\"]");
+		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name=\"Create account\"])[2]");
+		VisualCheck.doVisualCheck(CHECK_FINISH_ACCOUNT_EMPTY_SCREEN);
+		byte[] finishAccountEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		//tap "why do we need you phone number?"
+		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Why do we need your phone number?\"]", driver);
+		//validate the bottom sheet
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Why do we need your phone number? \"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"This will allow us to send you important program info and updates. By providing your phone number, you give us permission to contact you via text message.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Ok\"]");
+		VisualCheck.doVisualCheck(CHECK_FINISH_ACCOUNT_PHONE_BOTTOM_SHEET);
+		//tap outside the bottom sheet
+		mobileActions.tapByCoordinates(133, 282);
+		//enter an invalid password
+		MobileElement finishAccountPassField = driver.findElementByXPath("//XCUIElementTypeSecureTextField");
+		finishAccountPassField.sendKeys("1234567");
+		//tap outside the pass field
+		mobileActions.tapByCoordinates(328, 217);
+		//validate the pass error
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Minimum of characters is 8\"]");
+		//tap the eye
+		utilitiesiOS.clickByAccessibilityId("show_password_button", driver);
+		//enter an invalid phone number
+		MobileElement finishAccountPhoneField = driver.findElementByAccessibilityId("signup_phone_textfield");
+		finishAccountPhoneField.sendKeys("0000000000");
+		//tap to close the keyboard
+		mobileActions.tapByCoordinates(336, 490);
+		VisualCheck.doVisualCheck(CHECK_FINISH_ACCOUNT_PASS_ERROR);
+		//compare the pass error with the empty screen
+		byte[] finishAccountPassError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(finishAccountPassError, finishAccountEmpty, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.92)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "finish_account_empty_pass_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Finish account page empty vs pass error - Similarity of: " + result.getScore());
+		//enter a valid password
+		finishAccountPassField.clear();
+		finishAccountPassField.sendKeys("Test1234!");
+		//tap the eye
+		utilitiesiOS.clickByAccessibilityId("show_password_button", driver);
+		//tap create account button
+		utilitiesiOS.clickByAccessibilityId("signup_create_account_button", driver);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+		//validate the phone error
+
+		//compare the phone error with pass error
+
+		//tap the country
+		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"+1\"]", driver);
+		//validate the bottom sheet
+		VisualCheck.doVisualCheck(CHECK_FINISH_ACCOUNT_COUNTRIES_BOTTOM_SHEET);
+		//tap Portugal
+		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Portugal (+351)\"]", driver);
+		//enter a valid phone number
+		finishAccountPhoneField.clear();
+		finishAccountPhoneField.sendKeys("999999999");
+		//validate the filled screen
+		VisualCheck.doVisualCheck(CHECK_FINISH_ACCOUNT_FILLED_SCREEN);
+		//tap the eye again
 
 		//ConfigurationsiOS.killDriver();
 	}
