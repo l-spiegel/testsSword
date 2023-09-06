@@ -43,6 +43,14 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_GUARDIANS_REQUIRED_FIELD_ERROR_SCREEN = "guardians_required_fields_error_screen";
 	private final static String CHECK_GUARDIANS_INVALID_CHAR_ERROR_SCREEN = "guardians_invalid_char_error_screen";
 	private final static String CHECK_GUARDIANS_FILLED_SCREEN = "guardians_filled_screen";
+	private final static String CHECK_COVERAGE_EMPTY_SCREEN = "coverage_empty_screen";
+	private final static String CHECK_COVERAGE_IM_COVERED_SCREEN = "coverage_covered_option";
+	private final static String CHECK_COVERAGE_SELECT_OPTION_ERROR_SCREEN = "coverage_select_option_error";
+	private final static String CHECK_COVERAGE_DEPENDENT_EMPTY_SCREEN = "coverage_dependent_empty_screen";
+	private final static String CHECK_COVERAGE_DEPENDENT_REQUIRED_FIELDS_ERROR = "coverage_dependent_required_fields_error";
+	private final static String CHECK_COVERAGE_RELATIONSHIP_BOTTOM_SHEET = "coverage_relationship_bottom_sheet";
+	private final static String CHECK_COVERAGE_DEPENDENT_INVALID_CHAR_ERROR = "coverage_dependent_invalid_char_error";
+	private final static String CHECK_COVERAGE_DEPENDENT_FILLED_SCREEN = "coverage_dependent_filled_screen";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -139,10 +147,10 @@ public class TestSwordRegressionSignupiOS {
 		mobileActions.swipeByElements(stateField, lastCheckbox);
 		//fill date of birth as minor
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[5]/XCUIElementTypeOther", driver);
-		String year = "2007";
+		String eligibilityYear = "2007";
 		List<MobileElement> pw = driver.findElements(MobileBy.className("XCUIElementTypePickerWheel"));
 		// set third PickerWheel - year
-		pw.get(2).sendKeys(year);
+		pw.get(2).sendKeys(eligibilityYear);
 		utilitiesiOS.clickByAccessibilityId("Done", driver);
 		//scroll first name field to state
 		MobileElement firstNameField = driver.findElementByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[2]");
@@ -361,20 +369,145 @@ public class TestSwordRegressionSignupiOS {
 		//tap continue
 		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//validate health coverage screen empty
-
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Your health coverage\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@label=\"My employer, health plan or provider has told me that I'm covered for Sword\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@label=\"I'm covered as a dependent of someone receiving Sword as a benefit\"]");
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_EMPTY_SCREEN);
+		byte[] coverageEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate error screen
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_SELECT_OPTION_ERROR_SCREEN);
+		byte[] coverageSelectOpetionError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageSelectOpetionError, coverageEmpty, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.95)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_empty_select_option_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page empty vs select option error - Similarity of: " + result.getScore());
 		//tap I'm covered option
-
-		//visual check
-
+		utilitiesiOS.clickByAccessibilityId("signup_coverage_describes_option_0", driver);
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_IM_COVERED_SCREEN);
+		//compare covered with select option error
+		byte[] coverageCoveredOption = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageCoveredOption, coverageSelectOpetionError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.93)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_select_option_error_covered" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page select option error vs I'm covered - Similarity of: " + result.getScore());
 		//tap I'm dependent option
-
+		utilitiesiOS.clickByAccessibilityId("signup_coverage_describes_option_1", driver);
+		//compare dependent top screen with covered
+		byte[] coverageDependentOptionTop = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageDependentOptionTop, coverageCoveredOption, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.87)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_covered_dependent" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page I'm covered vs I'm dependent - Similarity of: " + result.getScore());
 		//scroll
-
+		MobileElement coverageLastName = driver.findElementByAccessibilityId("signup_coverage_last_name_textfield");
+		MobileElement coverageTitle = driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Your health coverage\"]");
+		mobileActions.swipeByElements(coverageLastName, coverageTitle);
 		//validate the extra fields
-
-		//visual check
-
-
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Who is the person directly receiving Sword as a benefit?\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"First name\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Last name\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Date of birth\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Relationship\"]");
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_DEPENDENT_EMPTY_SCREEN);
+		byte[] coverageDependentEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate error screen
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_DEPENDENT_REQUIRED_FIELDS_ERROR);
+		//compare dependent required field error with dependent empty screen
+		byte[] coverageDependentRequiredError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageDependentRequiredError, coverageDependentEmpty, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.86)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_dependent_empty_required_field_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page I'm dependent empty vs required field error - Similarity of: " + result.getScore());
+		//fill the fields but first and last name with invalid characters
+		MobileElement coverageFirstNameField = driver.findElementByAccessibilityId("signup_coverage_first_name_textfield");
+		MobileElement coverageLastNameField = driver.findElementByAccessibilityId("signup_coverage_last_name_textfield");
+		coverageFirstNameField.sendKeys("aaaa1");
+		coverageLastNameField.sendKeys("bbb1");
+		//date picker
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther", driver);
+		String coverageYear = "1990";
+		List<MobileElement> pw2 = driver.findElements(MobileBy.className("XCUIElementTypePickerWheel"));
+		// set third PickerWheel - year
+		pw2.get(2).sendKeys(coverageYear);
+		utilitiesiOS.clickByAccessibilityId("Done", driver);
+		//tap relationship
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther[4]", driver);
+		//validate bottom sheet
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Child\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Employee\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Life partner\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Other relationship\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Spouse\"]");
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_RELATIONSHIP_BOTTOM_SHEET);
+		//tap child option
+		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Child\"]", driver);
+		//validate invalid character errors
+		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name=\"  Invalid character\"])[1]");
+		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name=\"  Invalid character\"])[2]");
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_DEPENDENT_INVALID_CHAR_ERROR);
+		//compare dependent invalid char error with dependent required fields error
+		byte[] coverageDependentInvalidError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageDependentInvalidError, coverageDependentRequiredError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.85)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_dependent_required_field_error_invalid_char_error" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page I'm dependent required field error vs invalid char error - Similarity of: " + result.getScore());
+		//fill correct info in the first and last name fields
+		coverageFirstNameField.clear();
+		coverageFirstNameField.sendKeys("aaa");
+		coverageLastNameField.clear();
+		coverageLastNameField.sendKeys("bbb");
+		mobileActions.tapByCoordinates(332, 197);
+		VisualCheck.doVisualCheck(CHECK_COVERAGE_DEPENDENT_FILLED_SCREEN);
+		//compare dependent filled with invalid char error screen
+		byte[] coverageDependentFilledScreen = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+		result = driver
+				.getImagesSimilarity(coverageDependentFilledScreen, coverageDependentInvalidError, new SimilarityMatchingOptions()
+						.withEnabledVisualization());
+		assertThat(result.getVisualization().length, is(greaterThan(0)));
+		assertThat(result.getScore(), is(greaterThan(0.92)));
+		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "coverage_dependent_invalid_char_error_filled" + ".png";
+		comparison = new File(baselineFilename);
+		result.storeVisualization(comparison);
+		System.out.println("Health coverage page I'm dependent invalid char error vs filled screen - Similarity of: " + result.getScore());
+		//tap continue
+		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
+		//validate finish account
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
+		driver.findElementByXPath("");
 
 		//ConfigurationsiOS.killDriver();
 	}
