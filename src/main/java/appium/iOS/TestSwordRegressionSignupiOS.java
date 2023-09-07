@@ -201,7 +201,7 @@ public class TestSwordRegressionSignupiOS {
 		lastNameTxtField.clear();
 		lastNameTxtField.sendKeys("aeiou");
 		emailTxtField.clear();
-		emailTxtField.sendKeys("seis3@setembro.com"); //no fim do teste o user será criado e terá que ser um novo email sempre que correr o teste até o final
+		emailTxtField.sendKeys("seis5@setembro.com"); //no fim do teste o user será criado e terá que ser um novo email sempre que correr o teste até o final
 		mobileActions.tapByCoordinates(299, 147);
 		//scroll last name field to state field
 		mobileActions.swipeByElements(lastNameField, stateField);
