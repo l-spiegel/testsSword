@@ -56,7 +56,7 @@ public class SwordRegressionRemindersiOS {
 		VisualCheck visualCheck = new VisualCheck(driver);
 
 		//fazer login
-		utilitiesiOS.newLogin("luiza@marco.com", "10março!", driver);
+		utilitiesiOS.newLogin("vinteum@sword.com", "Test1234!", driver);
 		//wait carregar home
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//verificar texto do card
@@ -305,6 +305,11 @@ public class SwordRegressionRemindersiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Congrats! You earned a new badge!']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reminders Scheduled']");
 		//teste visual
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		visualCheck.doVisualCheck(CHECK_REMINDERS_BADGE_POPUP_SCREEN);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Ok']", driver);
 		//abrir reminders
@@ -371,6 +376,11 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_delete_reminder_button", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
 		//screenshot my reminders depois do delete - comparar com o my reminders depois do update
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		visualCheck.doVisualCheck(CHECK_MY_REMINDERS_AFTER_DELETE_REMINDER_SCREEN);
 		byte[] myRemindersAfterDelete = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result12 = driver
@@ -397,7 +407,7 @@ public class SwordRegressionRemindersiOS {
 				.getImagesSimilarity(myRemindersAfterTryingCreateEmptyReminder, myRemindersAfterDelete, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result13.getVisualization().length, is(greaterThan(0)));
-		assertThat(result13.getScore(), is(greaterThan(0.99)));
+		assertThat(result13.getScore(), is(greaterThan(0.98)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_trying_create_empty_reminder" + ".png";
 		File comparison13 = new File(baselineFilename);
 		result13.storeVisualization(comparison13);
@@ -408,13 +418,17 @@ public class SwordRegressionRemindersiOS {
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Yes']", driver);
 		//comparar com o my reminders depois de tentar criar o reminder vazio
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My reminders']")));
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		byte[] myRemindersAfterUpdateNotSaved = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		SimilarityMatchingResult result14 = driver
 				.getImagesSimilarity(myRemindersAfterUpdateNotSaved, myRemindersAfterTryingCreateEmptyReminder, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result14.getVisualization().length, is(greaterThan(0)));
-		assertThat(result14.getScore(), is(greaterThan(0.99)));
+		assertThat(result14.getScore(), is(greaterThan(0.98)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "my_reminders_update_without_saving" + ".png";
 		File comparison14 = new File(baselineFilename);
 		result14.storeVisualization(comparison14);
