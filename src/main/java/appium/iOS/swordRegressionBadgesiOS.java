@@ -32,16 +32,16 @@ public class swordRegressionBadgesiOS {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		VisualCheck visualCheck = new VisualCheck(driver);
 
-		utilitiesiOS.login("l.spiegel+4@swordhealth.com", "Test1234!", driver);
+		utilitiesiOS.newLogin("l.spiegel+4@swordhealth.com", "Test1234!", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Weekly goal']")));
 		//fazer swipe pra mostrar o card das badges
 		MobileElement totalStarsCard = driver.findElementByAccessibilityId("home_card_achieved_stars");
 		MobileElement ptCard = driver.findElementByAccessibilityId("home_card_pt");
 		mobileActions.swipeByElements(totalStarsCard, ptCard);
 		//validar presença do card com if
-		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name='My badges']")).size() > 0) {
+		if (driver.findElements(By.xpath("//XCUIElementTypeStaticText[@name='Badges']")).size() > 0) {
 			//validar título do card
-			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My badges']");
+			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Badges']");
 			//validar o botão see all badges
 			driver.findElementByXPath("//XCUIElementTypeStaticText[@name='See more']");
 			//pegar os valores das 3 primeiras badges
@@ -77,7 +77,7 @@ public class swordRegressionBadgesiOS {
 			ConfigurationsiOS.killDriver();
 		}
 		//validar título
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='My badges']");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Badges']");
 		//validar título e badges do number of sessions
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Sessions']");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name='1st Session']");
@@ -161,7 +161,7 @@ public class swordRegressionBadgesiOS {
 		visualCheck.doVisualCheck(CHECK_BADGE_SCREEN_4);
 		//voltar
 		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='My badges']")));
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Badges']")));
 
 		ConfigurationsiOS.killDriver();
 	}
