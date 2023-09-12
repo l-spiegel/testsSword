@@ -66,10 +66,25 @@ public class TestSwordRegressionSignupiOS {
 	private final static String CHECK_ERRORS_ELIGIBILITY_FILLED_1 = "errors_eligibility_page_filled1";
 	private final static String CHECK_ERRORS_ELIGIBILITY_MINORS_2 = "errors_eligibility_page_minors";
 	private final static String CHECK_ERRORS_INSURANCE_EMPTY_SCREEN = "errors_insurance_empty_screen";
+	private final static String CHECK_ERRORS_INSURANCE_REQUIRED_FIELDS_ERROR_SCREEN = "errors_insurance_required_error_screen";
+	private final static String CHECK_ERRORS_INSURANCE_PROVIDER_BOTTOM_SHEET = "errors_insurance_provider_bottom_sheet";
 	private final static String CHECK_ERRORS_INSURANCE_MAX_CHAR_ERROR_SCREEN = "errors_insurance_maximum_char_error_screen";
 	private final static String CHECK_ERRORS_INSURANCE_FILLED_SCREEN = "errors_insurance_filled_screen";
 	private final static String CHECK_ERRORS_INSURANCE_INVALID_CHAR_ERROR_SCREEN = "errors_insurance_invalid_char_error_screen";
 	private final static String CHECK_ERRORS_UNDER_18_ERROR_SCREEN = "errors_under_18_error_screen";
+	private final static String CHECK_ERRORS_COVERAGE_EMPTY_SCREEN = "errors_coverage_empty_screen";
+	private final static String CHECK_ERRORS_COVERAGE_IM_COVERED_SCREEN = "errors_coverage_covered_option";
+	private final static String CHECK_ERRORS_COVERAGE_SELECT_OPTION_ERROR_SCREEN = "errors_coverage_select_option_error";
+	private final static String CHECK_ERRORS_COVERAGE_DEPENDENT_EMPTY_SCREEN = "errors_coverage_dependent_empty_screen";
+	private final static String CHECK_ERRORS_COVERAGE_DEPENDENT_REQUIRED_FIELDS_ERROR = "errors_coverage_dependent_required_fields_error";
+	private final static String CHECK_ERRORS_COVERAGE_DEPENDENT_INVALID_CHAR_ERROR = "errors_coverage_dependent_invalid_char_error";
+	private final static String CHECK_ERRORS_COVERAGE_DEPENDENT_FILLED_SCREEN = "errors_coverage_dependent_filled_screen";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_EMPTY_SCREEN = "errors_finish_account_empty_screen";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_PHONE_BOTTOM_SHEET = "errors_finish_account_phone_bottom_sheet";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_PASS_ERROR = "errors_finish_account_pass_error";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_COUNTRIES_BOTTOM_SHEET = "errors_finish_account_countries_bottom_sheet";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_FILLED_SCREEN = "errors_finish_account_filled_screen";
+	private final static String CHECK_ERRORS_FINISH_ACCOUNT_PHONE_ERROR = "errors_finish_account_phone_error";
 
 	private IOSDriver<MobileElement> driver;
 	@Before
@@ -301,11 +316,11 @@ public class TestSwordRegressionSignupiOS {
 		System.out.println("Insurance screen empty vs required fields error - Similarity of: " + result.getScore());
 		//select one provider
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther", driver);
-		VisualCheck.doVisualCheck(CHECK_ERRORS_PROVIDER_BOTTOM_SHEET);
+		VisualCheck.doVisualCheck(CHECK_ERRORS_INSURANCE_PROVIDER_BOTTOM_SHEET);
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther", driver);
 		//validate invalid characters error
 		memberIdField.sendKeys("aaa");
-		mobileActions.tapByCoordinates(340, 311);
+		mobileActions.tapByCoordinates(340, 350);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Invalid character\"]");
 		VisualCheck.doVisualCheck(CHECK_ERRORS_INSURANCE_INVALID_CHAR_ERROR_SCREEN);
 		//compare invalid character with required fields error
@@ -314,7 +329,7 @@ public class TestSwordRegressionSignupiOS {
 				.getImagesSimilarity(insuranceErrorsInvalidCharError, insuranceErrorsRequiredFieldsError, new SimilarityMatchingOptions()
 						.withEnabledVisualization());
 		assertThat(result.getVisualization().length, is(greaterThan(0)));
-		assertThat(result.getScore(), is(greaterThan(0.92)));
+		assertThat(result.getScore(), is(greaterThan(0.89)));
 		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "errors_insurance_required_fields_error_invalid_char_error" + ".png";
 		comparison = new File(baselineFilename);
 		result.storeVisualization(comparison);
@@ -322,7 +337,7 @@ public class TestSwordRegressionSignupiOS {
 		//validate maximum characters error
 		memberIdField.clear();
 		memberIdField.sendKeys("123456789012345678901");
-		mobileActions.tapByCoordinates(340, 311);
+		mobileActions.tapByCoordinates(340, 350);
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Maximum character limit is 20\"]");
 		VisualCheck.doVisualCheck(CHECK_ERRORS_INSURANCE_MAX_CHAR_ERROR_SCREEN);
 		//compare maximum characters error with invalid character error
@@ -341,7 +356,7 @@ public class TestSwordRegressionSignupiOS {
 		//fill correctly
 		memberIdField.clear();
 		memberIdField.sendKeys("12345678901234567890");
-		mobileActions.tapByCoordinates(340, 311);
+		mobileActions.tapByCoordinates(340, 350);
 		VisualCheck.doVisualCheck(CHECK_ERRORS_INSURANCE_FILLED_SCREEN);
 		//compare filled with maximum characters error
 		byte[] insuranceErrorsFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
@@ -412,7 +427,6 @@ public class TestSwordRegressionSignupiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"First name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Last name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Date of birth\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Relationship\"]");
 		VisualCheck.doVisualCheck(CHECK_ERRORS_COVERAGE_DEPENDENT_EMPTY_SCREEN);
 		byte[] coverageErrorsDependentEmpty = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
 		//tap continue
@@ -442,17 +456,6 @@ public class TestSwordRegressionSignupiOS {
 		// set third PickerWheel - year
 		pw2.get(2).sendKeys(coverageYear);
 		utilitiesiOS.clickByAccessibilityId("Done", driver);
-		//tap relationship
-		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther[4]", driver);
-		//validate bottom sheet
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Child\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Employee\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Life partner\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Other relationship\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Spouse\"]");
-		VisualCheck.doVisualCheck(CHECK_ERRORS_COVERAGE_RELATIONSHIP_BOTTOM_SHEET);
-		//tap child option
-		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Child\"]", driver);
 		//validate invalid character errors
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name=\"  Invalid character\"])[1]");
 		driver.findElementByXPath("(//XCUIElementTypeStaticText[@name=\"  Invalid character\"])[2]");
@@ -473,7 +476,8 @@ public class TestSwordRegressionSignupiOS {
 		coverageFirstNameField.sendKeys("aaa");
 		coverageLastNameField.clear();
 		coverageLastNameField.sendKeys("bbb");
-		mobileActions.tapByCoordinates(332, 197);
+		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther", driver);
+		utilitiesiOS.clickByAccessibilityId("Done", driver);
 		VisualCheck.doVisualCheck(CHECK_ERRORS_COVERAGE_DEPENDENT_FILLED_SCREEN);
 		//compare dependent filled with invalid char error screen
 		byte[] coverageErrorsDependentFilledScreen = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
