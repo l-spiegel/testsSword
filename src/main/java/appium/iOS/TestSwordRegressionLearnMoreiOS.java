@@ -135,7 +135,7 @@ public class TestSwordRegressionLearnMoreiOS {
 		mobileActions.swipeByElements(pelvicHealthSpecialistsTxt, bloomImage);
 		//validate the screen
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Pelvic Health Specialists (PHS)\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Our PHSs all have Doctor of Physical Therapy Degrees and clinical experience focusing on the pelvic floor and pelvic health. They work 1-1 with each individual, providing customized guidance.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Our PHSs all have Doctor of Physical Therapy Degrees and clinical experience focusing on the pelvic floor and pelvic health. They work 1-1 with each member, providing customized guidance.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Bloom Pod\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Your pod tracks and measures the force, stamina, and accuracy of the pelvic floor, offering real-time feedback and results.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Bloom App\"]");
