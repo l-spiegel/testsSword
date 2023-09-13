@@ -86,7 +86,7 @@ public class SwordRegressionWizardiOS {
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name='Next']", driver);
         //validar your personal goals - só é visível se tiver program goals - muda de user pra user
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your personal goals']");
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Track your progress toward your personal health goals.']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"These are the goals you'll work to achieve during your program.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"I’ve customized your sessions based on the goals you selected.\"]");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Next']");
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Skip']");
@@ -127,7 +127,7 @@ public class SwordRegressionWizardiOS {
         MobileElement yourWeeklyGoalTxt = driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Your weekly goal']");
         mobileActions.swipeByElements(getMovingTxt, yourWeeklyGoalTxt);
         //validar o resto do your weekly goal
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='See my program']");
+        driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Go to my program']");
         //teste visual
         visualCheck.doVisualCheck(CHECK_YOUR_WEEKLY_GOAL_SCREEN_2);
         //clicar em set a reminder
@@ -141,7 +141,7 @@ public class SwordRegressionWizardiOS {
         //salvar
         utilitiesiOS.clickByAccessibilityId("session_reminders_reminder_save_reminder_button", driver);
         //see my program
-        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"See my program\"]", driver);
+        utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Go to my program\"]", driver);
         //validar popup dos reminders
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Congrats! You earned a new badge!']")));
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Reminders Scheduled']");
