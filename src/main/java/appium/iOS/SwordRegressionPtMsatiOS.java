@@ -269,17 +269,10 @@ public class SwordRegressionPtMsatiOS {
         }
         //Tap "Share feedback" button
         utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Share feedback\"]", driver);
-        //validar ecrã de sucesso - vai sumir depois do merge das alterações da bloom
-        //driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Thank you!']");
-       // driver.findElementByXPath("//XCUIElementTypeStaticText[@name='We appreciate your feedback.']");
-        //driver.findElementByXPath("//XCUIElementTypeStaticText[@name='Close']");
         //toaster de sucesso - implementado depois das alterações da bloom
         driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thank you! We appreciate your feedback.\"]");
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_SHARE_SUCCESS);
-        //Tap "Close" button - também vai sumir depois do merge das alterações da bloom
-        //utilitiesiOS.clickByXPath("//XCUIElementTypeButton[@name=\"Close\"]",driver);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Your Physical Therapist']")));
 
         ConfigurationsiOS.killDriver();
     }
