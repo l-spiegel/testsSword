@@ -588,6 +588,11 @@ public class TestSwordRegressionSignupiOS {
 		new VisualCheck(driver);
 
 		utilitiesiOS.clickByAccessibilityId("Allow", driver);
+		try {
+			Thread.sleep(12000);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
 		//tap signup
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		utilitiesiOS.clickByAccessibilityId("loginSignupButton", driver);
