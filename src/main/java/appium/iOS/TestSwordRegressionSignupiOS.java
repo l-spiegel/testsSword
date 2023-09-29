@@ -94,7 +94,8 @@ public class TestSwordRegressionSignupiOS {
 		//tap signup
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		utilitiesiOS.clickByAccessibilityId("loginSignupButton", driver);
-		//select magnolia client
+		//select signup c client
+		driver.findElementByClassName("XCUIElementTypeTextField").sendKeys("Signup C");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Signup C\"]", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create account']")));
 		//tap to go back to clients list
@@ -103,7 +104,7 @@ public class TestSwordRegressionSignupiOS {
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Signup C\"]", driver);
 		//validate eligibility page
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Create account\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Good news! Signup C offers Sword as a benefit.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Good news! These benefits are offered by Signup C.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"First name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Last name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Email\"]");
@@ -264,7 +265,7 @@ public class TestSwordRegressionSignupiOS {
 		utilitiesiOS.clickByAccessibilityId("signup_continue_button", driver);
 		//validate underage error screen
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Thank you for your interest in Sword\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require members to be at least 13 years old to enroll in a Sword program.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Unfortunately, we require members to be at least 18 years old to enroll in a Sword program.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Ok\"]");
 		VisualCheck.doVisualCheck(CHECK_ERRORS_UNDER_18_ERROR_SCREEN);
 		//tap ok button
@@ -588,20 +589,16 @@ public class TestSwordRegressionSignupiOS {
 		new VisualCheck(driver);
 
 		utilitiesiOS.clickByAccessibilityId("Allow", driver);
-		try {
-			Thread.sleep(12000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
 		//tap signup
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		utilitiesiOS.clickByAccessibilityId("loginSignupButton", driver);
 		//select magnolia client
+		driver.findElementByClassName("XCUIElementTypeTextField").sendKeys("Magnolia");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"Magnolia\"]", driver);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Create account']")));
 		//validate eligibility page
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Create account\"]");
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Good news! Magnolia Tree offers Sword as a benefit.\"]");
+		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Good news! These benefits are offered by Magnolia Tree.\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"First name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Last name\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Email\"]");
@@ -641,7 +638,7 @@ public class TestSwordRegressionSignupiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Date of birth\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"State\"]");
 		//fill email, date of birth (under 13) and state - after running the test until the end, the email will be taken and needs to use a new one
-		driver.findElementByAccessibilityId("signup_email_textfield").sendKeys("quatorze@setembro.com");
+		driver.findElementByAccessibilityId("signup_email_textfield").sendKeys("vintenove@setembro.com");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[5]/XCUIElementTypeOther", driver);
 		String eligibilityYear = "2013";
 		List<MobileElement> pw = driver.findElements(MobileBy.className("XCUIElementTypePickerWheel"));
