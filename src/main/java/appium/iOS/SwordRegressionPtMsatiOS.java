@@ -116,7 +116,7 @@ public class SwordRegressionPtMsatiOS {
         sendMessage.click();
         sendMessage.sendKeys("Tests. Please ignore. Thank you!");
         //tap fora da caixa de texto
-        mobileActions.tapByCoordinates(264, 256);
+        mobileActions.tapByCoordinates(258, 153);
         //teste visual - comparar com build anterior
         visualCheck.doVisualCheck(PTMSAT_SCREEN_FILLED);
         //fazer scroll pra poder comparar direito
