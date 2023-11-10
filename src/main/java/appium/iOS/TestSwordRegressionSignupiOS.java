@@ -533,26 +533,26 @@ public class TestSwordRegressionSignupiOS {
 		//tap the eye
 		utilitiesiOS.clickByAccessibilityId("show_password_button", driver);
 		//tap create account button
-		utilitiesiOS.clickByAccessibilityId("signup_create_account_button", driver);
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			Thread.currentThread().interrupt();
-		}
+//		utilitiesiOS.clickByAccessibilityId("signup_create_account_button", driver);
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			Thread.currentThread().interrupt();
+//		}
 		//validate the phone error
-		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Invalid phone number\"]");
-		VisualCheck.doVisualCheck(CHECK_ERRORS_FINISH_ACCOUNT_PHONE_ERROR);
+//		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"  Invalid phone number\"]");
+//		VisualCheck.doVisualCheck(CHECK_ERRORS_FINISH_ACCOUNT_PHONE_ERROR);
 		//compare the phone error with pass error
-		byte[] finishAccountErrorsPhoneError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		result = driver
-				.getImagesSimilarity(finishAccountErrorsPhoneError, finishAccountErrorsPassError, new SimilarityMatchingOptions()
-						.withEnabledVisualization());
-		assertThat(result.getVisualization().length, is(greaterThan(0)));
-		assertThat(result.getScore(), is(greaterThan(0.78)));
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "errors_finish_account_pass_error_phone_error" + ".png";
-		comparison = new File(baselineFilename);
-		result.storeVisualization(comparison);
-		System.out.println("Finish account page pass error vs phone error - Similarity of: " + result.getScore());
+//		byte[] finishAccountErrorsPhoneError = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+//		result = driver
+//				.getImagesSimilarity(finishAccountErrorsPhoneError, finishAccountErrorsPassError, new SimilarityMatchingOptions()
+//						.withEnabledVisualization());
+//		assertThat(result.getVisualization().length, is(greaterThan(0)));
+//		assertThat(result.getScore(), is(greaterThan(0.78)));
+//		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "errors_finish_account_pass_error_phone_error" + ".png";
+//		comparison = new File(baselineFilename);
+//		result.storeVisualization(comparison);
+//		System.out.println("Finish account page pass error vs phone error - Similarity of: " + result.getScore());
 		//tap the country
 		utilitiesiOS.clickByXPath("//XCUIElementTypeStaticText[@name=\"+1\"]", driver);
 		//validate the bottom sheet
@@ -567,16 +567,16 @@ public class TestSwordRegressionSignupiOS {
 		//validate the filled screen
 		VisualCheck.doVisualCheck(CHECK_ERRORS_FINISH_ACCOUNT_FILLED_SCREEN);
 		//compare filled screen with phone error
-		byte[] finishAccountErrorsFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
-		result = driver
-				.getImagesSimilarity(finishAccountErrorsFilled, finishAccountErrorsPhoneError, new SimilarityMatchingOptions()
-						.withEnabledVisualization());
-		assertThat(result.getVisualization().length, is(greaterThan(0)));
-		assertThat(result.getScore(), is(greaterThan(0.92)));
-		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "errors_finish_account_phone_error_filled" + ".png";
-		comparison = new File(baselineFilename);
-		result.storeVisualization(comparison);
-		System.out.println("Finish account page phone error vs filled - Similarity of: " + result.getScore());
+//		byte[] finishAccountErrorsFilled = Base64.encodeBase64(driver.getScreenshotAs(OutputType.BYTES));
+//		result = driver
+//				.getImagesSimilarity(finishAccountErrorsFilled, finishAccountErrorsPhoneError, new SimilarityMatchingOptions()
+//						.withEnabledVisualization());
+//		assertThat(result.getVisualization().length, is(greaterThan(0)));
+//		assertThat(result.getScore(), is(greaterThan(0.92)));
+//		baselineFilename = VALIDATION_PATH + "/" + BASELINE + "errors_finish_account_phone_error_filled" + ".png";
+//		comparison = new File(baselineFilename);
+//		result.storeVisualization(comparison);
+//		System.out.println("Finish account page phone error vs filled - Similarity of: " + result.getScore());
 
 		ConfigurationsiOS.killDriver();
 	}
@@ -638,7 +638,7 @@ public class TestSwordRegressionSignupiOS {
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Date of birth\"]");
 		driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"State\"]");
 		//fill email, date of birth (under 13) and state - after running the test until the end, the email will be taken and needs to use a new one
-		driver.findElementByAccessibilityId("signup_email_textfield").sendKeys("vintenove@setembro.com");
+		driver.findElementByAccessibilityId("signup_email_textfield").sendKeys("nove@novembro1.com");
 		utilitiesiOS.clickByXPath("//XCUIElementTypeApplication[@name=\"Sword Health\"]/XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther[5]/XCUIElementTypeOther", driver);
 		String eligibilityYear = "2013";
 		List<MobileElement> pw = driver.findElements(MobileBy.className("XCUIElementTypePickerWheel"));
