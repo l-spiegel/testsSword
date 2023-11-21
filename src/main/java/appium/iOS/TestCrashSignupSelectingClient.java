@@ -24,8 +24,8 @@ public class TestCrashSignupSelectingClient {
 		UtilitiesiOS utilitiesiOS = new UtilitiesiOS();
 		VisualCheck visualCheck = new VisualCheck(driver);
 
-		driver.findElementByAccessibilityId("Allow").click();
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
+//		driver.findElementByAccessibilityId("Allow").click();
+//		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//XCUIElementTypeStaticText[@name='Welcome to Sword']")));
 		utilitiesiOS.clickByAccessibilityId("loginSignupButton", driver);
 		//select client screen
 		try {
@@ -48,7 +48,7 @@ public class TestCrashSignupSelectingClient {
 			utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 			System.out.println(i + "x");
 		}
-
+		utilitiesiOS.clickByAccessibilityId("ic arrow left", driver);
 
 	}
 
